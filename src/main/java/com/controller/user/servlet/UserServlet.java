@@ -78,7 +78,11 @@ public class UserServlet extends HttpServlet {
 
 		// check db
 		String message = UserDAO.insertUser(userInfo);
+<<<<<<< HEAD
 		System.out.println("* : main" + message);
+=======
+		System.out.println("* : In final" + message);
+>>>>>>> 353dede662b1f8ae664c4d47555aede3925599f5
 		// main
 
 		// res
