@@ -73,17 +73,17 @@ public class UserServlet extends HttpServlet {
 		int phone = Integer.parseInt(req.getParameter("phone"));
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
-//		System.out.println(username + password + phone + username + password);
+		// System.out.println(username + password + phone + username + password);
 		User userInfo = new User(name, email, phone, username, password);
 
 		// check db
 		String message = UserDAO.insertUser(userInfo);
-		System.out.println("* : " + message);
+		System.out.println("* : test pull" + message);
 		// main
 
 		// res
-//		req.getAttribute(message);
-//		req.getRequestDispatcher("index.jsp").forward(req, res);
+		// req.getAttribute(message);
+		// req.getRequestDispatcher("index.jsp").forward(req, res);
 	}
 
 	private void login(HttpServletRequest req, HttpServletResponse res) {
