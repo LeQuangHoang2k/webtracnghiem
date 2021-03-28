@@ -78,7 +78,7 @@ public class UserServlet extends HttpServlet {
 
 		// check db
 		String message = UserDAO.insertUser(userInfo);
-		System.out.println("* : Push" + message);
+		System.out.println("* : merge thành công" + message);
 		// main
 
 		// res
