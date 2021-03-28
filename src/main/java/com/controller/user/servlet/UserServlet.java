@@ -78,7 +78,7 @@ public class UserServlet extends HttpServlet {
 
 		// check db
 		String message = UserDAO.insertUser(userInfo);
-		System.out.println("* : In Github" + message);
+		System.out.println("* : In Github123" + message);
 		// main
 
 		// res
