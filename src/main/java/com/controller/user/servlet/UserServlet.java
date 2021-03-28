@@ -78,7 +78,7 @@ public class UserServlet extends HttpServlet {
 
 		// check db
 		String message = UserDAO.insertUser(userInfo);
-		System.out.println("* : test pull" + message);
+		System.out.println("* : dang commit" + message);
 		// main
 
 		// res
