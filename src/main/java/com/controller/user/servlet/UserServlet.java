@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.controller.user.model.User;
+
 import com.controller.user.dao.UserDAO;
 
 @WebServlet("/")
@@ -74,24 +77,32 @@ public class UserServlet extends HttpServlet {
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
 		// System.out.println(username + password + phone + username + password);
+		password = hashData(password);
 		User userInfo = new User(name, email, phone, username, password);
 
 		// check db
 		String message = UserDAO.insertUser(userInfo);
-		System.out.println("* : test pull" + message);
+
 		// main
 
 		// res
-		// req.getAttribute(message);
-		// req.getRequestDispatcher("index.jsp").forward(req, res);
+		req.setAttribute("message", message);
+		if (!message.equals("success")) {
+			req.getRequestDispatcher("index.jsp").forward(req, res);
+			return;
+		}
+			
+		req.getRequestDispatcher("quiz.jsp").forward(req, res);
 	}
 
 	private void login(HttpServletRequest req, HttpServletResponse res) {
 		// input
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
+		
 		// check db
-
+//		String message = UserDAO.insertUser(userInfo);
+		
 		// main
 
 		// res
@@ -117,15 +128,30 @@ public class UserServlet extends HttpServlet {
 		// res
 
 	}
-
+	
 	private void forgotPassword(HttpServletRequest req, HttpServletResponse res) {
 		// input
-
+		String name = req.getParameter("name");
+		String email = req.getParameter("email");
+		int phone = Integer.parseInt(req.getParameter("phone"));
+		String username = req.getParameter("username");
+		String password = req.getParameter("password");
+		
 		// check db
-
+		
 		// main
-
+		
 		// res
 	}
 
+	private String hashData(String data) {
+		data = BCrypt.hashpw(data, BCrypt.gensalt(12));
+		System.out.println("data lucs saau la : " + data + " " + data.length());
+		return data;
+	}
+
+	private boolean checkData(String data) {
+//		BCrypt.checkpw(password, hash);
+		return false;
+	}
 }

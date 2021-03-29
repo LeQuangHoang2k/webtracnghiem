@@ -32,20 +32,20 @@ public class UserDAO {
 	}
 
 	public String insertUser(User user) {
-		String message = "";
+		String message = "success";
 		try (Connection conn = getConnection(); PreparedStatement stm = conn.prepareStatement(INSERT_USER_SQL)) {
 			message = this.checkExistUserByEmail(user.getEmail());
-			if (!message.equals("")) {
+			if (!message.equals("success")) {
 				return message;
 			}
 			
 			message = this.checkExistUserByPhone(user.getPhone());
-			if (!message.equals("")) {
+			if (!message.equals("success")) {
 				return message;
 			}
 			
 			message = this.checkExistUserByUsername(user.getUsername());
-			if (!message.equals("")) {
+			if (!message.equals("success")) {
 				return message;
 			}
 			
@@ -65,11 +65,11 @@ public class UserDAO {
 			System.out.println(e);
 		}
 		
-		return "";
+		return "success";
 	}
 
 	public String checkExistUserByEmail(String email) {
-		String message = "";
+		String message = "success";
 		try (Connection conn = getConnection(); PreparedStatement stm = conn.prepareStatement(SELECT_USER_BY_EMAIL)) {
 			stm.setString(1, email);
 			ResultSet rs = stm.executeQuery();
@@ -84,7 +84,7 @@ public class UserDAO {
 	}
 	
 	public String checkExistUserByPhone(int phone) {
-		String message = "";
+		String message = "success";
 		try (Connection conn = getConnection(); PreparedStatement stm = conn.prepareStatement(SELECT_USER_BY_PHONE)) {
 			stm.setInt(1, phone);
 			ResultSet rs = stm.executeQuery();
@@ -99,7 +99,7 @@ public class UserDAO {
 	}
 	
 	public String checkExistUserByUsername(String username) {
-		String message = "";
+		String message = "success";
 		try (Connection conn = getConnection(); PreparedStatement stm = conn.prepareStatement(SELECT_USER_BY_USERNAME)) {
 			stm.setString(1, username);
 			ResultSet rs = stm.executeQuery();

@@ -22,7 +22,7 @@
       <div class="user signinBx">
         <div class="formBx" id="login">
           <form action="<%= request.getContextPath()%>/login" method="POST">
-            <h2>Login</h2>
+            <h2>Login <% if (request.getAttribute("message") != null) {out.print(request.getAttribute("message")); } %></h2>
             <input type="text" name="username" placeholder="Username" />
             <input type="password" name="password" placeholder="Password" id="password" />
             <div style="display:flex;justify-content: center;">
