@@ -43,7 +43,7 @@ public class UserDAO {
 
 		String phone = Integer.toString(user.getPhone());
 		if (checkEmpty(phone)) {
-			return "Error : Password is empty or length < 11";
+			return "Error : Phone is empty or length < 11";
 		}
 
 		try (Connection conn = getConnection(); PreparedStatement stm = conn.prepareStatement(INSERT_USER_SQL)) {
@@ -118,6 +118,25 @@ public class UserDAO {
 
 	public String forgotUser(User user) {
 		String hashPassword = "";
+		String phone = "";
+
+		if (checkEmpty(user.getEmail())) {
+			return "Error : Email is empty or length < 5";
+		}
+		
+		phone = Integer.toString(user.getPhone());
+		if (checkEmpty(phone)) {
+			return "Error : Phone is empty or length < 11";
+		}
+		
+		if (checkEmpty(user.getUsername())) {
+			return "Error : Username is empty or length < 5";
+		}
+
+		if (checkEmpty(user.getPassword())) {
+			return "Error : Password is empty or length < 5";
+		}
+
 		try (Connection conn = getConnection();
 				PreparedStatement stm = conn.prepareStatement(UPDATE_PASSWORD_BY_USERNAME)) {
 
@@ -170,12 +189,6 @@ public class UserDAO {
 		return false;
 	}
 
-//	public boolean checkEmptyInt(int data) {
-//		if (data == null || data.length() < 5) {
-//			return true;
-//		}
-//		return false;
-//	}
 	// check exist
 	public boolean checkExistUserByEmail(String email) {
 		try (Connection conn = getConnection(); PreparedStatement stm = conn.prepareStatement(SELECT_USER_BY_EMAIL)) {

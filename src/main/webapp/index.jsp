@@ -49,7 +49,7 @@
             <h2>Register</h2>
             <input type="text" name="name" placeholder="Name" />
             <input type="email" name="email" placeholder="Your Email" />
-            <input type="tel" name="phone" placeholder="Your Phone" />
+            <input type="text" name="phone" id="phoneRegister" placeholder="Your Phone" />
             <input type="text" name="username" placeholder="Username" />
             <input type="password" name="password" placeholder="New Password" />
             <!--<input type="password" placeholder="Confirm Password" />-->
@@ -74,7 +74,7 @@
           <form action="<%= request.getContextPath()%>/forgot" method="post">
             <h2>Reset Password</h2>
             <input type="email" name="email" placeholder="Your Email" />
-            <input type="tel" name="phone " placeholder="Your Phone" />
+            <input type="text" name="phone" id="phoneForgot" placeholder="Your Phone" />
             <input type="text" name="username" placeholder="Username" />
             <input type="password" name="password" placeholder="New Password" />
             <input type="password" placeholder="Confirm Password" />
@@ -111,6 +111,8 @@
       container.classList.toggle("activate");
     };
 
+    document.getElementById("phoneRegister").defaultValue = "+84";
+    document.getElementById("phoneForgot").defaultValue = "+84";
   </script>
 
 </body>
