@@ -7,6 +7,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="google-signin-client_id" content="496509540327-sdht0p2mir6mjjshd0ih9ks54h2k9bq9.apps.googleusercontent.com">
   <title>Document</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -35,9 +36,12 @@
             <p class="signup">Forget password ?<a onclick="Form()">Click here.</a>
             </p>
             <div class="text-area">
-              <p class="or"><span class="or">Or Login </span></p>
-              <a href=""><i class="fab fa-facebook" aria-hidden="true"></i></a>
-              <a href=""><i class="fab fa-google" aria-hidden="true"></i></a>
+               <!-- <p class="or"><span class="or">Or Login </span></p>
+              
+          		<a data-onsuccess="onSignIn"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+              	<a  class="g-signin2" data-onsuccess="onSignIn"><i class="fab fa-google" aria-hidden="true"></i></a>
+              	<div class="g-signin2" style="background-color: red" data-onsuccess="onSignIn">1</div>
+               -->
             </div>
           </form>
         </div>
@@ -100,6 +104,9 @@
 
   </section>
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
     function toggleForm() {
       var container = document.querySelector(".container");
@@ -110,9 +117,7 @@
       var container = document.querySelector(".container");
       container.classList.toggle("activate");
     };
-
-    document.getElementById("phoneRegister").defaultValue = "+84";
-    document.getElementById("phoneForgot").defaultValue = "+84";
+    
   </script>
 
 </body>
