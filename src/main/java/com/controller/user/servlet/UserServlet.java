@@ -76,14 +76,35 @@ public class UserServlet extends HttpServlet {
 		int phone = Integer.parseInt(req.getParameter("phone"));
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
-		// System.out.println(username + password + phone + username + password);
-		password = hashData(password);
+		System.out.println(username + password + phone + username + password);
 		User userInfo = new User(name, email, phone, username, password);
 
 		// check db
-		String message = UserDAO.insertUser(userInfo);
+		String message = UserDAO.registerUser(userInfo);
 
 		// main
+
+		// res
+		req.setAttribute("message", message);
+//		if (!message.equals("success")) {
+//			return;
+//		}
+		req.getRequestDispatcher("index.jsp").forward(req, res);
+
+//		req.getRequestDispatcher("quiz.jsp").forward(req, res);
+	}
+
+	private void login(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		// input
+		String username = req.getParameter("username");
+		String password = req.getParameter("password");
+		User userInfo = new User(username, password);
+
+		// check db
+		String message = UserDAO.loginUser(userInfo);
+
+		// main
+//		jwt
 
 		// res
 		req.setAttribute("message", message);
@@ -91,21 +112,8 @@ public class UserServlet extends HttpServlet {
 			req.getRequestDispatcher("index.jsp").forward(req, res);
 			return;
 		}
-			
+
 		req.getRequestDispatcher("quiz.jsp").forward(req, res);
-	}
-
-	private void login(HttpServletRequest req, HttpServletResponse res) {
-		// input
-		String username = req.getParameter("username");
-		String password = req.getParameter("password");
-		
-		// check db
-//		String message = UserDAO.insertUser(userInfo);
-		
-		// main
-
-		// res
 	}
 
 	private void loginFB(HttpServletRequest req, HttpServletResponse res) {
@@ -128,30 +136,24 @@ public class UserServlet extends HttpServlet {
 		// res
 
 	}
-	
-	private void forgotPassword(HttpServletRequest req, HttpServletResponse res) {
+
+	private void forgotPassword(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// input
 		String name = req.getParameter("name");
 		String email = req.getParameter("email");
 		int phone = Integer.parseInt(req.getParameter("phone"));
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
-		
+		User userInfo = new User(name, email, phone, username, password);
+
 		// check db
-		
+		String message = UserDAO.forgotUser(userInfo);
+
 		// main
-		
+
 		// res
-	}
+		req.setAttribute("message", message);
+		req.getRequestDispatcher("index.jsp").forward(req, res);
 
-	private String hashData(String data) {
-		data = BCrypt.hashpw(data, BCrypt.gensalt(12));
-		System.out.println("data lucs saau la : " + data + " " + data.length());
-		return data;
-	}
-
-	private boolean checkData(String data) {
-//		BCrypt.checkpw(password, hash);
-		return false;
 	}
 }
