@@ -86,12 +86,12 @@ public class UserServlet extends HttpServlet {
 
 		// res
 		req.setAttribute("message", message);
-//		if (!message.equals("success")) {
-//			return;
-//		}
+		// if (!message.equals("success")) {
+		// return;
+		// }
 		req.getRequestDispatcher("index.jsp").forward(req, res);
 
-//		req.getRequestDispatcher("quiz.jsp").forward(req, res);
+		// req.getRequestDispatcher("quiz.jsp").forward(req, res);
 	}
 
 	private void login(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -104,7 +104,7 @@ public class UserServlet extends HttpServlet {
 		String message = UserDAO.loginUser(userInfo);
 
 		// main
-//		jwt
+		// jwt
 
 		// res
 		req.setAttribute("message", message);
@@ -133,7 +133,7 @@ public class UserServlet extends HttpServlet {
 
 		// main
 
-		// res
+		// res xxx
 
 	}
 
