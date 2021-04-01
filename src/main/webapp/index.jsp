@@ -32,7 +32,7 @@
             <div style="display:flex;justify-content: center;">
               <input type="submit" value="Submit" />
             </div>
-            <p class="signup">Don't have account aaaaaaaaaaagit <a onclick="toggleForm();">Register now</a></p>
+            <p class="signup">Don't have account <a onclick="toggleForm();">Register now</a></p>
             <p class="signup">Forget password ?<a onclick="Form()">Click here.</a>
             </p>
             <div class="text-area">
