@@ -27,6 +27,9 @@ public class UserServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
 		String action = request.getServletPath();
 		switch (action) {
 
@@ -42,17 +45,17 @@ public class UserServlet extends HttpServlet {
 			break;
 		}
 
-		case "/loginFB": {
-			System.out.println("page loginFB : " + action);
-			this.loginFB(request, response);
-			break;
-		}
-
-		case "/loginGG": {
-			System.out.println("page loginGG : " + action);
-			this.loginGG(request, response);
-			break;
-		}
+//		case "/loginFB": {
+//			System.out.println("page loginFB : " + action);
+//			this.loginFB(request, response);
+//			break;
+//		}
+//
+//		case "/loginGG": {
+//			System.out.println("page loginGG : " + action);
+//			this.loginGG(request, response);
+//			break;
+//		}
 
 		case "/forgot": {
 			System.out.println("page forgot : " + action);
@@ -69,6 +72,11 @@ public class UserServlet extends HttpServlet {
 		// input
 		String name = req.getParameter("name");
 		String email = req.getParameter("email");
+		if(req.getParameter("phone").equals("")) {
+			req.setAttribute("message", "Error : Phone doesn't match");
+			req.getRequestDispatcher("index.jsp").forward(req, res);
+			return;
+		}
 		int phone = Integer.parseInt(req.getParameter("phone"));
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
@@ -82,12 +90,7 @@ public class UserServlet extends HttpServlet {
 
 		// res
 		req.setAttribute("message", message);
-		// if (!message.equals("success")) {
-		// return;
-		// }
 		req.getRequestDispatcher("index.jsp").forward(req, res);
-
-		// req.getRequestDispatcher("quiz.jsp").forward(req, res);
 	}
 
 	private void login(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
