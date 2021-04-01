@@ -32,11 +32,11 @@
             <div style="display:flex;justify-content: center;">
               <input type="submit" value="Submit" />
             </div>
-            <p class="signup">Don't have account aaaaaaaaaaagit <a onclick="toggleForm();">Register now</a></p>
-            <p class="signup"> password ?<a onclick="Form()">Click here.</a>
+            <p class="signup">Don't have account ?<a onclick="toggleForm();">Register now</a></p>
+            <p class="signup">Forget Trung's password ?<a onclick="Form()">Click here.</a>
             </p>
             <div class="text-area">
-               <!-- <p class="or"><span class="or">Or Login hoang</span></p>
+               <!-- <p class="or"><span class="or">Or Login </span></p>
               
           		<a data-onsuccess="onSignIn"><i class="fab fa-facebook" aria-hidden="true"></i></a>
               	<a  class="g-signin2" data-onsuccess="onSignIn"><i class="fab fa-google" aria-hidden="true"></i></a>
