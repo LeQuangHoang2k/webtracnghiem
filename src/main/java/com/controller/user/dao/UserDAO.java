@@ -120,14 +120,15 @@ public class UserDAO {
 		String hashPassword = "";
 		String phone = "";
 
-		if (checkEmpty(user.getEmail())) {
-			return "Error : Email is empty or length < 5";
-		}
-		
 		phone = Integer.toString(user.getPhone());
 		if (checkEmpty(phone)) {
 			return "Error : Phone is empty or length < 11";
 		}
+
+		if (checkEmpty(user.getEmail())) {
+			return "Error : Email is empty or length < 5";
+		}
+		
 		
 		if (checkEmpty(user.getUsername())) {
 			return "Error : Username is empty or length < 5";
@@ -165,9 +166,7 @@ public class UserDAO {
 
 	// hash
 	private String hashData(String password) {
-		password = BCrypt.hashpw(password, BCrypt.gensalt(12));
-		System.out.println(password + " " + password.length());
-		return password;
+		return BCrypt.hashpw(password, BCrypt.gensalt(12));
 	}
 
 	private boolean checkHashPassword(String password, String passwordSQL) {
