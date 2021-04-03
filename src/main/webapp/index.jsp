@@ -32,11 +32,15 @@
             <div style="display:flex;justify-content: center;">
               <input type="submit" value="Submit" />
             </div>
+<<<<<<< HEAD
             <p class="signup">Don't have account Trung ga vl  <a onclick="toggleForm();">Register now</a></p>
+=======
+            <p class="signup">Don't have account ?<a onclick="toggleForm();">Register now</a></p>
+>>>>>>> e5a64e956772747794cc06f177da950c77ba8120
             <p class="signup">Forget password ?<a onclick="Form()">Click here.</a>
             </p>
             <div class="text-area">
-               <!-- <p class="or"><span class="or">Or Login hoang</span></p>
+               <!-- <p class="or"><span class="or">Or Login </span></p>
               
           		<a data-onsuccess="onSignIn"><i class="fab fa-facebook" aria-hidden="true"></i></a>
               	<a  class="g-signin2" data-onsuccess="onSignIn"><i class="fab fa-google" aria-hidden="true"></i></a>
