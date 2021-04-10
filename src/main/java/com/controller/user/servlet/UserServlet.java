@@ -7,8 +7,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.controller.user.model.User;
+import org.sr.Message;
 
+import com.controller.user.model.User;
+import com.corundumstudio.socketio.AckRequest;
+import com.corundumstudio.socketio.Configuration;
+import com.corundumstudio.socketio.SocketIOClient;
+import com.corundumstudio.socketio.SocketIOServer;
+import com.corundumstudio.socketio.listener.ConnectListener;
+import com.corundumstudio.socketio.listener.DataListener;
+import com.corundumstudio.socketio.listener.DisconnectListener;
 import com.controller.user.dao.UserDAO;
 
 @WebServlet("/")
@@ -22,14 +30,28 @@ public class UserServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("index.jsp").forward(request, response);
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+
+		String action = request.getServletPath();
+		switch (action) {
+
+		case "/": {
+			request.getRequestDispatcher("index.jsp").forward(request, response);
+		}
+
+		case "/quiz": {
+			socketio(request, response);
+		}
+
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		
+
 		String action = request.getServletPath();
 		switch (action) {
 
@@ -63,6 +85,11 @@ public class UserServlet extends HttpServlet {
 			break;
 		}
 
+		case "/quiz": {
+			System.out.println("page quiz : " + action);
+			this.loginGG(request, response);
+			break;
+		}
 		default:
 			break;
 		}
@@ -72,7 +99,7 @@ public class UserServlet extends HttpServlet {
 		// input
 		String name = req.getParameter("name");
 		String email = req.getParameter("email");
-		if(req.getParameter("phone").equals("")) {
+		if (req.getParameter("phone").equals("")) {
 			req.setAttribute("message", "Error : Phone doesn't match");
 			req.getRequestDispatcher("index.jsp").forward(req, res);
 			return;
@@ -112,7 +139,8 @@ public class UserServlet extends HttpServlet {
 			return;
 		}
 
-		req.getRequestDispatcher("quiz.jsp").forward(req, res);
+		res.sendRedirect(req.getContextPath() + "/quiz");
+//		req.getRequestDispatcher("quiz.jsp").forward(req, res);
 	}
 
 	private void loginFB(HttpServletRequest req, HttpServletResponse res) {
@@ -154,5 +182,46 @@ public class UserServlet extends HttpServlet {
 		req.setAttribute("message", message);
 		req.getRequestDispatcher("index.jsp").forward(req, res);
 
+	}
+
+	private void socketio(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		System.out.println("socketio connecting...");
+		// input
+
+//		Configuration config = new Configuration();
+//		config.setHostname("localhost");
+//		config.setPort(8000);
+//		final SocketIOServer server = new SocketIOServer(config);
+//		server.addConnectListener(new ConnectListener() {
+//            @Override
+//            public void onConnect(SocketIOClient client) {
+//                System.out.println("onConnected");
+//                client.sendEvent("message", new Message("", "Welcome to the chat!"));
+//            }
+//        });
+//		
+//        server.addDisconnectListener(new DisconnectListener() {
+//            @Override
+//            public void onDisconnect(SocketIOClient client) {
+//                System.out.println("onDisconnected");
+//            }
+//        });
+//		server.addEventListener("hello", Message.class, new DataListener<Message>() {
+//			@Override
+//			public void onData(SocketIOClient arg0, Message arg1, AckRequest arg2) throws Exception {
+//				System.out.println("ChatServer");
+//				server.getBroadcastOperations().sendEvent("chat", arg1);
+//			}
+//
+//		});
+//		server.start();
+
+		// db
+
+		// main
+
+		// res
+		System.out.println("aaaa");
+		req.getRequestDispatcher("quiz.jsp").forward(req, res);
 	}
 }

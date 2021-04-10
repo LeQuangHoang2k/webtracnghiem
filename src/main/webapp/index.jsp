@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google-signin-client_id" content="496509540327-sdht0p2mir6mjjshd0ih9ks54h2k9bq9.apps.googleusercontent.com">
-  <title>Document</title>
+  <title>Website kiểm tra trắc nghiệm nhanh</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <style type="text/css">

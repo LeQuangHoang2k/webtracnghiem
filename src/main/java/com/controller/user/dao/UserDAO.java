@@ -14,7 +14,7 @@ public class UserDAO {
 	private final String jdbcUsername = "root";
 	private final String jdbcPassword = "admin";
 
-	private final String INSERT_USER_SQL = "INSERT INTO user (name,email,phone,username,password) VALUES (?,?,?,?,?)";
+	private final String INSERT_USER_SQL = "INSERT INTO user (name,email,phone,username,passwordHash,totalScore,rank) VALUES (?,?,?,?,?,?,?)";
 	private final String SELECT_USER_BY_EMAIL = "SELECT * FROM user WHERE email=?";
 	private final String SELECT_USER_BY_PHONE = "SELECT * FROM user WHERE phone=?";
 	private final String SELECT_USER_BY_USERNAME = "SELECT * FROM user WHERE username=?";
@@ -67,6 +67,8 @@ public class UserDAO {
 			stm.setInt(3, user.getPhone());
 			stm.setString(4, user.getUsername());
 			stm.setString(5, hashPassword);
+			stm.setInt(6, 0);
+			stm.setString(7, "Iron");
 			stm.executeUpdate();
 			System.out.println("da insert thanh cong ");
 		} catch (Exception e) {
@@ -128,8 +130,7 @@ public class UserDAO {
 		if (checkEmpty(user.getEmail())) {
 			return "Error : Email is empty or length < 5";
 		}
-		
-		
+
 		if (checkEmpty(user.getUsername())) {
 			return "Error : Username is empty or length < 5";
 		}
