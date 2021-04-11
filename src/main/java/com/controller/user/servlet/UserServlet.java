@@ -28,15 +28,14 @@ public class UserServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 
-//		String action = request.getServletPath();
-//		switch (action) {
-//
-//		case "/": {
+		String action = request.getServletPath();
+		switch (action) {
+
+		case "/": {
 			System.out.println("server start at 8080");
 			request.getRequestDispatcher("index.jsp").forward(request, response);
-//		}
-
-//		}
+		}
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -114,7 +113,7 @@ public class UserServlet extends HttpServlet {
 		// res
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("message", message);
-		//map.put("alo", "http://localhost:4000/");
+		map.put("redirect", "http://localhost:4000/");
 		write(res, map);
 	}
 

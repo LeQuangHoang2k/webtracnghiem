@@ -150,7 +150,8 @@
 
               $("#usernameLogin").val("");
               $("#passwordLogin").val("");
-              //localStorage.setItem("isLogin", true);
+              localStorage.setItem("isLogin", true);
+              alert(res.redirect)
             }
           });
         });
