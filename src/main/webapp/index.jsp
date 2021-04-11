@@ -100,11 +100,13 @@
       </div>
 
     </section>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
+      if (localStorage.getItem("isLogin")) window.location.href = "http://localhost:4000";
+
       function toggleForm() {
         var container = document.querySelector(".container");
         container.classList.toggle("active");
@@ -140,6 +142,7 @@
         $('#formLogin').submit((event) => {
           event.preventDefault();
 
+          alert("Waiting for login...")
           $.post({
             url: 'login',
             dataType: 'json',
@@ -151,19 +154,17 @@
               $("#usernameLogin").val("");
               $("#passwordLogin").val("");
               localStorage.setItem("isLogin", true);
-              //console.log(res);
               window.location.href = res.redirect
             }
           });
         });
 
-        $('#formForgot').submit((event) => {
+        $('#formForgot').submit(function (event) {
           event.preventDefault();
 
           const passwordForgot = $("#passwordForgot").val();
           const passwordConfirmForgot = $("#passwordConfirmForgot").val();
-
-          if (passwordForgot !== passwordConfirmForgot) return $("#messageForgot").text("Error : Password is not confirmed!");
+          if (passwordForgot !== passwordConfirmForgot) return $("#serverResponse").text("Error : Password is not confirmed!");
 
           $.post({
             url: 'forgot',
