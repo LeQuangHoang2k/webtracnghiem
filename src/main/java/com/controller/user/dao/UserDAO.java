@@ -14,11 +14,11 @@ public class UserDAO {
 	private final String jdbcUsername = "root";
 	private final String jdbcPassword = "admin";
 
-	private final String INSERT_USER_SQL = "INSERT INTO user (name,email,phone,username,passwordHash,totalScore,rank) VALUES (?,?,?,?,?,?,?)";
+	private final String INSERT_USER_SQL = "INSERT INTO user (name,email,phone,username,password_hash,total_score,level) VALUES (?,?,?,?,?,?,?)";
 	private final String SELECT_USER_BY_EMAIL = "SELECT * FROM user WHERE email=?";
 	private final String SELECT_USER_BY_PHONE = "SELECT * FROM user WHERE phone=?";
 	private final String SELECT_USER_BY_USERNAME = "SELECT * FROM user WHERE username=?";
-	private final String UPDATE_PASSWORD_BY_USERNAME = "UPDATE user SET password = ? WHERE username=?";
+	private final String UPDATE_PASSWORD_BY_USERNAME = "UPDATE user SET password_hash = ? WHERE username=?";
 //	private final String INSERT_USER_SQL="INSERT INTO user (name,password,phone VALUES (?,?,?)";
 
 	private Connection getConnection() {
@@ -33,19 +33,26 @@ public class UserDAO {
 	}
 
 	public String registerUser(User user) {
+		if (checkEmpty(user.getName())) {
+			return "Error : Name is empty or length < 5";
+		}
+		
+		if (checkEmpty(user.getEmail())) {
+			return "Error : Email is empty or length < 5";
+		}
+		
+		if (checkEmpty(user.getPhone())) {
+			return "Error : Phone is empty or length < 11";
+		}
+
 		if (checkEmpty(user.getUsername())) {
 			return "Error : Username is empty or length < 5";
 		}
 
-		if (checkEmpty(user.getEmail())) {
+		if (checkEmpty(user.getPassword())) {
 			return "Error : Password is empty or length < 5";
 		}
-
-		String phone = Integer.toString(user.getPhone());
-		if (checkEmpty(phone)) {
-			return "Error : Phone is empty or length < 11";
-		}
-
+		
 		try (Connection conn = getConnection(); PreparedStatement stm = conn.prepareStatement(INSERT_USER_SQL)) {
 
 			if (checkExistUserByEmail(user.getEmail())) {
@@ -64,7 +71,7 @@ public class UserDAO {
 
 			stm.setString(1, user.getName());
 			stm.setString(2, user.getEmail());
-			stm.setInt(3, user.getPhone());
+			stm.setString(3, user.getPhone());
 			stm.setString(4, user.getUsername());
 			stm.setString(5, hashPassword);
 			stm.setInt(6, 0);
@@ -93,16 +100,16 @@ public class UserDAO {
 		try (Connection conn = getConnection();
 				PreparedStatement stm = conn.prepareStatement(SELECT_USER_BY_USERNAME)) {
 
-			System.out.println(" abc " + user.getUsername());
+			System.out.println("Login checking.... : " + user.getUsername());
 			stm.setString(1, user.getUsername());
 			ResultSet rs = stm.executeQuery();
 
 			while (rs.next()) {
 				usernameSQL = rs.getString("username");
-				passwordSQL = rs.getString("password");
+				passwordSQL = rs.getString("password_hash");
 			}
 
-			System.out.println(usernameSQL + " " + passwordSQL);
+//			System.out.println(usernameSQL + " " + passwordSQL);
 
 			if (!checkValidUsername(user.getUsername(), usernameSQL)) {
 				return "Error : Username doesn't match";
@@ -111,7 +118,8 @@ public class UserDAO {
 			if (!checkHashPassword(user.getPassword(), passwordSQL)) {
 				return "Error : Password doesn't match";
 			}
-
+			
+			System.out.println("Login success!");
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -120,15 +128,13 @@ public class UserDAO {
 
 	public String forgotUser(User user) {
 		String hashPassword = "";
-		String phone = "";
-
-		phone = Integer.toString(user.getPhone());
-		if (checkEmpty(phone)) {
-			return "Error : Phone is empty or length < 11";
-		}
 
 		if (checkEmpty(user.getEmail())) {
 			return "Error : Email is empty or length < 5";
+		}
+
+		if (checkEmpty(user.getPhone())) {
+			return "Error : Phone is empty or length < 11";
 		}
 
 		if (checkEmpty(user.getUsername())) {
@@ -141,7 +147,9 @@ public class UserDAO {
 
 		try (Connection conn = getConnection();
 				PreparedStatement stm = conn.prepareStatement(UPDATE_PASSWORD_BY_USERNAME)) {
-
+			
+			System.out.println("Forgot checking.... : ");
+			
 			if (!checkExistUserByEmail(user.getEmail())) {
 				return "Error : Email not valid";
 			}
@@ -158,7 +166,8 @@ public class UserDAO {
 			stm.setString(1, hashPassword);
 			stm.setString(2, user.getUsername());
 			stm.executeUpdate();
-
+			
+			System.out.println("Forgot success!");
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -203,9 +212,9 @@ public class UserDAO {
 		return true;
 	}
 
-	public boolean checkExistUserByPhone(int phone) {
+	public boolean checkExistUserByPhone(String phone) {
 		try (Connection conn = getConnection(); PreparedStatement stm = conn.prepareStatement(SELECT_USER_BY_PHONE)) {
-			stm.setInt(1, phone);
+			stm.setString(1, phone);
 			ResultSet rs = stm.executeQuery();
 			if (!rs.next())
 				return false;
@@ -229,19 +238,4 @@ public class UserDAO {
 
 		return true;
 	}
-
-//	public String checkExistUserByPassword(String username) {
-//		String message = "";
-//		try (Connection conn = getConnection(); PreparedStatement stm = conn.prepareStatement(SELECT_USER_BY_USERNAME)) {
-//			stm.setString(1, username);
-//			ResultSet rs = stm.executeQuery();
-//			if (rs.next() == true)
-//				message = "Lỗi : sai mật khẩu";
-//			System.out.println("đã tìm thấy" + rs.next());
-//		} catch (Exception e) {
-//			System.out.println(e);
-//		}
-//
-//		return message;
-//	}
 }

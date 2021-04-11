@@ -8,14 +8,14 @@ create table user(
 	username varchar(50),
 	password_hash varchar(50),
     total_score int(10),
-    rank varchar(50),
+    level varchar(50),
     primary key (id)
 );
 
 create table question(
 	id INT(10) NOT NULL auto_increment,
 	content varchar(200),
-    level varchar(50),
+    difficuty int(10),
     category varchar(50),
 	primary key (id)
 );
@@ -24,7 +24,7 @@ create table answer(
 	id INT(10) NOT NULL auto_increment,
 	id_question INT(10),
 	content varchar(200),
-	state boolean,
+	statú boolean,
     primary key (id),
     FOREIGN KEY (id_question) REFERENCES question(id)
 );

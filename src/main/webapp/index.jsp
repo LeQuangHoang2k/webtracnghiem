@@ -1,92 +1,91 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html lang="en">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+  <!DOCTYPE html>
+  <html lang="en">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="google-signin-client_id" content="496509540327-sdht0p2mir6mjjshd0ih9ks54h2k9bq9.apps.googleusercontent.com">
-  <title>Website kiểm tra trắc nghiệm nhanh</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-  <style type="text/css">
-  	<%@ include file="main.css" %>
-  	<%@ include file="WEB-INF/font-awesome/css/fontawesome.min.css" %>
-  </style>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-signin-client_id"
+      content="496509540327-sdht0p2mir6mjjshd0ih9ks54h2k9bq9.apps.googleusercontent.com">
+    <title>Website kiểm tra trắc nghiệm nhanh</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <style type="text/css">
+      <%@ include file="main.css"%><%@ include file="WEB-INF/font-awesome/css/fontawesome.min.css"%>
+    </style>
+  </head>
 
-<body>
-  <section>
-    <div class="container">
-    <center style="color:red">
-        <% if (request.getAttribute("message") != null) {out.print(request.getAttribute("message")); } %>
-    </center>
-      <div class="user signinBx">
-        <div class="formBx" id="login">
-          <form action="<%= request.getContextPath()%>/login" method="POST">
-            <h2>Login</h2>
-            <input type="text" name="username" placeholder="Username" />
-            <input type="password" name="password" placeholder="Password" id="password" />
-            <div style="display:flex;justify-content: center;">
-              <input type="submit" value="Submit" />
-            </div>
-            <p class="signup">Don't have account ?<a onclick="toggleForm();">Register now</a></p>
-            <p class="signup">Forget password ?<a onclick="Form()">Click here.</a>
-            </p>
-            <div class="text-area">
-               <!-- <p class="or"><span class="or">Or Login </span></p>
+  <body>
+    <section>
+      <div class="container">
+        <center id="messageLogin" style="color:red"></center>
+        <div class="user signinBx">
+          <div class="formBx" id="login">
+            <form id="formLogin" method="post">
+              <h2>Login</h2>
+              <input type="text" name="username" id="usernameLogin" placeholder="Username" />
+              <input type="password" name="password" id="passwordLogin" placeholder="Password" id="password" />
+              <div style="display:flex;justify-content: center;">
+                <input type="submit" value="Submit" />
+              </div>
+              <p class="signup">Don't have account ?<a onclick="toggleForm();">Register now</a></p>
+              <p class="signup">Forget password ?<a onclick="Form()">Click here.</a>
+              </p>
+              <div class="text-area">
+                <!-- <p class="or"><span class="or">Or Login </span></p>
               
           		<a data-onsuccess="onSignIn"><i class="fab fa-facebook" aria-hidden="true"></i></a>
               	<a  class="g-signin2" data-onsuccess="onSignIn"><i class="fab fa-google" aria-hidden="true"></i></a>
               	<div class="g-signin2" style="background-color: red" data-onsuccess="onSignIn">1</div>
                -->
-            </div>
-          </form>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
 
-      <div class="user signupBx">
-        <div class="formBx">
-          <form action="<%= request.getContextPath()%>/register" method="POST">
-            <h2>Register</h2>
-            <input type="text" name="name" placeholder="Name" />
-            <input type="email" name="email" placeholder="Your Email" />
-            <input type="text" name="phone" id="phoneRegister" placeholder="Your Phone" />
-            <input type="text" name="username" placeholder="Username" />
-            <input type="password" name="password" placeholder="New Password" />
-            <!--<input type="password" placeholder="Confirm Password" />-->
-            <div style="display: flex;justify-content: space-between;">
-              <input type="button" value="<<" onclick="toggleForm()" />
-              <input type="submit" value="Submit">
-            </div>
-            <!-- <p class="signup">
+        <center id="messageResgister" style="color:red"></center>
+        <div class="user signupBx">
+          <div class="formBx">
+            <form id="formRegister" method="post">
+              <h2>Register</h2>
+              <input type="text" name="name" id="nameRegister" placeholder="Name" />
+              <input type="email" name="email" id="emailRegister" placeholder="Your Email" />
+              <input type="text" name="phone" id="phoneRegister" placeholder="Your Phone" />
+              <input type="text" name="username" id="usernameRegister" placeholder="Username" />
+              <input type="password" name="password" id="passwordRegister" placeholder="New Password" />
+              <!--<input type="password" placeholder="Confirm Password" />-->
+              <div style="display: flex;justify-content: space-between;">
+                <input type="button" value="<<" onclick="toggleForm()" />
+                <input type="submit" value="Submit">
+              </div>
+              <!-- <p class="signup">
               Already have account ?<a href="#" onclick="toggleForm()">Login.</a>
             </p> -->
-            <!-- <div class="text-area">
+              <!-- <div class="text-area">
                 <p class="or"><span class="or">Or Signup</span></p>
                 <a href=""><i class="fa fa-facebook" aria-hidden="true"></i></a>
                 <a href=""><i class="fa fa-google" aria-hidden="true"></i></a>
               </div> -->
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
 
-      <div class="user forgotBx">
-        <div class="formBx">
-          <form action="<%= request.getContextPath()%>/forgot" method="post">
-            <h2>Reset Password</h2>
-            <input type="email" name="email" placeholder="Your Email" />
-            <input type="text" name="phone" id="phoneForgot" placeholder="Your Phone" />
-            <input type="text" name="username" placeholder="Username" />
-            <input type="password" name="password" placeholder="New Password" />
-            <input type="password" placeholder="Confirm Password" />
-            <div style="display:flex;justify-content: space-between;">
-              <input type="button" value="<<" onclick="Form()" />
-              <input type="submit" value="Submit">
-            </div>
-            <!-- <p class="signup">
+        <center id="messageForgot" style="color:red"></center>
+        <div class="user forgotBx">
+          <div class="formBx">
+            <form id="formForgot" method="POST">
+              <h2>Reset Password</h2>
+              <input type="email" name="email" id="emailForgot" placeholder="Your Email" />
+              <input type="text" name="phone" id="phoneForgot" placeholder="Your Phone" />
+              <input type="text" name="username" id="usernameForgot" placeholder="Username" />
+              <input type="password" name="password" id="passwordForgot" placeholder="New Password" />
+              <input type="password" name="passwordConfirm" id="passwordConfirmForgot" placeholder="Confirm Password" />
+              <div style="display:flex;justify-content: space-between;">
+                <input type="button" value="<<" onclick="Form()" />
+                <input type="submit" value="Submit">
+              </div>
+              <!-- <p class="signup">
                 Already have account ?<a href="#" 
                   >LogIn.</a
                 >
@@ -96,30 +95,99 @@
                 <a href=""><i class="fa fa-facebook" aria-hidden="true"></i></a>
                 <a href=""><i class="fa fa-google" aria-hidden="true"></i></a>
               </div> -->
-          </form>
+            </form>
+          </div>
         </div>
+
       </div>
 
-    </div>
+    </section>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      function toggleForm() {
+        var container = document.querySelector(".container");
+        container.classList.toggle("active");
+      };
 
-  </section>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script>
-    function toggleForm() {
-      var container = document.querySelector(".container");
-      container.classList.toggle("active");
-    };
+      function Form() {
+        var container = document.querySelector(".container");
+        container.classList.toggle("activate");
+      };
 
-    function Form() {
-      var container = document.querySelector(".container");
-      container.classList.toggle("activate");
-    };
-    
-  </script>
+      $(document).ready(function () {
+        $('#formRegister').submit((event) => {
+          event.preventDefault();
 
-</body>
+          $.ajax({
+            url: 'register',
+            type: 'POST',
+            dataType: 'json',
+            data: $('#formRegister').serialize(),
+            success: (res) => {
+              //alert("Register :" + res.message);
+              $("#messageResgister").text(res.message);
+              if (res.message !== "success")
+                return
 
-</html>
+              $("#nameRegister").val("");
+              $("#emailRegister").val("");
+              $("#phoneRegister").val("");
+              $("#usernameRegister").val("");
+              $("#passwordRegister").val("");
+            }
+          });
+        });
+
+        $('#formLogin').submit((event) => {
+          event.preventDefault();
+
+          $.ajax({
+            url: 'login',
+            type: 'POST',
+            dataType: 'json',
+            data: $('#formLogin').serialize(),
+            success: (res) => {
+              $("#messageLogin").text(res.message);
+              if (res.message !== "success")
+                return
+
+              $("#usernameLogin").val("");
+              $("#passwordLogin").val("");
+            }
+          });
+        });
+
+        $('#formForgot').submit((event) => {
+          event.preventDefault();
+
+          const passwordForgot = $("#passwordForgot").val();
+          const passwordConfirmForgot = $("#passwordConfirmForgot").val();
+
+          if (passwordForgot !== passwordConfirmForgot) return $("#messageForgot").text("Error : Password is not confirmed!");
+
+          $.ajax({
+            url: 'forgot',
+            type: 'POST',
+            dataType: 'json',
+            data: $('#formForgot').serialize(),
+            success: (res) => {
+              $("#messageForgot").text(res.message);
+              if (res.message !== "success")
+                return
+
+              $("#emailForgot").val("");
+              $("#phoneForgot").val("");
+              $("#usernameForgot").val("");
+              $("#passwordForgot").val("");
+            }
+          });
+        });
+      });
+    </script>
+
+  </body>
+
+  </html>
