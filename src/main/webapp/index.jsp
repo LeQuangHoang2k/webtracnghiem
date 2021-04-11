@@ -119,16 +119,14 @@
         $('#formRegister').submit((event) => {
           event.preventDefault();
 
-          $.ajax({
+          $.post({
             url: 'register',
-            type: 'POST',
             dataType: 'json',
             data: $('#formRegister').serialize(),
             success: (res) => {
               //alert("Register :" + res.message);
               $("#serverResponse").text(res.message);
-              if (res.message !== "success")
-                return
+              if (res.message !== "success") return
 
               $("#nameRegister").val("");
               $("#emailRegister").val("");
@@ -141,19 +139,18 @@
 
         $('#formLogin').submit((event) => {
           event.preventDefault();
-
-          $.ajax({
+			alert("abc")
+          $.post({
             url: 'login',
-            type: 'POST',
             dataType: 'json',
             data: $('#formLogin').serialize(),
             success: (res) => {
               $("#serverResponse").text(res.message);
-              if (res.message !== "success")
-                return
+              if (res.message !== "success") return
 
               $("#usernameLogin").val("");
               $("#passwordLogin").val("");
+              localStorage.setItem("isLogin", true);
             }
           });
         });
@@ -166,15 +163,13 @@
 
           if (passwordForgot !== passwordConfirmForgot) return $("#messageForgot").text("Error : Password is not confirmed!");
 
-          $.ajax({
+          $.post({
             url: 'forgot',
-            type: 'POST',
             dataType: 'json',
             data: $('#formForgot').serialize(),
             success: (res) => {
               $("#serverResponse").text(res.message);
-              if (res.message !== "success")
-                return
+              if (res.message !== "success") return
 
               $("#emailForgot").val("");
               $("#phoneForgot").val("");
