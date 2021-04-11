@@ -115,7 +115,7 @@
         container.classList.toggle("activate");
       };
 
-      $(document).ready(function () {
+      $(document).ready(() => {
         $('#formRegister').submit((event) => {
           event.preventDefault();
 
@@ -139,7 +139,7 @@
 
         $('#formLogin').submit((event) => {
           event.preventDefault();
-			alert("abc")
+
           $.post({
             url: 'login',
             dataType: 'json',
@@ -150,7 +150,7 @@
 
               $("#usernameLogin").val("");
               $("#passwordLogin").val("");
-              localStorage.setItem("isLogin", true);
+              //localStorage.setItem("isLogin", true);
             }
           });
         });
