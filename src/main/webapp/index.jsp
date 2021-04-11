@@ -19,7 +19,7 @@
   <body>
     <section>
       <div class="container">
-        <center id="messageLogin" style="color:red"></center>
+        <center id="serverResponse" style="color:red"></center>
         <div class="user signinBx">
           <div class="formBx" id="login">
             <form id="formLogin" method="post">
@@ -44,7 +44,6 @@
           </div>
         </div>
 
-        <center id="messageResgister" style="color:red"></center>
         <div class="user signupBx">
           <div class="formBx">
             <form id="formRegister" method="post">
@@ -71,7 +70,6 @@
           </div>
         </div>
 
-        <center id="messageForgot" style="color:red"></center>
         <div class="user forgotBx">
           <div class="formBx">
             <form id="formForgot" method="POST">
@@ -128,7 +126,7 @@
             data: $('#formRegister').serialize(),
             success: (res) => {
               //alert("Register :" + res.message);
-              $("#messageResgister").text(res.message);
+              $("#serverResponse").text(res.message);
               if (res.message !== "success")
                 return
 
@@ -150,7 +148,7 @@
             dataType: 'json',
             data: $('#formLogin').serialize(),
             success: (res) => {
-              $("#messageLogin").text(res.message);
+              $("#serverResponse").text(res.message);
               if (res.message !== "success")
                 return
 
@@ -174,7 +172,7 @@
             dataType: 'json',
             data: $('#formForgot').serialize(),
             success: (res) => {
-              $("#messageForgot").text(res.message);
+              $("#serverResponse").text(res.message);
               if (res.message !== "success")
                 return
 
@@ -182,6 +180,7 @@
               $("#phoneForgot").val("");
               $("#usernameForgot").val("");
               $("#passwordForgot").val("");
+              $("#passwordConfirmForgot").val("");
             }
           });
         });
