@@ -151,7 +151,8 @@
               $("#usernameLogin").val("");
               $("#passwordLogin").val("");
               localStorage.setItem("isLogin", true);
-              alert(res.redirect)
+              //console.log(res);
+              window.location.href = res.redirect
             }
           });
         });
