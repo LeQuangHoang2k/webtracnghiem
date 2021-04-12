@@ -19,7 +19,6 @@
     <div class="head__rank">
       <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/9632/trophy.svg" />
       <h2>Quangg Hoàng</h2>
-      <%= a %>
       <h3>Total Score : 500</h3>
     </div>
 
@@ -102,10 +101,27 @@
       z.style.left = "0px";
     }
 
+    //
+    function getCookie(cname) {
+      var name = cname + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+    console.log(document.cookie + " lobby");
+    document.cookie="alo=1234;"
+    //
     const socket = io();
-    socket.on("hello", () => {
-      alert("or")
-    })
+    socket.emit("fetch-info", document.cookie)
   </script>
 
 </body>

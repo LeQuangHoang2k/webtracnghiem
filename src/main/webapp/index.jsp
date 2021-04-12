@@ -100,12 +100,11 @@
       </div>
 
     </section>
-    <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script> -->
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-      if (localStorage.getItem("isLogin")) window.location.href = "http://localhost:4000";
+      if (document.cookie.length > 0) window.location.href = "http://localhost:4000";
+      console.log(document.cookie + " here");
 
       function toggleForm() {
         var container = document.querySelector(".container");
@@ -153,8 +152,17 @@
 
               $("#usernameLogin").val("");
               $("#passwordLogin").val("");
-              localStorage.setItem("isLogin", true);
-              window.location.href = res.redirect
+              // localStorage.setItem("isLogin", true);
+
+              //set cookie
+              var d = new Date();
+              d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
+              const id = "id=1;";
+              const expires = "expires=" + d.toGMTString() + ";";
+              const path = "path=/"
+              document.cookie = id + expires + path;
+              console.log(document.cookie);
+              // window.location.href = res.redirect
             }
           });
         });

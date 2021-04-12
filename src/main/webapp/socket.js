@@ -4,25 +4,21 @@ const mysql = require("mysql");
 const path = require("path");
 const socketio = require("socket.io");
 const cors = require("cors");
+var cookieParser = require('cookie-parser');
 
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-require("./data/connect");
-
-// configure middleware
-app.set("views", __dirname + "/views"); // set express to look in this folder to render our view
-app.set("view engine", "ejs"); // configure template engine
-app.use(express.static(path.join(__dirname, "public"))); // configure express to use public folder
+const conn = require("./data/connect");
+app.use(express.static(path.join(__dirname, "public")));
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/views");
 app.use(cors());
+app.use(cookieParser());
 
-// const routes = require("./routes");
-
-// connection.end();
 app.get("/", (req, res) => {
-  var mess = "LE QUANG HAONG";
-  res.render("lobby.ejs", { a: mess });
+  res.render("lobby.ejs");
 });
 
 // set the app to listen on the port
@@ -32,5 +28,7 @@ server.listen(4000, () => {
 
 io.on("connection", (socket) => {
   console.log("socketio started");
-  socket.emit("hello");
+  socket.on("fetch-info",(data)=>{
+    console.log(data);
+  });
 });
