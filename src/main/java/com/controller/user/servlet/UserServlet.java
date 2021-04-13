@@ -33,7 +33,7 @@ public class UserServlet extends HttpServlet {
 
 		case "/": {
 			System.out.println("server start at 8080");
-			request.getRequestDispatcher("index.jsp").forward(request, response);
+			request.getRequestDispatcher("WEB-INF/views/index.jsp").forward(request, response);
 		}
 		}
 	}
@@ -113,7 +113,7 @@ public class UserServlet extends HttpServlet {
 		// res
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("message", message);
-		map.put("redirect", "http://localhost:4000/");
+		map.put("redirect", "http://localhost:4000/website-trac-nghiem");
 		write(res, map);
 	}
 
