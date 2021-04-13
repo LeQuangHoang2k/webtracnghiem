@@ -117,9 +117,10 @@
       }
       return "";
     }
-    console.log(document.cookie + " lobby");
-    document.cookie="alo=1234;"
+
     //
+    if (!document.cookie) window.location.href = "http://localhost:8080/website-trac-nghiem/"
+    console.log(decodeURIComponent(document.cookie));
     const socket = io();
     socket.emit("fetch-info", document.cookie)
   </script>

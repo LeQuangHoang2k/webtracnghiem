@@ -1,22 +1,17 @@
 package com.controller.user.servlet;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.sr.Message;
-
 import com.controller.user.model.User;
-import com.corundumstudio.socketio.AckRequest;
-import com.corundumstudio.socketio.Configuration;
-import com.corundumstudio.socketio.SocketIOClient;
-import com.corundumstudio.socketio.SocketIOServer;
-import com.corundumstudio.socketio.listener.ConnectListener;
-import com.corundumstudio.socketio.listener.DataListener;
-import com.corundumstudio.socketio.listener.DisconnectListener;
+import com.google.gson.Gson;
 import com.controller.user.dao.UserDAO;
 
 @WebServlet("/")
@@ -37,13 +32,9 @@ public class UserServlet extends HttpServlet {
 		switch (action) {
 
 		case "/": {
+			System.out.println("server start at 8080");
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
-
-		case "/quiz": {
-			socketio(request, response);
-		}
-
 		}
 	}
 
@@ -67,47 +58,31 @@ public class UserServlet extends HttpServlet {
 			break;
 		}
 
-//		case "/loginFB": {
-//			System.out.println("page loginFB : " + action);
-//			this.loginFB(request, response);
-//			break;
-//		}
-//
-//		case "/loginGG": {
-//			System.out.println("page loginGG : " + action);
-//			this.loginGG(request, response);
-//			break;
-//		}
-
 		case "/forgot": {
 			System.out.println("page forgot : " + action);
 			this.forgotPassword(request, response);
 			break;
 		}
 
-		case "/quiz": {
-			System.out.println("page quiz : " + action);
-			this.loginGG(request, response);
-			break;
-		}
 		default:
 			break;
 		}
+	}
+
+	protected void write(HttpServletResponse res, Map<String, Object> map) throws ServletException, IOException {
+		res.setContentType("json");
+		res.setCharacterEncoding("UTF-8");
+		res.getWriter().write(new Gson().toJson(map));
 	}
 
 	private void register(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// input
 		String name = req.getParameter("name");
 		String email = req.getParameter("email");
-		if (req.getParameter("phone").equals("")) {
-			req.setAttribute("message", "Error : Phone doesn't match");
-			req.getRequestDispatcher("index.jsp").forward(req, res);
-			return;
-		}
-		int phone = Integer.parseInt(req.getParameter("phone"));
+		String phone = req.getParameter("phone");
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
-		System.out.println(username + password + phone + username + password);
+		System.out.println(name + email + phone + username + password);
 		User userInfo = new User(name, email, phone, username, password);
 
 		// check db
@@ -116,8 +91,10 @@ public class UserServlet extends HttpServlet {
 		// main
 
 		// res
-		req.setAttribute("message", message);
-		req.getRequestDispatcher("index.jsp").forward(req, res);
+		System.out.println(message);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("message", message);
+		write(res, map);
 	}
 
 	private void login(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -130,45 +107,21 @@ public class UserServlet extends HttpServlet {
 		String message = UserDAO.loginUser(userInfo);
 
 		// main
+
 		// jwt
 
 		// res
-		req.setAttribute("message", message);
-		if (!message.equals("success")) {
-			req.getRequestDispatcher("index.jsp").forward(req, res);
-			return;
-		}
-
-		res.sendRedirect(req.getContextPath() + "/quiz");
-//		req.getRequestDispatcher("quiz.jsp").forward(req, res);
-	}
-
-	private void loginFB(HttpServletRequest req, HttpServletResponse res) {
-		// input
-
-		// check db
-
-		// main
-
-		// res
-	}
-
-	private void loginGG(HttpServletRequest req, HttpServletResponse res) {
-		// input
-
-		// check db
-
-		// main
-
-		// res xxx
-
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("message", message);
+		map.put("redirect", "http://localhost:4000/");
+		write(res, map);
 	}
 
 	private void forgotPassword(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// input
 		String name = req.getParameter("name");
 		String email = req.getParameter("email");
-		int phone = Integer.parseInt(req.getParameter("phone"));
+		String phone = req.getParameter("phone");
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
 		User userInfo = new User(name, email, phone, username, password);
@@ -179,49 +132,8 @@ public class UserServlet extends HttpServlet {
 		// main
 
 		// res
-		req.setAttribute("message", message);
-		req.getRequestDispatcher("index.jsp").forward(req, res);
-
-	}
-
-	private void socketio(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		System.out.println("socketio connecting...");
-		// input
-
-//		Configuration config = new Configuration();
-//		config.setHostname("localhost");
-//		config.setPort(8000);
-//		final SocketIOServer server = new SocketIOServer(config);
-//		server.addConnectListener(new ConnectListener() {
-//            @Override
-//            public void onConnect(SocketIOClient client) {
-//                System.out.println("onConnected");
-//                client.sendEvent("message", new Message("", "Welcome to the chat!"));
-//            }
-//        });
-//		
-//        server.addDisconnectListener(new DisconnectListener() {
-//            @Override
-//            public void onDisconnect(SocketIOClient client) {
-//                System.out.println("onDisconnected");
-//            }
-//        });
-//		server.addEventListener("hello", Message.class, new DataListener<Message>() {
-//			@Override
-//			public void onData(SocketIOClient arg0, Message arg1, AckRequest arg2) throws Exception {
-//				System.out.println("ChatServer");
-//				server.getBroadcastOperations().sendEvent("chat", arg1);
-//			}
-//
-//		});
-//		server.start();
-
-		// db
-
-		// main
-
-		// res
-		System.out.println("aaaa");
-		req.getRequestDispatcher("quiz.jsp").forward(req, res);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("message", message);
+		write(res, map);
 	}
 }

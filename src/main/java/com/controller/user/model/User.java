@@ -5,8 +5,7 @@ public class User {
 
 	private String name;
 	private String email;
-	private int phone;
-
+	private String phone;
 	private String username;
 	private String password;
 
@@ -18,7 +17,7 @@ public class User {
 	}
 
 	// register
-	public User(String name, String email, int phone, String username, String password) {
+	public User(String name, String email, String phone, String username, String password) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -27,7 +26,7 @@ public class User {
 		this.password = password;
 	}
 
-	public User(int id, String name, String email, int phone, String username, String password) {
+	public User(int id, String name, String email, String phone, String username, String password) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -69,11 +68,11 @@ public class User {
 		this.name = name;
 	}
 
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
