@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google-signin-client_id" content="496509540327-sdht0p2mir6mjjshd0ih9ks54h2k9bq9.apps.googleusercontent.com">
-  <title>Document</title>
+  <title>Website kiểm tra trắc nghiệm nhanh</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <style type="text/css">
@@ -32,11 +32,15 @@
             <div style="display:flex;justify-content: center;">
               <input type="submit" value="Submit" />
             </div>
+<<<<<<< HEAD
             <p class="signup">Don't have account <a onclick="toggleForm();">Register now</a></p>
+=======
+            <p class="signup">Don't have account ?<a onclick="toggleForm();">Register now</a></p>
+>>>>>>> 29d7a67bb96d660894f2820f8bd3c856f38cd4b1
             <p class="signup">Forget password ?<a onclick="Form()">Click here.</a>
             </p>
             <div class="text-area">
-               <!-- <p class="or"><span class="or">Or Login hoang</span></p>
+               <!-- <p class="or"><span class="or">Or Login </span></p>
               
           		<a data-onsuccess="onSignIn"><i class="fab fa-facebook" aria-hidden="true"></i></a>
               	<a  class="g-signin2" data-onsuccess="onSignIn"><i class="fab fa-google" aria-hidden="true"></i></a>

@@ -14,7 +14,7 @@ public class UserDAO {
 	private final String jdbcUsername = "root";
 	private final String jdbcPassword = "admin";
 
-	private final String INSERT_USER_SQL = "INSERT INTO user (name,email,phone,username,password) VALUES (?,?,?,?,?)";
+	private final String INSERT_USER_SQL = "INSERT INTO user (name,email,phone,username,passwordHash,totalScore,rank) VALUES (?,?,?,?,?,?,?)";
 	private final String SELECT_USER_BY_EMAIL = "SELECT * FROM user WHERE email=?";
 	private final String SELECT_USER_BY_PHONE = "SELECT * FROM user WHERE phone=?";
 	private final String SELECT_USER_BY_USERNAME = "SELECT * FROM user WHERE username=?";
@@ -67,6 +67,8 @@ public class UserDAO {
 			stm.setInt(3, user.getPhone());
 			stm.setString(4, user.getUsername());
 			stm.setString(5, hashPassword);
+			stm.setInt(6, 0);
+			stm.setString(7, "Iron");
 			stm.executeUpdate();
 			System.out.println("da insert thanh cong ");
 		} catch (Exception e) {
@@ -120,15 +122,15 @@ public class UserDAO {
 		String hashPassword = "";
 		String phone = "";
 
-		if (checkEmpty(user.getEmail())) {
-			return "Error : Email is empty or length < 5";
-		}
-		
 		phone = Integer.toString(user.getPhone());
 		if (checkEmpty(phone)) {
 			return "Error : Phone is empty or length < 11";
 		}
-		
+
+		if (checkEmpty(user.getEmail())) {
+			return "Error : Email is empty or length < 5";
+		}
+
 		if (checkEmpty(user.getUsername())) {
 			return "Error : Username is empty or length < 5";
 		}
@@ -165,9 +167,7 @@ public class UserDAO {
 
 	// hash
 	private String hashData(String password) {
-		password = BCrypt.hashpw(password, BCrypt.gensalt(12));
-		System.out.println(password + " " + password.length());
-		return password;
+		return BCrypt.hashpw(password, BCrypt.gensalt(12));
 	}
 
 	private boolean checkHashPassword(String password, String passwordSQL) {
