@@ -24,9 +24,35 @@ create table answer(
 	id INT(10) NOT NULL auto_increment,
 	id_question INT(10),
 	content varchar(200),
-	statú boolean,
+	status boolean,
     primary key (id),
     FOREIGN KEY (id_question) REFERENCES question(id)
+);
+
+create table room(
+	id INT(10) NOT NULL auto_increment,
+    id_creator varchar(30),
+    primary key (id)
+	FOREIGN KEY (id_creator) REFERENCES user(id)
+);
+
+create table room_question(
+	id INT(10) NOT NULL auto_increment,
+    id_room INT(10),
+    id_question INT(10),
+    primary key (id),
+    foreign key (id_room) references room(id),
+    foreign key (id_question) references question(id)
+);
+
+create table room_member(
+	id int(10),
+    id_room int(10),
+    id_user int(10),
+    score int(10),
+    primary key (id),
+    foreign key (id_room) references room(id),
+    foreign key (id_user) references user(id)
 );
 
 INSERT INTO question (id, content) VALUES
