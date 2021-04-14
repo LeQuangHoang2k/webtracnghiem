@@ -1,15 +1,9 @@
 const mysql = require("mysql");
 
-var conn = mysql.createConnection({
+exports.conn = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "admin",
+  database: "webtracnghiem",
   // insecureAuth : true
 });
-
-conn.connect(function (err) {
-  if (err) throw err;
-  console.log("Connected!");
-});
-
-module.export = conn;

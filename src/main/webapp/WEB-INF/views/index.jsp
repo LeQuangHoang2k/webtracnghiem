@@ -8,8 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Website kiểm tra trắc nghiệm nhanh</title>
     <style type="text/css">
-      <%@ include file="/WEB-INF/public/main.css"%>
-      <%@ include file="/WEB-INF/font-awesome/css/fontawesome.min.css"%>
+      <%@ include file="/WEB-INF/public/main.css"%><%@ include file="/WEB-INF/font-awesome/css/fontawesome.min.css"%>
     </style>
   </head>
 
@@ -176,11 +175,13 @@
           alert("value la: " + value)
 
           //main
-          const username = "username=" + value + ";";
-          const expires = "expires=" + d.toGMTString() + ";";
-          const path = "path=/"
-          document.cookie = username + expires + path;
-          console.log(document.cookie);
+          // const username = "username=" + value + ";";
+          // const expires = "expires=" + d.toGMTString() + ";";
+          // const path = "path=/"
+          // document.cookie = username + expires + path;
+          // console.log(document.cookie);
+
+          document.cookie = "username=" + value;
         }
 
         const resetForm = (id) => {

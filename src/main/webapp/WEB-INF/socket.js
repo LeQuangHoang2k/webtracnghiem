@@ -10,8 +10,9 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-const conn = require("./data/connect");
+require("./data/connect");
 const router = require("./router");
+const { fetchInfo } = require("./function/fetchInfo");
 
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
@@ -32,7 +33,6 @@ server.listen(4000, () => {
 
 io.on("connection", (socket) => {
   console.log("socketio started");
-  socket.on("fetch-info", (data) => {
-    console.log(data);
-  });
+
+  socket.on("fetch-info", (data) => fetchInfo(socket, data));
 });
