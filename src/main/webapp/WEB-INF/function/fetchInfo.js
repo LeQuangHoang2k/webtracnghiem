@@ -27,19 +27,19 @@ const convertToObject = (data) => {
 const getUserInfo = async (socket, username) => {
   console.log("query by username");
 
-  var arrays = [];
+  var userInfor = null;
 
-  const runLog = (data) => {
-    arrays = data;
-    console.log(arrays);
-    socket.emit("a", arrays);
-  };
-  const userInfo = await conn.query(
+  await conn.query(
     `SELECT * FROM user WHERE username=${username}`,
     (err, result) => {
       if (err) throw err;
-      console.log(result[0]);
-      runLog(result[0]);
+      response(result[0]);
     }
   );
+
+  const response = (data) => {
+    userInfor = data;
+    console.log(userInfor);
+    socket.emit("fetch-info-success", userInfor);
+  };
 };

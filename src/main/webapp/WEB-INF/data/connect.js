@@ -5,5 +5,4 @@ exports.conn = mysql.createConnection({
   user: "root",
   password: "admin",
   database: "webtracnghiem",
-  // insecureAuth : true
 });

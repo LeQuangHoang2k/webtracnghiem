@@ -32,6 +32,7 @@ create table answer(
 create table room(
 	id INT(10) NOT NULL auto_increment,
     id_creator int(10),
+    active boolean,
     primary key (id),
 	FOREIGN KEY (id_creator) REFERENCES user(id)
 );

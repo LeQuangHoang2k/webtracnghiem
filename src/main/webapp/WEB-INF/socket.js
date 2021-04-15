@@ -10,23 +10,17 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-require("./data/connect");
 const router = require("./router");
 const { fetchInfo } = require("./function/fetchInfo");
+const { createRoom } = require("./function/createRoom");
 
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 app.use(cors());
 app.use(cookieParser());
-
 app.use(router);
 
-// app.get("/", (req, res) => {
-//   res.render("lobby.ejs");
-// });
-
-// set the app to listen on the port
 server.listen(4000, () => {
   console.log(`http://localhost:4000/website-trac-nghiem/`);
 });
@@ -35,4 +29,5 @@ io.on("connection", (socket) => {
   console.log("socketio started");
 
   socket.on("fetch-info", (data) => fetchInfo(socket, data));
+  socket.on("create-room", (data) => createRoom(socket, data));
 });
