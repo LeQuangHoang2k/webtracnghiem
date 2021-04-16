@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Website kiểm tra trắc nghiệm nhanh</title>
-    <link rel="icon" href="https://cdn4.vectorstock.com/i/1000x1000/68/03/quiz-sign-icon-questions-and-answers-game-vector-3756803.jpg"
+    <link rel="icon" href="https://freepngimg.com/thumb/symbol/88546-area-text-symbol-icons-question-mark-computer.png"
       type="image/gif" sizes="16x16">
     <style type="text/css">
       <%@ include file="/WEB-INF/public/main.css"%><%@ include file="/WEB-INF/font-awesome/css/fontawesome.min.css"%>

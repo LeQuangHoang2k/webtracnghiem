@@ -127,8 +127,21 @@
     const handleJoinRoom = () => {
       var roomId = document.getElementById("clientJoinId").value
       if (!roomId && roomId === "") return alert("troll cc")
-      alert(roomId)
-      socket.emit("join-room", (roomId))
+
+      let array = []
+      let userCookie = {}
+      let data = null
+
+      array = document.cookie.split("; ")
+      array.forEach((item) => {
+        item = item.split("=")
+        userCookie[item[0]] = item[1]
+      })
+
+      data = { id: userCookie.id, username: userCookie.username, roomId }
+      console.log(data);
+
+      socket.emit("join-room", (data))
       socket.on("join-room-success", (data) => {
         alert("join success")
       })

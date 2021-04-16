@@ -10,7 +10,8 @@ exports.fetchInfo = async (socket, data) => {
   //main
   const { username } = await convertToObject(data);
   const { userInfor } = await getUserInfo(username);
-
+  await saveIdInSocket(socket, userInfor);
+  
   //res
   await response(socket, userInfor);
 };
@@ -46,6 +47,10 @@ const getUserInfo = async (username) => {
     });
 
   return { userInfor };
+};
+
+const saveIdInSocket = (socket, userInfor) => {
+  socket.id = userInfor.id;
 };
 
 const response = (socket, userInfor) => {

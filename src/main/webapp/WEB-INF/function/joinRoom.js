@@ -1,21 +1,41 @@
 const { conn } = require("../data/connect");
 
-exports.joinRoom = async (socket, data) => {
+let globalListRoomMember = [];
+exports.joinRoom = async (io, socket, data) => {
   console.log("join room");
 
   //input
-  if (!data && data === "") return console.log("không join dc");
+  const { id, username, roomId } = data;
+  if (!roomId && roomId === "") return console.log("không join dc");
 
   //db
-  await checkRoomUsableById(data);
-  // console.log(checkRoomUsableById(data));
+  const status = await checkRoomUsableById(roomId);
+  if (!status) return socket.emit("join-room-failed");
+
+  //main
+  await addSocket(socket, roomId);
+  // await checkMember(id, username);
+  await addMember(id, username);
+
+  //res
+  response(io, socket, roomId);
+};
+
+exports.leaveRoom = (socket) => {
+  globalListRoomMember.splice(
+    globalListRoomMember.findIndex((user) => {
+      user.id === socket.id;
+    }),
+    1
+  )[0];
+  console.log("disconnect", globalListRoomMember);
 };
 
 const checkRoomUsableById = async (id) => {
   let status = false;
 
   const getResult = (rows) => {
-    console.log(rows);
+    // console.log(rows);
     if (rows.usable) return (status = true);
   };
 
@@ -26,6 +46,25 @@ const checkRoomUsableById = async (id) => {
       getResult(rows[0]);
     });
 
-  console.log(status);
   return status;
+};
+
+const addSocket = (socket, roomId) => {
+  socket.join(roomId);
+  console.log("join", roomId);
+  console.log(socket.adapter.rooms[roomId]);
+};
+
+// const checkMember = (id, username) => {
+//   console.log("a", globalListRoomMember);
+//   // console.log("check", check);
+// };
+
+const addMember = (id, username) => {
+  globalListRoomMember.push({ id, username });
+  console.log(globalListRoomMember);
+};
+
+const response = (io, socket, roomId) => {
+  io.to(roomId).emit("join-room-success");
 };

@@ -13,7 +13,7 @@ const io = socketio(server);
 const router = require("./router");
 const { fetchInfo } = require("./function/fetchInfo");
 const { createRoom } = require("./function/createRoom");
-const { joinRoom } = require("./function/joinRoom");
+const { joinRoom, leaveRoom } = require("./function/joinRoom");
 
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
@@ -31,5 +31,7 @@ io.on("connection", (socket) => {
 
   socket.on("fetch-info", (data) => fetchInfo(socket, data));
   socket.on("create-room", (data) => createRoom(socket, data));
-  socket.on("join-room", (data) => joinRoom(socket, data));
+  socket.on("join-room", (data) => joinRoom(io, socket, data));
+
+  socket.on("disconnect", () => leaveRoom(socket));
 });
