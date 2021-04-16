@@ -1,6 +1,6 @@
 const express = require("express");
 const http = require("http");
-const mysql = require("mysql");
+const mysql = require("mysql2");
 const path = require("path");
 const socketio = require("socket.io");
 const cors = require("cors");
@@ -13,6 +13,7 @@ const io = socketio(server);
 const router = require("./router");
 const { fetchInfo } = require("./function/fetchInfo");
 const { createRoom } = require("./function/createRoom");
+const { joinRoom } = require("./function/joinRoom");
 
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
@@ -30,4 +31,5 @@ io.on("connection", (socket) => {
 
   socket.on("fetch-info", (data) => fetchInfo(socket, data));
   socket.on("create-room", (data) => createRoom(socket, data));
+  socket.on("join-room", (data) => joinRoom(socket, data));
 });

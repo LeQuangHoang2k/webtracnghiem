@@ -1,15 +1,20 @@
 const { conn } = require("../data/connect");
-
-exports.createRoom = (socket, data) => {
+const bluebird = require("bluebird");
+exports.createRoom = async (socket, data) => {
   console.log("create room here! ");
   console.log(data);
 
   //input
-  const { id } = getIdFromCookie(data);
+  const { id } = await getIdFromCookie(data);
 
   //db
-  createRoomByCreatorId(id);
-  selectRoomLastedById(socket, id);
+  await createRoomByCreatorId(id);
+
+  //main
+  const { roomId } = await selectRoomLastedById(id);
+
+  //res
+  await response(socket, roomId);
 };
 
 const getIdFromCookie = (data) => {
@@ -25,23 +30,38 @@ const getIdFromCookie = (data) => {
   return object;
 };
 
-const createRoomByCreatorId = (id) => {
-  conn.query(`INSERT INTO room (id_creator,active) VALUES (${id},true)`, (err, result) => {
-    console.log("create thanh cong");
-  });
+const createRoomByCreatorId = async (id) => {
+  await conn
+    .promise()
+    .query(`INSERT INTO room (id_creator,usable) VALUES (${id},true)`)
+    .then(() => {
+      console.log("create success");
+    });
 };
 
-const selectRoomLastedById = (socket, id) => {
-  conn.query(
-    `SELECT id FROM room WHERE id_creator=${id} ORDER BY id DESC LIMIT 1`,
-    (err, result) => {
-      response(socket, result[0]);
-    }
-  );
+const selectRoomLastedById = async (id) => {
+  let roomInfo = [];
+
+  const getResult = (rows) => {
+    roomInfo = rows;
+  };
+
+  await conn
+    .promise()
+    .query(
+      `SELECT id FROM room WHERE id_creator=${id} ORDER BY id DESC LIMIT 1`
+    )
+    .then(([rows]) => {
+      getResult(rows);
+    });
+
+  console.log(roomInfo);
+  return { roomId: roomInfo[0].id };
 };
 
-const response = (socket, data) => {
-  console.log(data);
+const response = (socket, roomId) => {
+  // console.log(data);
 
-  socket.emit("create-room-success",data);
+  console.log("65", roomId);
+  socket.emit("create-room-success", { roomId });
 };

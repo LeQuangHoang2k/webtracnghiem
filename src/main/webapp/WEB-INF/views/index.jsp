@@ -7,8 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Website kiểm tra trắc nghiệm nhanh</title>
-    <link rel="icon"
-      href="https://scontent.fsgn5-4.fna.fbcdn.net/v/t1.6435-9/125804657_206521220865306_8629959089832217753_n.jpg?_nc_cat=102&ccb=1-3&_nc_sid=e3f864&_nc_ohc=7IqqAA5Z0fYAX-bRGmG&_nc_oc=AQmzaImohaTiaanikp62ultvHgPTDkPfk8g7wmuhZ0nUbsH0Fwmw40rdLtfPDmx8iU4Y-uM3gx5vhZA0vWEPhbkG&_nc_ht=scontent.fsgn5-4.fna&oh=356349e0482d5b77f67950f1a82a151a&oe=609E9C66"
+    <link rel="icon" href="https://cdn4.vectorstock.com/i/1000x1000/68/03/quiz-sign-icon-questions-and-answers-game-vector-3756803.jpg"
       type="image/gif" sizes="16x16">
     <style type="text/css">
       <%@ include file="/WEB-INF/public/main.css"%><%@ include file="/WEB-INF/font-awesome/css/fontawesome.min.css"%>

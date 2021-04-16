@@ -1,12 +1,18 @@
 const { conn } = require("../data/connect");
 
-exports.fetchInfo = (socket, data) => {
+exports.fetchInfo = async (socket, data) => {
   //input
+  console.log("getch ÌNo");
   if (!data) return console.log("error : input");
 
   //db
-  const { username } = convertToObject(data);
-  getUserInfo(socket, username);
+
+  //main
+  const { username } = await convertToObject(data);
+  const { userInfor } = await getUserInfo(username);
+
+  //res
+  await response(socket, userInfor);
 };
 
 const convertToObject = (data) => {
@@ -24,22 +30,26 @@ const convertToObject = (data) => {
   return object;
 };
 
-const getUserInfo = async (socket, username) => {
+const getUserInfo = async (username) => {
   console.log("query by username");
 
   var userInfor = null;
 
-  await conn.query(
-    `SELECT * FROM user WHERE username=${username}`,
-    (err, result) => {
-      if (err) throw err;
-      response(result[0]);
-    }
-  );
-
-  const response = (data) => {
+  const getResult = (data) => {
     userInfor = data;
-    console.log(userInfor);
-    socket.emit("fetch-info-success", userInfor);
   };
+  await conn
+    .promise()
+    .query(`SELECT * FROM user WHERE username=${username}`)
+    .then(([rows]) => {
+      getResult(rows[0]);
+    });
+
+  return { userInfor };
+};
+
+const response = (socket, userInfor) => {
+  // userInfor = data;
+  console.log(userInfor);
+  socket.emit("fetch-info-success", { userInfor });
 };
