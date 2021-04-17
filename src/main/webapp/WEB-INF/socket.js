@@ -33,5 +33,5 @@ io.on("connection", (socket) => {
   socket.on("create-room", (data) => createRoom(socket, data));
   socket.on("join-room", (data) => joinRoom(io, socket, data));
 
-  socket.on("disconnect", () => leaveRoom(socket));
+  socket.on("disconnect", () => leaveRoom(io, socket));
 });

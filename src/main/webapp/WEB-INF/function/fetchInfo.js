@@ -2,7 +2,7 @@ const { conn } = require("../data/connect");
 
 exports.fetchInfo = async (socket, data) => {
   //input
-  console.log("getch ÌNo");
+  console.log("fetch infor");
   if (!data) return console.log("error : input");
 
   //db
@@ -10,8 +10,8 @@ exports.fetchInfo = async (socket, data) => {
   //main
   const { username } = await convertToObject(data);
   const { userInfor } = await getUserInfo(username);
-  await saveIdInSocket(socket, userInfor);
-  
+  await saveInfoInSocket(socket, userInfor);
+
   //res
   await response(socket, userInfor);
 };
@@ -49,8 +49,10 @@ const getUserInfo = async (username) => {
   return { userInfor };
 };
 
-const saveIdInSocket = (socket, userInfor) => {
-  socket.id = userInfor.id;
+const saveInfoInSocket = (socket, userInfor) => {
+  socket.userId = userInfor.id;
+  socket.username = userInfor.username;
+  socket.clientName = userInfor.name;
 };
 
 const response = (socket, userInfor) => {

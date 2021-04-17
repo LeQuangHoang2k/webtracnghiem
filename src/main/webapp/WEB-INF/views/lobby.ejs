@@ -64,8 +64,8 @@
     </div>
   </div>
 
-  <div class="lobby__body">
-    <div class="user">Lê Đức Nghị</div>
+  <div class="lobby__body" id="lobby__body">
+    <!-- <div class="user">Lê Đức Nghị</div>
     <div class="user">Lee Quang Hoàng</div>
     <div class="user">Phạm Anh Tứng</div>
     <div class="user">Phùng Quốc Hùng</div>
@@ -82,7 +82,7 @@
     <div class="user">Phùng Quốc Hùng</div>
     <div class="user">Phùng Quốc Hùng</div>
     <div class="user">Phùng Quốc Hùng</div>
-    <div class="user">Lee Hoàng Bảo</div>
+    <div class="user">Lee Hoàng Bảo</div> -->
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -97,6 +97,7 @@
 
       //save
       document.cookie = `id=${userInfor.id}`
+      document.cookie = `name=${userInfor.name}`
       console.log(document.cookie);
     })
 
@@ -138,33 +139,40 @@
         userCookie[item[0]] = item[1]
       })
 
-      data = { id: userCookie.id, username: userCookie.username, roomId }
+      data = { id: userCookie.id, username: userCookie.username, name: userCookie.name, roomId }
       console.log(data);
 
-      socket.emit("join-room", (data))
-      socket.on("join-room-success", (data) => {
-        alert("join success")
-      })
+      socket.emit("join-room", data)
     }
 
-    //
-    // function getCookie(cname) {
-    //   var name = cname + "=";
-    //   var decodedCookie = decodeURIComponent(document.cookie);
-    //   var ca = decodedCookie.split(';');
-    //   for (var i = 0; i < ca.length; i++) {
-    //     var c = ca[i];
-    //     while (c.charAt(0) == ' ') {
-    //       c = c.substring(1);
-    //     }
-    //     if (c.indexOf(name) == 0) {
-    //       return c.substring(name.length, c.length);
-    //     }
-    //   }
-    //   return "";
-    // }
+    socket.on("join-room-success", (listMember) => {
+      console.log(listMember);
 
+      resetOldListMember(listMember)
+      showNewListMember(listMember)
+    })
 
+    socket.on("someone-leave-room", (listMember) => {
+      resetOldListMember(listMember)
+      showNewListMember(listMember)
+    })
+
+    const resetOldListMember = (listMember) => {
+      const divListMember = document.getElementById("lobby__body");
+      while (divListMember.lastElementChild) {
+        divListMember.removeChild(divListMember.lastElementChild);
+      }
+    }
+
+    const showNewListMember = (listMember) => {
+      listMember.forEach((item) => {
+        var html = document.createElement("div");
+        html.classList.add("user")
+        var text = document.createTextNode(item.name);
+        html.appendChild(text);
+        document.getElementById("lobby__body").appendChild(html);
+      })
+    }
   </script>
 
 </body>

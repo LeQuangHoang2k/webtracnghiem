@@ -1,11 +1,13 @@
 const { conn } = require("../data/connect");
 
 let globalListRoomMember = [];
+let globalRoomId = null;
+
 exports.joinRoom = async (io, socket, data) => {
   console.log("join room");
 
   //input
-  const { id, username, roomId } = data;
+  const { id, username, name, roomId } = data;
   if (!roomId && roomId === "") return console.log("không join dc");
 
   //db
@@ -13,21 +15,28 @@ exports.joinRoom = async (io, socket, data) => {
   if (!status) return socket.emit("join-room-failed");
 
   //main
+  globalRoomId = roomId;
   await addSocket(socket, roomId);
-  // await checkMember(id, username);
-  await addMember(id, username);
+  const index = await checkMemberExistInRoom(socket, username);
+  if (index < 0) addMember(id, username, name);
 
   //res
   response(io, socket, roomId);
 };
 
-exports.leaveRoom = (socket) => {
-  globalListRoomMember.splice(
-    globalListRoomMember.findIndex((user) => {
-      user.id === socket.id;
-    }),
-    1
-  )[0];
+exports.leaveRoom = (io, socket) => {
+  const index = globalListRoomMember.findIndex(
+    (item) => item.username === socket.username
+  );
+
+  globalListRoomMember.splice(index, 1);
+
+  const message = `${socket.username} da roi khoi room ${socket.id}`;
+  io.in(globalRoomId).emit("someone-leave-room", globalListRoomMember);
+
+  console.log("globalRoomId", globalRoomId);
+  socket.leave(globalRoomId);
+  console.log(socket.adapter.rooms);
   console.log("disconnect", globalListRoomMember);
 };
 
@@ -52,19 +61,26 @@ const checkRoomUsableById = async (id) => {
 const addSocket = (socket, roomId) => {
   socket.join(roomId);
   console.log("join", roomId);
-  console.log(socket.adapter.rooms[roomId]);
+  console.log(socket.adapter.rooms);
 };
 
-// const checkMember = (id, username) => {
-//   console.log("a", globalListRoomMember);
-//   // console.log("check", check);
-// };
+const checkMemberExistInRoom = (socket, username) => {
+  const index = globalListRoomMember.findIndex(
+    (item) => item.username === socket.username
+  );
+  console.log("index", index);
+  return index;
+};
 
-const addMember = (id, username) => {
-  globalListRoomMember.push({ id, username });
+const addMember = (id, username, name) => {
+  globalListRoomMember.push({ id, username, name });
   console.log(globalListRoomMember);
 };
 
 const response = (io, socket, roomId) => {
-  io.to(roomId).emit("join-room-success");
+  console.log("response", roomId, globalListRoomMember);
+  console.log(socket.adapter.rooms[roomId]);
+  // socket.emit("join-room-success", globalListRoomMember);
+  // socket.broadcast.emit("join-room-success", globalListRoomMember)
+  io.in(roomId).emit("join-room-success", globalListRoomMember);
 };
