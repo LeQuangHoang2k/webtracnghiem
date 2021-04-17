@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Lobster+Two&family=Oleo+Script&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -13,8 +15,8 @@ section {
   align-items: center;
 
   min-height: 100vh;
-  background: linear-gradient(to bottom,#091921,#dff1ff);
-  /* background: linear-gradient(to bottom, #f2cece,#8c4545); */
+  background: #f8f8f8;
+  /* background: #ebf5fc; */
 }
 
 .container {
@@ -23,7 +25,9 @@ section {
   min-height: 500px;
   border-radius: 10px;
   backdrop-filter: blur(15px);
-  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1); */
+  box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.8),
+    5px 5px 10px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-right: 1px solid rgba(255, 255, 255, 0.2);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
@@ -53,6 +57,7 @@ section .container .user .formBx {
 }
 
 section .container .user .formBx form h2 {
+  font-family: courier, arial, helvetica;
   position: relative;
   font-size: 18px;
   font-weight: 600px;
@@ -60,7 +65,7 @@ section .container .user .formBx form h2 {
   letter-spacing: 1px;
   width: 100%;
   margin-bottom: 15px;
-  color: #fff;
+  color: #111;
 }
 
 /* section .container .user .formBx form h2::before {
@@ -78,24 +83,48 @@ section .container .user .formBx form input {
   width: 100%;
   border: none;
   outline: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  letter-spacing: 1px;
-  color: #fff;
+  padding: 12px 20px;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  /* color: #111; */
+  color: #03a9f4;
+  box-sizing: border-box;
+  background: transparent;
 
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 35px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+
+  /* box-shadow: -4px -4px 10px rgba(255, 255, 255, 1),
+    inset 4px 4px 10px rgba(0, 0, 0, 0.05),
+    inset -4px -4px 10px rgba(255, 255, 255, 1),
+    4px 4px 10px rgba(0, 0, 0, 0.05); */
+  box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 1),
+    inset 2px 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 section .container .user .formBx form input::placeholder {
-  color: #fff;
+  color: #111;
+}
+section .container .signinBx .formBx #toggle {
+  position: absolute;
+  top: 11em;
+  right: 3.5em;
+
+  transform: translateY(-50%);
+
+  width: 25px;
+  height: 25px;
+
+  background: url(view.png);
+  background-size: cover;
+  cursor: pointer;
 }
 
-section .container .user .formBx form input[type="button"], 
+section .container .signinBx .formBx #toggle.hide {
+  background: url(hide.png);
+  background-size: cover;
+}
+
+section .container .user .formBx form input[type="button"],
 section .container .user .formBx form input[type="submit"] {
   background: #fff;
   color: #666;
@@ -103,18 +132,27 @@ section .container .user .formBx form input[type="submit"] {
   cursor: pointer;
   margin-bottom: 10px;
   font-weight: 600;
+  border-radius: 35px;
   right: 0;
+  box-shadow: -2px -2px 6px rgba(255, 255, 255, 1),
+    2px 2px 6px rgba(0, 0, 0, 0.1);
 }
-
+section .container .user .formBx form input[type="submit"]:active {
+  color: #006c9c;
+  box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 1),
+    inset 2px 2px 6px rgba(0, 0, 0, 0.1);
+}
 section .container .user .formBx form .signup {
   position: relative;
   margin: 10px;
   margin-top: 20px;
-  font-size: 12px;
-  letter-spacing: 1px;
+  font-size: 15px;
+  letter-spacing: 0.5px;
   color: #222;
   text-transform: uppercase;
-  font-weight: 300;
+  font-family: courier, arial, helvetica;
+  cursor: pointer;
+  font-weight: 600;
 }
 
 .formBx form .signup a {
@@ -152,11 +190,10 @@ section .container.active .signinBx .formBx {
   left: 100%;
 }
 
-section .container.activate .signinBx .formBx{
+section .container.activate .signinBx .formBx {
   transform: translateX(-400px);
   transition: 0.5s;
 }
-
 
 /* Forgot */
 section .container .forgotBx {
@@ -168,7 +205,7 @@ section .container.activate .forgotBx {
 }
 
 section .container .forgotBx .formBx {
-  left:100%;
+  left: 100%;
 }
 
 section .container.activate .forgotBx .formBx {

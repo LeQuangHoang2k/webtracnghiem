@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+  <!-- <link rel="stylesheet" href="test.css" /> -->
+  <link rel="stylesheet" href="ranking.css">
+  <link rel="stylesheet" href="quiz-form.css">
+  <link rel="stylesheet" href="lobby.css">
+  <link rel="stylesheet" href="start.css">
+</head>
+
+<body>
+
+  <div class="container__lobby">
+    <div class="head__id">
+      <h2>3711827</h2>
+    </div>
+    <div class="head__rank">
+      <div class="rank">Master</div>
+      <img src="master.png" alt="">
+      <h2>Quangg Hoàng</h2>
+      <h3>Total Score : 500</h3>
+    </div>
+    <!-- <div class="information">
+        <h3>93 ĐNG</h3>
+      </div> -->
+
+    <a class="btn" href="#open-modal">Join / Create</a>
+    <div id="open-modal" class="modal-window">
+
+      <div class="button-box">
+        <div id="btn"></div>
+        <button type="button" class="toggle-btn" onclick="join()">Join</button>
+        <button type="button" class="toggle-btn" onclick="create()">Create</button>
+      </div>
+      <form id="create">
+        <a href="#" title="Close" class="modal-close">Close</a>
+        <!-- <h2>Create Room</h2> -->
+        <div class="input">
+          <div class="inputBox">
+          </div>
+          <div class="inputBox">
+            <button class="submit">Create</button>
+          </div>
+        </div>
+      </form>
+
+      <form id="join">
+        <a href="#" title="Close" class="modal-close">Close</a>
+        <!-- <h2>Join Room</h2> -->
+        <div class="input">
+          <div class="inputBox">
+            <input type="text" placeholder="Please input ur ID Room" />
+          </div>
+          <div class="inputBox">
+            <button class="submit">Join</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="lobby__body">
+      <div class="user">Lê Đức Nghị</div>
+      <div class="user">Lee Quang Hoàng</div>
+      <div class="user">Phạm Anh Tứng</div>
+      <div class="user">Phùng Quốc Hùng</div>
+      <div class="user">Lee Hoàng Bảo</div>
+      <div class="user">Nguyễn Hải Ngọc Tố Nga</div>
+      <div class="user">Lee Hoàng Bảo</div>
+      <div class="user">Lee Hoàng Bảo</div>
+      <div class="user">Lee Hoàng Bảo</div>
+      <div class="user">Lee Hoàng Bảo</div>
+      <div class="user">Lee Hoàng Bảo</div>
+      <div class="user">Lee Hoàng Bảo</div>
+      <div class="user">Lee Hoàng Bảo</div>
+      <div class="user">Lee Hoàng Bảo</div>
+      <div class="user">Lee Hoàng Bảo</div>
+      <div class="user">Lee Hoàng Bảo</div>
+      <div class="user">Lee Hoàng Bảo</div>
+      <div class="user">Lee Hoàng Bảo</div>
+      <div class="user">Lee Hoàng Bảo</div>
+
+    </div>
+
+    <div class="next__page">
+      <span>
+        <a onclick="intoStart();">Let's go</a>
+        <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+      </span>
+      <div class="logout">
+        <a href="index.html">Log Out</a>
+        <div class="doorway">
+          <div class="door">
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="animate__animated animate__zoomIn container__start" style="display: none;">
+    <!-- <div class="heading">
+        <h1 class="heading__text">Topic</h1>
+      </div> -->
+    <div class="quiz">
+      <form class="quiz-form">
+        <div class="quiz-form__quiz1">
+          <p class="quiz-form__question">Topic</p>
+          <label class="quiz-form__ans1">
+            <input type="radio" name="q1" id="q11" value="A" checked />
+            <span class="design1"></span>
+            <span class="text1">Toán</span>
+          </label>
+          <label class="quiz-form__ans1">
+            <input type="radio" name="q1" id="q12" value="B" />
+            <span class="design1"></span>
+            <span class="text1">Sử</span>
+          </label>
+          <label class="quiz-form__ans1">
+            <input type="radio" name="q1" id="q13" value="C" />
+            <span class="design1"></span>
+            <span class="text1">Địa</span>
+          </label>
+        </div>
+
+        <div class="quiz-form__quiz1">
+          <p class="quiz-form__question">Difficult</p>
+          <label class="quiz-form__ans1">
+            <input type="radio" name="q2" id="q21" value="A" checked />
+            <span class="design1"></span>
+            <span class="text1">Expert</span>
+          </label>
+          <label class="quiz-form__ans1">
+            <input type="radio" name="q2" id="q22" value="B" />
+            <span class="design1"></span>
+            <span class="text1">Medium</span>
+          </label>
+          <label class="quiz-form__ans1">
+            <input type="radio" name="q2" id="q23" value="C" />
+            <span class="design1"></span>
+            <span class="text1">Easy</span>
+          </label>
+        </div>
+      </form>
+    </div>
+    <input class="submit animate__animated animate__zoomIn" id="start-button" type="submit" value="Start"
+      onclick="intoQuiz();" />
+  </div>
+
+  <div class="animate__animated animate__zoomIn container__quiz" style="display: none;">
+    <div class="clock ">
+      <span id="time-left">0</span>
+    </div>
+    <div class="heading">
+      <h1 class="heading__text">Quiz</h1>
+    </div>
+    <div class="quiz">
+      <form class="quiz-form">
+
+        <!-- -->
+        <div class="quiz-form__quiz">
+          <p class="quiz-form__question">
+            1. Sự khác nhau cơ bản giữa truyền thông multicast và truyền thông
+            broadcast là gi?
+          </p>
+          <label class="quiz-form__ans" for="q31">
+            <input type="radio" name="q3" id="q31" value="A" checked />
+            <span class="design"></span>
+            <span class="text">Multicast là gửi cho nhiều mạng được định nghĩa với
+              multicast.</span>
+          </label>
+          <label class="quiz-form__ans" for="q32">
+            <input type="radio" name="q3" id="q32" value="B" />
+            <span class="design"></span>
+            <span class="text">Multicast và broadcast về cơ bản là giống nhau.</span>
+          </label>
+          <label class="quiz-form__ans" for="q33">
+            <input type="radio" name="q3" id="q33" value="C" />
+            <span class="design"></span>
+            <span class="text">Broadcast là gửi cho mọi nút mạng có đăng ký nhóm và/hoặc
+              mạngcon.y</span>
+          </label>
+          <label class="quiz-form__ans" for="q34">
+            <input type="radio" name="q3" id="q34" value="D" />
+            <span class="design"></span>
+            <span class="text">Không phải các ý trên.</span>
+          </label>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="animate__animated animate__zoomIn container__rank " style="display: none;">
+    <div class="title__box">
+      <h2 class="title">Congratulation</h2>
+    </div>
+    <div class="ranking__box">
+      <div class="rank">
+        <img src="silver-medal.png" alt="" />
+        <h2>Lê Đức Nghị</h2>
+        <div class="score">
+          <h1>29148</h2>
+            <h3>4 out of 5</h3>
+        </div>
+      </div>
+      <div class="rank">
+        <img src="gold-medal.png" alt="" />
+        <h2>Lê Quang Hoàng</h2>
+        <div class="score">
+          <h1>29148</h2>
+            <h3>4 out of 5</h3>
+        </div>
+      </div>
+      <div class="rank">
+        <img src="bronze-medal.png" alt="" />
+        <h2>Phạm Anh Tuấn</h2>
+        <div class="score">
+          <h1>29148</h2>
+            <h3>4 out of 5</h3>
+        </div>
+
+      </div>
+      <!-- <div class="catchup__box">
+          <div class="final__rank">
+            <img class="medal" src="medal.png" alt="" />
+            <h2>Hoàng</h2>
+          </div>
+          <div class="final__rank">
+            <img class="medal" src="medal.png" alt="" />
+            <h2>Bảo</h2>
+          </div>
+        </div> -->
+
+
+    </div>
+  </div>
+
+  <script>
+    // transform div 
+    function intoStart() {
+      var x = document.querySelector(".container__start");
+      var y = document.querySelector(".container__lobby")
+      if (x.style.display === "none") {
+        x.style.display = "block";
+        y.style.display = "none"
+      }
+    };
+
+    // transform div & active clock 
+    const timeLeftDisplay = document.querySelector("#time-left");
+    const startBtn = document.querySelector("#start-button");
+    let timeLeft = 0;
+    function intoQuiz() {
+      var a = document.querySelector(".container__quiz");
+      var b = document.querySelector(".container__start")
+      if (a.style.display === "none") {
+        a.style.display = "block";
+        b.style.display = "none";
+      }
+      setInterval(function () {
+        document.querySelector('.container__rank').style.display = "none";
+        if (timeLeft >= 1) {
+          document.querySelector('.container__rank').style.display = "block";
+          document.querySelector('.container__quiz').style.display = "none";
+          clearInterval(timeLeft = 1);
+        }
+        timeLeftDisplay.innerHTML = timeLeft;
+        timeLeft += 1;
+      }, 1000);
+      startBtn.addEventListener("click", intoQuiz);
+    };
+
+
+    // transform tab create-join
+    var x = document.getElementById("join");
+    var y = document.getElementById("create");
+    var z = document.getElementById("btn");
+
+    function create() {
+      x.style.left = "-50%";
+      y.style.left = "50%";
+      z.style.left = "100px";
+    }
+
+    function join() {
+      x.style.left = "50%";
+      y.style.left = "-50%";
+      z.style.left = "0px";
+    }
+  </script>
+</body>
+
+</html>
