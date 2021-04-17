@@ -14,6 +14,7 @@ const router = require("./router");
 const { fetchInfo } = require("./function/fetchInfo");
 const { createRoom } = require("./function/createRoom");
 const { joinRoom, leaveRoom } = require("./function/joinRoom");
+const { startExam } = require("./function/startExam");
 
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
@@ -32,6 +33,6 @@ io.on("connection", (socket) => {
   socket.on("fetch-info", (data) => fetchInfo(socket, data));
   socket.on("create-room", (data) => createRoom(socket, data));
   socket.on("join-room", (data) => joinRoom(io, socket, data));
-
+  socket.on("all-member-start", (data) => startExam(io, socket, data));
   socket.on("disconnect", () => leaveRoom(io, socket));
 });

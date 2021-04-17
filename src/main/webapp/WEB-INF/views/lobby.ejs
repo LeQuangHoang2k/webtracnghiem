@@ -8,24 +8,31 @@
   <title>Website kiểm tra trắc nghiệm nhanh</title>
   <link rel="icon" href="https://freepngimg.com/thumb/symbol/88546-area-text-symbol-icons-question-mark-computer.png"
     type="image/gif" sizes="16x16">
-  <link rel="stylesheet" href="lobby.css" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+
+  <link rel="stylesheet" href="ranking.css">
+  <link rel="stylesheet" href="quiz-form.css">
+  <link rel="stylesheet" href="lobby.css">
+  <link rel="stylesheet" href="start.css">
 </head>
 
 <body>
-  <div class="container">
+  <div class="container__lobby">
     <div class="head__id">
-      <h2 id="clientRoom">default</h2>
+      <h2 id="clientRoom"></h2>
     </div>
     <div class="head__rank">
-      <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/9632/trophy.svg" /> -->
-      <h2 id="clientName">default</h2>
+      <div id="clientRank" class="rank"></div>
+      <img id="clientIconRank" src="bronze.png" alt="">
+      <h2 id="clientName"></h2>
       <h3>Total Score : <span id="clientScore">default</span></h3>
     </div>
 
-    <a class="btn" href="#open-modal">Join / Create</a>
+    <a class="btn" id="showRoomModal" href="#open-modal">Join / Create</a>
+    <button type="button" id="quitRoom" onclick="quitRoom()" style="display: none;">Quit Room</button>
     <div id="open-modal" class="modal-window">
+
       <div class="button-box">
         <div id="btn"></div>
         <button type="button" class="toggle-btn" onclick="join()">Join</button>
@@ -33,74 +40,180 @@
       </div>
       <form id="create">
         <a href="#" title="Close" class="modal-close">Close</a>
-        <h2>create Room</h2>
+        <!-- <h2>Create Room</h2> -->
         <div class="input">
           <div class="inputBox">
-            <label for="">ID</label>
-            <input type="text" placeholder="Please input ur ID Room" />
           </div>
           <div class="inputBox">
-            <input type="" value="Submit" onclick="handleCreateRoom()" />
+            <button type="button" class="submit" onclick="handleCreateRoom()">Create</button>
           </div>
         </div>
       </form>
 
       <form id="join">
         <a href="#" title="Close" class="modal-close">Close</a>
-        <h2>Join Room</h2>
+        <!-- <h2>Join Room</h2> -->
         <div class="input">
           <div class="inputBox">
-            <label for="">ID</label>
             <input type="text" id="clientJoinId" placeholder="Please input ur ID Room" />
-            <!-- <label for="">Name</label>
-              <input type="text" placeholder="What should we call you ? " /> -->
           </div>
           <div class="inputBox">
-            <input type="" value="Submit" onclick="handleJoinRoom()" />
+            <button type="button" class="submit" onclick="handleJoinRoom()">Join</button>
           </div>
         </div>
       </form>
+    </div>
 
+    <div class="lobby__body" id="lobby__body"></div>
+
+    <button type="button" id="showPageOption" style="display: none;" onclick="intoStart()">Let's go</button>
+    <button type="button" onclick="logout()">Logout</button>
+  </div>
+
+  <div class="animate__animated animate__zoomIn container__start" style="display: none;">
+    <!-- <div class="heading">
+        <h1 class="heading__text">Topic</h1>
+      </div> -->
+    <div class="quiz">
+      <form class="quiz-form">
+        <div class="quiz-form__quiz1">
+          <p class="quiz-form__question">Topic</p>
+          <label class="quiz-form__ans1">
+            <input type="radio" name="IT" id="q11" value="IT" checked />
+            <span class="design1"></span>
+            <span class="text1">Công nghệ</span>
+          </label>
+          <label class="quiz-form__ans1">
+            <input type="radio" name="history" id="q12" value="Sử" />
+            <span class="design1"></span>
+            <span class="text1">Sử</span>
+          </label>
+          <label class="quiz-form__ans1">
+            <input type="radio" name="geographic" id="q13" value="Địa" />
+            <span class="design1"></span>
+            <span class="text1">Địa</span>
+          </label>
+        </div>
+
+        <div class="quiz-form__quiz1">
+          <p class="quiz-form__question">Difficult</p>
+          <label class="quiz-form__ans1">
+            <input type="radio" name="easy" id="easy" value="1" checked />
+            <span class="design1"></span>
+            <span class="text1">Easy</span>
+          </label>
+          <label class="quiz-form__ans1">
+            <input type="radio" name="medium" id="medium" value="2" />
+            <span class="design1"></span>
+            <span class="text1">Medium</span>
+          </label>
+          <label class="quiz-form__ans1">
+            <input type="radio" name="expert" id="expert" value="3" />
+            <span class="design1"></span>
+            <span class="text1">Expert</span>
+          </label>
+        </div>
+      </form>
+    </div>
+    <button type="button" onclick="showPageLobby()">
+      <<<<<< </button>
+        <input class="submit animate__animated animate__zoomIn" id="start-button" type="submit" value="Start"
+          onclick="startExam();" />
+
+  </div>
+
+  <div class="animate__animated animate__zoomIn container__quiz" style="display: none;">
+    <div class="clock ">
+      <span id="time-left">0</span>
+    </div>
+    <div class="heading">
+      <h1 class="heading__text">Quiz</h1>
+    </div>
+    <div class="quiz">
+      <form class="quiz-form">
+
+        <!-- -->
+        <div class="quiz-form__quiz">
+          <p class="quiz-form__question">
+            1. Sự khác nhau cơ bản giữa truyền thông multicast và truyền thông
+            broadcast là gi?
+          </p>
+          <label class="quiz-form__ans" for="q31">
+            <input type="radio" name="q3" id="q31" value="A" checked />
+            <span class="design"></span>
+            <span class="text">Multicast là gửi cho nhiều mạng được định nghĩa với
+              multicast.</span>
+          </label>
+          <label class="quiz-form__ans" for="q32">
+            <input type="radio" name="q3" id="q32" value="B" />
+            <span class="design"></span>
+            <span class="text">Multicast và broadcast về cơ bản là giống nhau.</span>
+          </label>
+          <label class="quiz-form__ans" for="q33">
+            <input type="radio" name="q3" id="q33" value="C" />
+            <span class="design"></span>
+            <span class="text">Broadcast là gửi cho mọi nút mạng có đăng ký nhóm và/hoặc
+              mạngcon.y</span>
+          </label>
+          <label class="quiz-form__ans" for="q34">
+            <input type="radio" name="q3" id="q34" value="D" />
+            <span class="design"></span>
+            <span class="text">Không phải các ý trên.</span>
+          </label>
+        </div>
+      </form>
     </div>
   </div>
 
-  <div class="lobby__body" id="lobby__body">
-    <!-- <div class="user">Lê Đức Nghị</div>
-    <div class="user">Lee Quang Hoàng</div>
-    <div class="user">Phạm Anh Tứng</div>
-    <div class="user">Phùng Quốc Hùng</div>
-    <div class="user">Lee Hoàng Bảo</div>
-    <div class="user">Nguyễn Hải Ngọc Tố Nga</div>
-    <div class="user">Lee Hoàng Bảo</div>
-    <div class="user">Lee Hoàng Bảo</div>
-    <div class="user">Lee Hoàng Bảo</div>
-    <div class="user">Lee Hoàng Bảo</div>
-    <div class="user">Phùng Quốc Hùng</div>
-    <div class="user">Phùng Quốc Hùng</div>
-    <div class="user">Phùng Quốc Hùng</div>
-    <div class="user">Phùng Quốc Hùng</div>
-    <div class="user">Phùng Quốc Hùng</div>
-    <div class="user">Phùng Quốc Hùng</div>
-    <div class="user">Phùng Quốc Hùng</div>
-    <div class="user">Lee Hoàng Bảo</div> -->
+  <div class="animate__animated animate__zoomIn container__rank " style="display: none;">
+    <div class="title__box">
+      <h2 class="title">Congratulation</h2>
+    </div>
+    <div class="ranking__box">
+      <div class="rank">
+        <img src="silver-medal.png" alt="" />
+        <h2>Lê Đức Nghị</h2>
+        <div class="score">
+          <h1>29148</h2>
+            <h3>4 out of 5</h3>
+        </div>
+      </div>
+      <div class="rank">
+        <img src="gold-medal.png" alt="" />
+        <h2>Lê Quang Hoàng</h2>
+        <div class="score">
+          <h1>29148</h2>
+            <h3>4 out of 5</h3>
+        </div>
+      </div>
+      <div class="rank">
+        <img src="bronze-medal.png" alt="" />
+        <h2>Phạm Anh Tuấn</h2>
+        <div class="score">
+          <h1>29148</h2>
+            <h3>4 out of 5</h3>
+        </div>
+
+      </div>
+      <!-- <div class="catchup__box">
+          <div class="final__rank">
+            <img class="medal" src="medal.png" alt="" />
+            <h2>Hoàng</h2>
+          </div>
+          <div class="final__rank">
+            <img class="medal" src="medal.png" alt="" />
+            <h2>Bảo</h2>
+          </div>
+        </div> -->
+
+
+    </div>
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    if (!document.cookie) window.location.href = "http://localhost:8080/website-trac-nghiem/"
-    const socket = io();
-    socket.emit("fetch-info", document.cookie)
-    socket.on("fetch-info-success", ({ userInfor }) => {
-      $("#clientName").text(userInfor.name)
-      $("#clientScore").text(userInfor.total_score)
-
-      //save
-      document.cookie = `id=${userInfor.id}`
-      document.cookie = `name=${userInfor.name}`
-      console.log(document.cookie);
-    })
-
+    // nghi
     var x = document.getElementById("join");
     var y = document.getElementById("create");
     var z = document.getElementById("btn");
@@ -109,7 +222,6 @@
       x.style.left = "-50%";
       y.style.left = "50%";
       z.style.left = "82px";
-
     }
 
     function join() {
@@ -117,6 +229,31 @@
       y.style.left = "-50%";
       z.style.left = "0px";
     }
+
+    // transform div 
+    function intoStart() {
+      var x = document.querySelector(".container__start");
+      var y = document.querySelector(".container__lobby")
+      if (x.style.display === "none") {
+        x.style.display = "block";
+        y.style.display = "none"
+      }
+    };
+
+    //hoang
+    if (!document.cookie || document.cookie < 0) window.location.href = "http://localhost:8080/website-trac-nghiem/"
+    const socket = io();
+    socket.emit("fetch-info", document.cookie)
+    socket.on("fetch-info-success", ({ userInfor }) => {
+      $("#clientName").text(userInfor.name)
+      $("#clientRank").text(userInfor.level)
+      $("#clientScore").text(userInfor.total_score)
+
+      //save
+      document.cookie = `id=${userInfor.id}`
+      document.cookie = `name=${userInfor.name}`
+      console.log(document.cookie);
+    })
 
     const handleCreateRoom = () => {
       socket.emit("create-room", (document.cookie))
@@ -129,33 +266,47 @@
       var roomId = document.getElementById("clientJoinId").value
       if (!roomId && roomId === "") return alert("troll cc")
 
-      let array = []
-      let userCookie = {}
-      let data = null
+      const userCookie = getDataFromCookie()
 
-      array = document.cookie.split("; ")
-      array.forEach((item) => {
-        item = item.split("=")
-        userCookie[item[0]] = item[1]
-      })
-
-      data = { id: userCookie.id, username: userCookie.username, name: userCookie.name, roomId }
+      let data = { id: userCookie.id, username: userCookie.username, name: userCookie.name, roomId }
       console.log(data);
 
       socket.emit("join-room", data)
     }
 
-    socket.on("join-room-success", (listMember) => {
-      console.log(listMember);
-
+    socket.on("join-room-success", ({ listMember, roomId, creatorId }) => {
+      $("#clientRoom").text(roomId)
       resetOldListMember(listMember)
       showNewListMember(listMember)
+
+      const userCookie = getDataFromCookie()
+      document.getElementById("quitRoom").style.display = "block"
+      document.getElementById("showRoomModal").style.display = "none"
+      
+      if (userCookie.id == creatorId) {
+        alert("Bạn là chủ phòng");
+        document.getElementById("showPageOption").style.display = "block"
+      }
     })
 
     socket.on("someone-leave-room", (listMember) => {
       resetOldListMember(listMember)
       showNewListMember(listMember)
     })
+
+    const getDataFromCookie = () => {
+      let array = []
+      let userCookie = {}
+
+      array = document.cookie.split("; ")
+      array.forEach((item) => {
+        item = item.split("=")
+        userCookie[item[0]] = item[1]
+      })
+      console.log("cookie", userCookie);
+
+      return userCookie
+    }
 
     const resetOldListMember = (listMember) => {
       const divListMember = document.getElementById("lobby__body");
@@ -172,6 +323,60 @@
         html.appendChild(text);
         document.getElementById("lobby__body").appendChild(html);
       })
+    }
+
+    const logout = () => {
+      document.cookie = "id=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
+      document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "name=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
+      console.log(document.cookie);
+      window.location.href = "http://localhost:8080/website-trac-nghiem"
+    }
+
+    const showPageLobby = () => {
+      var a = document.querySelector(".container__lobby");
+      var b = document.querySelector(".container__start")
+      a.style.display = "block";
+      b.style.display = "none";
+    }
+
+    // transform div & active clock 
+    const timeLeftDisplay = document.querySelector("#time-left");
+    let timeLeft = 0;
+    function startExam() {// nghi ft.hoang
+      const roomId = document.getElementById("clientRoom").innerText;
+      socket.emit("all-member-start", ({ roomId }))
+    };
+
+    const showPageExam = () => {
+      var a = document.querySelector(".container__quiz");
+      var b = document.querySelector(".container__start")
+      var c = document.querySelector(".container__lobby")
+      if (a.style.display === "none") {
+        a.style.display = "block";
+        b.style.display = "none";
+        c.style.display = "none";
+      }
+      setInterval(function () {
+        document.querySelector('.container__rank').style.display = "none";
+        if (timeLeft >= 1) {
+          document.querySelector('.container__rank').style.display = "block";
+          document.querySelector('.container__quiz').style.display = "none";
+          document.querySelector('.container__lobby').style.display = "none";
+
+          clearInterval(timeLeft = 1);
+        }
+        timeLeftDisplay.innerHTML = timeLeft;
+        timeLeft += 1;
+      }, 1000);
+    }
+
+    socket.on("all-member-start-success", () => {
+      showPageExam()
+    })
+
+    const quitRoom = () => {
+      window.location.reload()
     }
   </script>
 

@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Oleo+Script:wght@700&display=swap');
+
+
 * {
   padding: 0;
   margin: 0;
@@ -6,23 +9,27 @@
 }
 
 body {
-  /* min-height: 100vh; */
-  /* background-image: linear-gradient(to right, #7f53ac 0, #657ced 100%); */
+  min-height: 100vh;
+  font-family: "Montserrat", sans-serif;
+
   background: #091921;
-}
-
-.container {
-  position: relative;
-  width: 100%;
-  margin: 50px auto;
-  /* background: red; */
-
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.container .head__id {
+.container__lobby {
+  position: relative;
+  width: 100%;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  /* margin: 1em auto; */
+}
+
+.container__lobby .head__id {
+  position: relative;
+  margin: 0 auto;
   width: 350px;
   height: 100px;
   background: #091921;
@@ -36,78 +43,67 @@ body {
   align-items: center;
 }
 
-.container .head__rank {
-  /* background: blue; */
+.container__lobby .head__rank::after {
+  content: "\f2c0";
   position: absolute;
-  width: 150px;
-  height: 150px;
-  top: -100px;
-  right: 40px;
+  top: 0.3em;
+  left: 0.7em;
+  font-family: fontAwesome;
+  color: #fff;
+  font-size: 35px;
+}
 
+/* RANK */
+.container__lobby .head__rank {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2;
-}
 
-.container .head__rank::after {
-  content: '\f2c0';
   position: absolute;
-  top:2.4em ;
-  left:-2em ;
-  font-family: fontAwesome;
-  color: #fff;
-  font-size: 38px;
-}
-.container .head__rank::before {
-  content: "Gold";
-  position: absolute;
-  color: #fff;
-  font-size: 20px;
-  font-weight: 600;
-  /* background: black; */
   background: #091921;
-  text-align: center;
-  top: 80px;
-  left: -120px;
+  top: -2em;
+  right: 5em;
   width: 280px;
   height: 170px;
   padding: 10px 0;
   border-radius: 10px;
   box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.1),
-              15px 15px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    15px 15px 10px rgba(0, 0, 0, 0.1);
 }
 
-.container .head__rank img {
-  position: absolute;
-  top: 9.2em;
-  left: -5em;
-  width: 50px;
-  height: 50px;
-}
-
-.container .head__rank h2{
-  position: absolute;
-  top:5em ;
-  left: -1em;
+.container__lobby .head__rank .rank {
+  color: #fff;
   font-size: 20px;
+  font-weight: 600;
+}
+
+/* TROPHY */
+.container__lobby .head__rank img {
+  position: absolute;
+  top: 3.8em;
+  left: 1em;
+  width: 3em;
+  height: 3em;
+}
+
+/* Username__RANK */
+.container__lobby .head__rank h2 {
+  white-space: nowrap;
+  position: absolute;
+  top: 1em;
+  font-size: 19px;
   font-weight: 600;
   color: #fff;
   z-index: 1;
 }
-.container .head__rank h3{
+.container__lobby .head__rank h3 {
   position: absolute;
-  top:12.5em ;
-  left: -2.5em;
+  top: 7.5em;
   font-size: 18px;
   font-weight: 600;
   color: #fff;
   z-index: 1;
 }
-
 
 .modal-window {
   position: fixed;
@@ -125,13 +121,31 @@ body {
   transition: 0.5s;
 }
 
+.information{
+  pointer-events: none;
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: normal;
+  padding: 1em;
+  position: absolute;
+  transition: opacity 2 ease-out;
+  transform: rotateX(-25deg) scale(1);
+  transform-origin: 50% 7em 0em;
+  opacity: 0;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.1), 0 2px 20px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  top: 3rem;
+  border-radius: 10px;
+  background: white;
+  display: block;
+  height: 300px;
+  width: calc(var(--menu-width) * 1.5);
+}
 
 .modal-window:target {
   visibility: visible;
   opacity: 1;
   pointer-events: auto;
 }
-
 
 .modal-window header {
   font-weight: bold;
@@ -149,7 +163,7 @@ body {
   position: absolute;
   right: 0;
   text-align: center;
-  top: 0;
+  top: 0em;
   width: 70px;
   text-decoration: none;
 }
@@ -162,9 +176,7 @@ a {
   color: inherit;
 }
 
-.modal-window div:not(:last-of-type) {
-  margin-bottom: 15px;
-}
+
 
 small {
   color: lightgray;
@@ -172,7 +184,8 @@ small {
 
 .btn {
   position: absolute;
-  left: 40px;
+  top: 1.5em;
+  left: 4em;
   cursor: pointer;
   color: #fff;
   font-size: 18px;
@@ -194,37 +207,38 @@ small {
 .btn i {
   padding-right: 0.3em;
 }
+
 #btn {
   top: 0;
   left: 0;
   position: absolute;
-  width: 80px;
+  width: 95px;
   height: 100%;
   background: linear-gradient(to right, #46588c, #d46e75);
   border-radius: 30px;
   transition: 0.5s;
 }
 
+.button-box {
+  width: 195px;
+  margin: 0px auto;
+  position: relative;
+  top: 29em;
+  box-shadow: 0 0 20px 9px #4a3b54;
+  border-radius: 30px;
+  z-index: 2;
+}
+
 .toggle-btn {
-  color: #fff;
-  padding: 10px 25px;
+  padding: 10px 30px;
   cursor: pointer;
   background: transparent;
   border: 0;
   outline: none;
-  border-radius: 15px;
   position: relative;
-  box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1),
-              inset 2px 2px 6px rgba(0, 0, 0, 0.8);
-}
-.button-box {
-  width: 220px;
-  position: relative;
-  left: 45%;
-  top: 30%;
-
-  border-radius: 30px;
-  z-index: 2;
+  font-size: 12px;
+  color: #fff;
+  font-weight: 600;
 }
 
 .modal-window > form {
@@ -233,45 +247,30 @@ small {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  /* transition: 0.5s; */
   padding: 2em;
-  /* background: white; */
   border-radius: 1rem;
   width: 350px;
   padding: 40px 40px 60px;
   background: #131419;
   text-align: center;
   box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.05),
-              5px 5px 15px rgba(0, 0, 0, 0.5);
+    5px 5px 15px rgba(0, 0, 0, 0.5);
 }
 
-
-  /*  */
-
 form h2 {
-  /* color: #c7c7c7; */
-  color: #BABECC;
-  /* text-shadow: 1px 1px 1px #FFF; */
+  color: #babecc;
   font-weight: 500;
-  /* text-transform: uppercase; */
   letter-spacing: 1px;
-  margin: 30px 0 0 0 ;
+  /* margin: 100px 0 0 0; */
 }
 
 form .input {
   text-align: left;
-  margin-top: 20px;
+  margin: 50px 0 10px 0;
 }
 
-form .input .inputBox {
-  margin-top: 20px;
-}
-form .input .inputBox label {
-  display: block;
-  color: #868686;
-  margin-bottom: 5px;
-  font-size: 18px;
-}
-
+form .input .inputBox button,
 form .input .inputBox input {
   width: 100%;
   height: 50px;
@@ -283,22 +282,22 @@ form .input .inputBox input {
   font-size: 18px;
   color: #03a9f4;
   box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1),
-              inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+    inset 2px 2px 6px rgba(0, 0, 0, 0.8);
 }
 
-form .input .inputBox input[type="submit"] {
+form .input .inputBox .submit {
   cursor: pointer;
   margin-top: 20px;
   box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.1),
-              2px 2px 6px rgba(0, 0, 0, 0.8);
+    2px 2px 6px rgba(0, 0, 0, 0.8);
 }
 
-form .input .inputBox input[type="submit"]:active {
+form .input .inputBox .submit:active {
   cursor: pointer;
   color: #006c9c;
   margin-top: 20px;
   box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1),
-              inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+    inset 2px 2px 6px rgba(0, 0, 0, 0.8);
 }
 
 form .input .inputBox input::placeholder {
@@ -309,8 +308,7 @@ form .input .inputBox input::placeholder {
 /* LOBBY */
 .lobby__body {
   position: relative;
-  /* background: red; */
-  top: 4em;
+  margin: 7em 0;
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -327,8 +325,185 @@ form .input .inputBox input::placeholder {
   background: #091921;
   font-weight: 600;
   color: #fff;
-  /* border: 1px solid rgba(255, 255, 255, 0.25); */
   box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.1),
-              15px 15px 10px rgba(0, 0, 0, 0.1);
+    15px 15px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ARROW */
+.next__page {
+  margin: 5em 0 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+span a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.next__page span i {
+  margin: 0px 10px;
+  font-size: 30px;
+  color: #fff;
+}
+
+a:hover + i {
+  animation: bounce 3s infinite;
+}
+
+@keyframes bounce {
+  /* blue, red, goldenrod, cyan */
+  0%,
+  5% {
+    transform: translateX(0);
+    color: #2852e2;
+  }
+  10% {
+    transform: translateX(40px);
+  }
+  12.5% {
+    transform: translateX(0);
+  }
+  15% {
+    transform: translateX(10px);
+  }
+  20%,
+  25% {
+    transform: translateX(0);
+  }
+
+  25%,
+  30% {
+    transform: translateX(0);
+    color: #ff0000;
+  }
+  35% {
+    transform: translateX(40px);
+  }
+  37.5% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(10px);
+  }
+  45%,
+  50% {
+    transform: translateX(0);
+  }
+
+  50%,
+  55% {
+    transform: translateX(0);
+    color: #dacd2a;
+  }
+  60% {
+    transform: translateX(40px);
+  }
+  62.5% {
+    transform: translateX(0);
+  }
+  65% {
+    transform: translateX(10px);
+  }
+  70%,
+  75% {
+    transform: translateX(0);
+  }
+
+  75%,
+  80% {
+    transform: translateX(0);
+    color: #3cddd6;
+  }
+  85% {
+    transform: translateX(40px);
+  }
+  87.5% {
+    transform: translateX(0);
+  }
+  90% {
+    transform: translateX(10px);
+  }
+  95%,
+  100% {
+    transform: translateX(0);
+    color: #2852e2;
+  }
+}
+
+.logout {
+  border: 4px solid lightgray;
+  position: relative;
+  left: -50em;
+  width: 40px;
+  height: 60px;
+  cursor: pointer;
+}
+
+.logout a {
+  white-space: nowrap;
+  position: absolute;
+  z-index: 1;
+  top: 18px;
+  left: 60px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+}
+
+.logout a:after {
+  background: none repeat scroll 0 0 transparent;
+  bottom: -5px;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: #fff;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+
+.logout a:hover:after {
+  width: 100%;
+  left: 0;
+}
+
+.logout .doorway {
+  position: absolute;
+  width: 32px;
+  height: 52px;
+  background-color: #fff;
+}
+
+.logout .doorway .door {
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+  transform-origin: 0% 0%;
+  width: 100%;
+  height: 100%;
+  transform: perspective(900) rotateY(0deg);
+  background: #091921;
+  position: relative;
+}
+.logout:hover .door {
+  -webkit-transform: perspective(900) rotateY(45deg);
+  transition: all 2s ease-in-out;
+}
+
+.door span {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: block;
+  background-color: lightgray;
+  top: 20px;
+  left: 20px;
 }
 
