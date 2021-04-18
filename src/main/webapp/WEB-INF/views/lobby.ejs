@@ -75,21 +75,21 @@
         <h1 class="heading__text">Topic</h1>
       </div> -->
     <div class="quiz">
-      <form class="quiz-form">
+      <form id="optionExam" class="quiz-form" accept-charset="utf-8">
         <div class="quiz-form__quiz1">
           <p class="quiz-form__question">Topic</p>
           <label class="quiz-form__ans1">
-            <input type="radio" name="IT" id="q11" value="IT" checked />
+            <input type="radio" name="topic" id="IT" value="IT" checked />
             <span class="design1"></span>
             <span class="text1">Công nghệ</span>
           </label>
           <label class="quiz-form__ans1">
-            <input type="radio" name="history" id="q12" value="Sử" />
+            <input type="radio" name="topic" id="history" value="Sử" />
             <span class="design1"></span>
             <span class="text1">Sử</span>
           </label>
           <label class="quiz-form__ans1">
-            <input type="radio" name="geographic" id="q13" value="Địa" />
+            <input type="radio" name="topic" id="geographic" value="Địa" />
             <span class="design1"></span>
             <span class="text1">Địa</span>
           </label>
@@ -98,17 +98,17 @@
         <div class="quiz-form__quiz1">
           <p class="quiz-form__question">Difficult</p>
           <label class="quiz-form__ans1">
-            <input type="radio" name="easy" id="easy" value="1" checked />
+            <input type="radio" name="difficult" id="easy" value="1" checked />
             <span class="design1"></span>
             <span class="text1">Easy</span>
           </label>
           <label class="quiz-form__ans1">
-            <input type="radio" name="medium" id="medium" value="2" />
+            <input type="radio" name="difficult" id="medium" value="2" />
             <span class="design1"></span>
             <span class="text1">Medium</span>
           </label>
           <label class="quiz-form__ans1">
-            <input type="radio" name="expert" id="expert" value="3" />
+            <input type="radio" name="difficult" id="expert" value="3" />
             <span class="design1"></span>
             <span class="text1">Expert</span>
           </label>
@@ -282,9 +282,9 @@
       const userCookie = getDataFromCookie()
       document.getElementById("quitRoom").style.display = "block"
       document.getElementById("showRoomModal").style.display = "none"
-      
+
       if (userCookie.id == creatorId) {
-        alert("Bạn là chủ phòng");
+        // alert("Bạn là chủ phòng");
         document.getElementById("showPageOption").style.display = "block"
       }
     })
@@ -345,7 +345,10 @@
     let timeLeft = 0;
     function startExam() {// nghi ft.hoang
       const roomId = document.getElementById("clientRoom").innerText;
-      socket.emit("all-member-start", ({ roomId }))
+      const optionExam = $("#optionExam").serialize()
+      console.log("option :");
+      alert("option")
+      socket.emit("all-member-start", ({ roomId, optionExam }))
     };
 
     const showPageExam = () => {
