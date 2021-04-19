@@ -135,22 +135,22 @@
             6s to ready...
           </p>
           <label class="quiz-form__ans" for="answer_A">
-            <input type="radio" name="quizAnswerValue" id="answer_A" value="1" checked />
+            <input type="radio" name="quizAnswerValue" id="answer_A" value="0" checked />
             <span class="design"></span>
             <span class="text quizAnswer"></span>
           </label>
           <label class="quiz-form__ans" for="answer_B">
-            <input type="radio" name="quizAnswerValue" id="answer_B" value="2" />
+            <input type="radio" name="quizAnswerValue" id="answer_B" value="1" />
             <span class="design"></span>
             <span class="text quizAnswer"></span>
           </label>
           <label class="quiz-form__ans" for="answer_C">
-            <input type="radio" name="quizAnswerValue" id="answer_C" value="3" />
+            <input type="radio" name="quizAnswerValue" id="answer_C" value="2" />
             <span class="design"></span>
             <span class="text quizAnswer"></span>
           </label>
           <label class="quiz-form__ans" for="answer_D">
-            <input type="radio" name="quizAnswerValue" id="answer_D" value="4" />
+            <input type="radio" name="quizAnswerValue" id="answer_D" value="3" />
             <span class="design"></span>
             <span class="text quizAnswer"></span>
           </label>
@@ -375,47 +375,111 @@
 
       showPageExam()
 
-      var x = document.getElementsByClassName("quizAnswer");
+      var quizAnswer = document.getElementsByClassName("quizAnswer");
 
       let currentScore = 0
       let indexQuestion = 0
-      let timeLeft = -6
+      let timeLeft = 0
       let myInterval
       myInterval = setInterval(() => {
+        // timeLeftDisplay.innerHTML = timeLeft;
+        // console.log(timeLeft);
+
+        // if (timeLeft >= 0 && timeLeft % 6 === 5) {
+        //   //set question
+        //   $("#quizQuestion").text(`Question ${indexQuestion + 1}: ${listQuestion[indexQuestion].content}`)
+
+        //   //set answer 
+        //   let indexAnswerFirst = indexQuestion * 4
+        //   console.log(indexQuestion,indexAnswerFirst);
+        //   x[0].innerHTML = listAnswer[indexAnswerFirst].content;
+        //   x[1].innerHTML = listAnswer[indexAnswerFirst + 1].content;
+        //   x[2].innerHTML = listAnswer[indexAnswerFirst + 2].content;
+        //   x[3].innerHTML = listAnswer[indexAnswerFirst + 3].content;
+
+        //   //set answer value
+        //   let yourChoice = $('#formExam').serialize()
+        //   let indexChoice = yourChoice.charAt(yourChoice.length - 1);
+        //   console.log("Bạn chọn đáp án : " + indexChoice);
+
+        //   let indexChoiceInList = indexAnswerFirst + indexAnswerFirst % indexChoice 
+        //   let answerInfor = listAnswer[indexChoiceInList]
+        //   console.log(answerInfor);
+        //   if (answerInfor.status) currentScore += 10
+        //   console.log("điểm nè",currentScore);
+
+        //   //set number question
+        //   indexQuestion++
+        // }
+        // // end      
+        // timeLeft++
+
+        function setQuestion() {
+          var indexQuestion = timeLeft / 6 - 1
+
+          if (!listQuestion[indexQuestion] || indexQuestion === 10) return false
+          $("#quizQuestion").text(`Question ${indexQuestion + 1}: ${listQuestion[indexQuestion].content}`)
+          console.log("setQuestion câu hỏi trong list" + indexQuestion);
+
+          return true
+        };
+
+        function setAnswer() {
+          // console.log("setQuestion câu hỏi trong list" + (timeLeft / 6 - 1));
+          var indexQuestion = timeLeft / 6 - 1
+          var indexAnswerA = 4 * indexQuestion
+          var indexAnswerB = 4 * indexQuestion + 1
+          var indexAnswerC = 4 * indexQuestion + 2
+          var indexAnswerD = 4 * indexQuestion + 3
+
+          console.log("setQuestion câu trả lời trong list: " + indexAnswerA, indexAnswerB, indexAnswerC, indexAnswerD);
+
+          quizAnswer[0].innerHTML = listAnswer[indexAnswerA].content;
+          quizAnswer[1].innerHTML = listAnswer[indexAnswerB].content;
+          quizAnswer[2].innerHTML = listAnswer[indexAnswerC].content;
+          quizAnswer[3].innerHTML = listAnswer[indexAnswerD].content;
+
+          // return true
+        };
+
+        function submitAnswer() {
+          const yourChoice = $("#formExam").serialize()
+          const indexChoice = yourChoice.charAt(yourChoice.length - 1)
+          var timeShowQuiz = (timeLeft - 5)
+          var indexQuestion = timeShowQuiz / 6 - 1
+          var indexAnswerA = 4 * indexQuestion
+          var indexAnswerInList = parseInt(indexAnswerA) + parseInt(indexChoice)
+          // console.log(yourChoice);
+          // console.log(indexChoice);
+
+          // console.log("cau trl tuong ung:", parseInt(indexAnswerA) + parseInt(indexChoice));
+          const answerInfor = listAnswer[indexAnswerInList];
+          console.log(answerInfor);
+
+          if (answerInfor.status) currentScore += 10
+          console.log("diem hien tai la : " + currentScore);
+        };
+        //
+        timeLeft++
         timeLeftDisplay.innerHTML = timeLeft;
         console.log(timeLeft);
 
-        if (timeLeft >= 0 && timeLeft % 6 === 5) {
-          //set question
-          $("#quizQuestion").text(`Question ${indexQuestion + 1}: ${listQuestion[indexQuestion].content}`)
-
-          //set answer 
-          let indexAnswerFirst = indexQuestion * 4
-          console.log(indexQuestion,indexAnswerFirst);
-          x[0].innerHTML = listAnswer[indexAnswerFirst].content;
-          x[1].innerHTML = listAnswer[indexAnswerFirst + 1].content;
-          x[2].innerHTML = listAnswer[indexAnswerFirst + 2].content;
-          x[3].innerHTML = listAnswer[indexAnswerFirst + 3].content;
-
-          //set answer value
-          let yourChoice = $('#formExam').serialize()
-          let indexChoice = yourChoice.charAt(yourChoice.length - 1);
-          console.log("Bạn chọn đáp án : " + indexChoice);
-
-          let indexChoiceInList = indexAnswerFirst + indexAnswerFirst % indexChoice 
-          let answerInfor = listAnswer[indexChoiceInList]
-          console.log(answerInfor);
-          if (answerInfor.status) currentScore += 10
-          console.log("điểm nè",currentScore);
-
-          //set number question
-          indexQuestion++
+        if (timeLeft == 1) console.log("6s to already....");
+        if (timeLeft !== 0 && timeLeft % 6 == 0) {
+          const ok = setQuestion();
+          if (!ok) return clearInterval(myInterval)
+          setAnswer();
         }
-        // end      
-        timeLeft++
-        if (timeLeft == 60) clearInterval(myInterval)
+
+        if (timeLeft > 6 && timeLeft % 6 === 5) {
+          submitAnswer()
+        }
+
+        if (timeLeft == 66) return
+
       }, 1000)
     })
+
 
     const quitRoom = () => {
       window.location.reload()
