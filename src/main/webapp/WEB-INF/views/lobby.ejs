@@ -71,9 +71,6 @@
   </div>
 
   <div class="animate__animated animate__zoomIn container__start" style="display: none;">
-    <!-- <div class="heading">
-        <h1 class="heading__text">Topic</h1>
-      </div> -->
     <div class="quiz">
       <form id="optionExam" class="quiz-form" accept-charset="utf-8">
         <div class="quiz-form__quiz1">
@@ -84,12 +81,12 @@
             <span class="text1">Công nghệ</span>
           </label>
           <label class="quiz-form__ans1">
-            <input type="radio" name="topic" id="history" value="Sử" />
+            <input type="radio" name="topic" id="history" value="history" />
             <span class="design1"></span>
             <span class="text1">Sử</span>
           </label>
           <label class="quiz-form__ans1">
-            <input type="radio" name="topic" id="geographic" value="Địa" />
+            <input type="radio" name="topic" id="geographic" value="geography" />
             <span class="design1"></span>
             <span class="text1">Địa</span>
           </label>
@@ -130,35 +127,32 @@
       <h1 class="heading__text">Quiz</h1>
     </div>
     <div class="quiz">
-      <form class="quiz-form">
+      <form class="quiz-form" id="formExam">
 
         <!-- -->
         <div class="quiz-form__quiz">
-          <p class="quiz-form__question">
-            1. Sự khác nhau cơ bản giữa truyền thông multicast và truyền thông
-            broadcast là gi?
+          <p class="quiz-form__question" id="quizQuestion">
+            6s to ready...
           </p>
-          <label class="quiz-form__ans" for="q31">
-            <input type="radio" name="q3" id="q31" value="A" checked />
+          <label class="quiz-form__ans" for="answer_A">
+            <input type="radio" name="quizAnswerValue" id="answer_A" value="1" checked />
             <span class="design"></span>
-            <span class="text">Multicast là gửi cho nhiều mạng được định nghĩa với
-              multicast.</span>
+            <span class="text quizAnswer"></span>
           </label>
-          <label class="quiz-form__ans" for="q32">
-            <input type="radio" name="q3" id="q32" value="B" />
+          <label class="quiz-form__ans" for="answer_B">
+            <input type="radio" name="quizAnswerValue" id="answer_B" value="2" />
             <span class="design"></span>
-            <span class="text">Multicast và broadcast về cơ bản là giống nhau.</span>
+            <span class="text quizAnswer"></span>
           </label>
-          <label class="quiz-form__ans" for="q33">
-            <input type="radio" name="q3" id="q33" value="C" />
+          <label class="quiz-form__ans" for="answer_C">
+            <input type="radio" name="quizAnswerValue" id="answer_C" value="3" />
             <span class="design"></span>
-            <span class="text">Broadcast là gửi cho mọi nút mạng có đăng ký nhóm và/hoặc
-              mạngcon.y</span>
+            <span class="text quizAnswer"></span>
           </label>
-          <label class="quiz-form__ans" for="q34">
-            <input type="radio" name="q3" id="q34" value="D" />
+          <label class="quiz-form__ans" for="answer_D">
+            <input type="radio" name="quizAnswerValue" id="answer_D" value="4" />
             <span class="design"></span>
-            <span class="text">Không phải các ý trên.</span>
+            <span class="text quizAnswer"></span>
           </label>
         </div>
       </form>
@@ -360,22 +354,67 @@
         b.style.display = "none";
         c.style.display = "none";
       }
-      setInterval(function () {
-        document.querySelector('.container__rank').style.display = "none";
-        if (timeLeft >= 1) {
-          document.querySelector('.container__rank').style.display = "block";
-          document.querySelector('.container__quiz').style.display = "none";
-          document.querySelector('.container__lobby').style.display = "none";
 
-          clearInterval(timeLeft = 1);
-        }
-        timeLeftDisplay.innerHTML = timeLeft;
-        timeLeft += 1;
-      }, 1000);
+      // $("#quizQuestion").text()
+      // setInterval(function () {
+      //   document.querySelector('.container__rank').style.display = "none";
+      //   if (timeLeft >= 1) {
+      //     document.querySelector('.container__rank').style.display = "block";
+      //     document.querySelector('.container__quiz').style.display = "none";
+      //     document.querySelector('.container__lobby').style.display = "none";
+
+      //     clearInterval(timeLeft = 1);
+      //   }
+      //   timeLeftDisplay.innerHTML = timeLeft;
+      //   timeLeft += 1;
+      // }, 1000);
     }
 
-    socket.on("all-member-start-success", () => {
+    socket.on("all-member-start-success", ({ listQuestion, listAnswer, arrayQuestionId }) => {
+      console.log(listQuestion, listAnswer, arrayQuestionId);
+
       showPageExam()
+
+      var x = document.getElementsByClassName("quizAnswer");
+
+      let currentScore = 0
+      let indexQuestion = 0
+      let timeLeft = -6
+      let myInterval
+      myInterval = setInterval(() => {
+        timeLeftDisplay.innerHTML = timeLeft;
+        console.log(timeLeft);
+
+        if (timeLeft >= 0 && timeLeft % 6 === 5) {
+          //set question
+          $("#quizQuestion").text(`Question ${indexQuestion + 1}: ${listQuestion[indexQuestion].content}`)
+
+          //set answer 
+          let indexAnswerFirst = indexQuestion * 4
+          console.log(indexQuestion,indexAnswerFirst);
+          x[0].innerHTML = listAnswer[indexAnswerFirst].content;
+          x[1].innerHTML = listAnswer[indexAnswerFirst + 1].content;
+          x[2].innerHTML = listAnswer[indexAnswerFirst + 2].content;
+          x[3].innerHTML = listAnswer[indexAnswerFirst + 3].content;
+
+          //set answer value
+          let yourChoice = $('#formExam').serialize()
+          let indexChoice = yourChoice.charAt(yourChoice.length - 1);
+          console.log("Bạn chọn đáp án : " + indexChoice);
+
+          let indexChoiceInList = indexAnswerFirst + indexAnswerFirst % indexChoice 
+          let answerInfor = listAnswer[indexChoiceInList]
+          console.log(answerInfor);
+          if (answerInfor.status) currentScore += 10
+          console.log("điểm nè",currentScore);
+
+          //set number question
+          indexQuestion++
+        }
+        // end      
+        timeLeft++
+        if (timeLeft == 60) clearInterval(myInterval)
+      }, 1000)
     })
 
     const quitRoom = () => {

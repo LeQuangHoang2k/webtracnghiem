@@ -46,8 +46,8 @@ const checkRoomUsableById = async (id) => {
   let creatorId = null;
 
   const getResult = (rows) => {
-    // console.log(rows);
-    if (!rows.usable) return;
+    console.log(rows);
+    if (!rows || !rows.usable) return console.log("lỗi nè");;
     creatorId = rows.id_creator;
     status = true;
   };
@@ -57,6 +57,9 @@ const checkRoomUsableById = async (id) => {
     .query(`SELECT * FROM room WHERE id=${id}`)
     .then(([rows]) => {
       getResult(rows[0]);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 
   return { status, creatorId };
