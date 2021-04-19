@@ -13,6 +13,8 @@ exports.startExam = async (io, socket, data) => {
     topic,
     difficult,
   });
+
+  await blockRoom(roomId);
   // console.log("listQuestion, listAnswer", arrayQuestionId);
 
   //
@@ -96,4 +98,14 @@ const getListAnswerDb = async (arrayQuestionId) => {
       getListAnswer(rows);
     });
   return { listAnswer };
+};
+
+const blockRoom = async (roomId) => {
+  console.log(roomId);
+  await conn
+    .promise()
+    .query(`UPDATE room SET usable=false WHERE id=${parseInt(roomId)}`)
+    .then(([rows]) => {
+      // getListAnswer(rows);
+    });
 };

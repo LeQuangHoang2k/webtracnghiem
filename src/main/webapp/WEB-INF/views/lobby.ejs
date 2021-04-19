@@ -166,41 +166,29 @@
     <div class="ranking__box">
       <div class="rank">
         <img src="silver-medal.png" alt="" />
-        <h2>Lê Đức Nghị</h2>
+        <h2 id="top1PlayerName"></h2>
         <div class="score">
-          <h1>29148</h2>
-            <h3>4 out of 5</h3>
+          <h2 id="top2PlayerScore"></h2>
+          <h3 id="top2PlayerRight"></h3>
         </div>
       </div>
       <div class="rank">
         <img src="gold-medal.png" alt="" />
-        <h2>Lê Quang Hoàng</h2>
+        <h2 id="top2PlayerName"></h2>
         <div class="score">
-          <h1>29148</h2>
-            <h3>4 out of 5</h3>
+          <h2 id="top1PlayerScore"></h2>
+          <h3 id="top1PlayerRight"></h3>
         </div>
       </div>
       <div class="rank">
         <img src="bronze-medal.png" alt="" />
-        <h2>Phạm Anh Tuấn</h2>
+        <h2 id="top3PlayerName"></h2>
         <div class="score">
-          <h1>29148</h2>
-            <h3>4 out of 5</h3>
+          <h2 id="top3PlayerScore"></h2>
+          <h3 id="top3PlayerRight"></h3>
         </div>
 
       </div>
-      <!-- <div class="catchup__box">
-          <div class="final__rank">
-            <img class="medal" src="medal.png" alt="" />
-            <h2>Hoàng</h2>
-          </div>
-          <div class="final__rank">
-            <img class="medal" src="medal.png" alt="" />
-            <h2>Bảo</h2>
-          </div>
-        </div> -->
-
-
     </div>
   </div>
 
@@ -258,7 +246,7 @@
 
     const handleJoinRoom = () => {
       var roomId = document.getElementById("clientJoinId").value
-      if (!roomId && roomId === "") return alert("troll cc")
+      if (!roomId && roomId === "") return alert("Not valid Input")
 
       const userCookie = getDataFromCookie()
 
@@ -281,6 +269,10 @@
         // alert("Bạn là chủ phòng");
         document.getElementById("showPageOption").style.display = "block"
       }
+    })
+
+    socket.on("join-room-failed", () => {
+      alert("This room is blocked")
     })
 
     socket.on("someone-leave-room", (listMember) => {
@@ -433,7 +425,9 @@
         }
 
         function sendScore() {
-          socket.emit("show-rank-player")
+          const userCookie = getDataFromCookie()
+          console.log("send id và score", { usernameCookie: userCookie.username, currentScore, roomId: $("#clientRoom").text() });
+          socket.emit("save-member", { userCookieId: userCookie.id, currentScore, roomId: $("#clientRoom").text() })
         }
         //
         timeLeft++
@@ -446,6 +440,7 @@
           if (!ok) {
             console.log("bạn đã thi xong, vui lòng đợi kết quả...");
             showPageRank()
+            sendScore()
             return clearInterval(myInterval)
           }
           setAnswer();
@@ -460,6 +455,32 @@
       }, 1000)
     })
 
+    socket.on("save-member-success", () => {
+      setTimeout(() => {
+        socket.emit("show-rank", { roomId: $("#clientRoom").text() })
+      }, 2000)
+    })
+
+    socket.on("show-rank-success", ({ listRank }) => {
+      // alert("listRank")
+      console.log("listRank", listRank);
+
+      $("#top1PlayerName").text(listRank[0].name)
+      $("#top1PlayerScore").text(listRank[0].score)
+      $("#top1PlayerScore").text(`${listRank[0].score / 10} out of 10`)
+
+      if (listRank[1]) {
+        $("#top2PlayerName").text(listRank[1].name)
+        $("#top2PlayerScore").text(listRank[1].score)
+        $("#top2PlayerScore").text(`${listRank[1].score / 10} out of 10`)
+      }
+      if (listRank[2]) {
+        $("#top3PlayerName").text(listRank[2].name)
+        $("#top3PlayerScore").text(listRank[2].score)
+        $("#top3PlayerScore").text(`${listRank[2].score / 10} out of 10`)
+      }
+
+    })
 
     const quitRoom = () => {
       window.location.reload()

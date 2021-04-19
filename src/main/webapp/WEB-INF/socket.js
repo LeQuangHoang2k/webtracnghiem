@@ -15,6 +15,7 @@ const { fetchInfo } = require("./function/fetchInfo");
 const { createRoom } = require("./function/createRoom");
 const { joinRoom, leaveRoom } = require("./function/joinRoom");
 const { startExam } = require("./function/startExam");
+const { saveMember } = require("./function/saveMember");
 const { showRank } = require("./function/showRank");
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -35,6 +36,7 @@ io.on("connection", (socket) => {
   socket.on("create-room", (data) => createRoom(socket, data));
   socket.on("join-room", (data) => joinRoom(io, socket, data));
   socket.on("all-member-start", (data) => startExam(io, socket, data));
-  socket.on("show-rank-player", (data) => showRank(io, socket, data));
+  socket.on("save-member", (data) => saveMember(io, socket, data));
+  socket.on("show-rank", (data) => showRank(io, socket, data));
   socket.on("disconnect", () => leaveRoom(io, socket));
 });

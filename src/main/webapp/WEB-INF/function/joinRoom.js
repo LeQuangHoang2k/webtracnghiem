@@ -47,7 +47,7 @@ const checkRoomUsableById = async (id) => {
 
   const getResult = (rows) => {
     console.log(rows);
-    if (!rows || !rows.usable) return console.log("lỗi nè");;
+    if (!rows || !rows.usable) return console.log("room is blocked");
     creatorId = rows.id_creator;
     status = true;
   };

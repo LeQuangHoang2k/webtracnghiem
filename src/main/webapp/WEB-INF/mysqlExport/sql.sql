@@ -47,7 +47,7 @@ create table room_question(
 );
 
 create table room_member(
-	id int(10),
+	id int(10) NOT NULL auto_increment,
     id_room int(10),
     id_user int(10),
     score int(10),
