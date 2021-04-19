@@ -61,7 +61,8 @@ const getListQuestionDb = async ({ topic, difficult }) => {
       arrayQuestionId.push(item.id);
     });
 
-    arrayQuestionId = "(" + arrayQuestionId.toString() + ")";
+    arrayQuestionId = arrayQuestionId.toString();
+    // console.log(arrayQuestionId);
   };
 
   await conn
@@ -82,12 +83,15 @@ const getListAnswerDb = async (arrayQuestionId) => {
 
   const getListAnswer = (rows) => {
     listAnswer = rows;
+    // console.log(rows);
   };
 
   // `SELECT * FROM answer WHERE id_question in (SELECT t.id FROM (SELECT id FROM question ORDER BY rand() LIMIT 10 ) as t)`
   await conn
     .promise()
-    .query(`SELECT * FROM answer WHERE id_question IN ${arrayQuestionId}`)
+    .query(
+      `SELECT * FROM answer WHERE id_question IN (${arrayQuestionId}) ORDER BY FIND_IN_SET(id_question,'${arrayQuestionId}')`
+    )
     .then(([rows]) => {
       getListAnswer(rows);
     });

@@ -355,7 +355,6 @@
         c.style.display = "none";
       }
 
-      // $("#quizQuestion").text()
       // setInterval(function () {
       //   document.querySelector('.container__rank').style.display = "none";
       //   if (timeLeft >= 1) {
@@ -382,38 +381,6 @@
       let timeLeft = 0
       let myInterval
       myInterval = setInterval(() => {
-        // timeLeftDisplay.innerHTML = timeLeft;
-        // console.log(timeLeft);
-
-        // if (timeLeft >= 0 && timeLeft % 6 === 5) {
-        //   //set question
-        //   $("#quizQuestion").text(`Question ${indexQuestion + 1}: ${listQuestion[indexQuestion].content}`)
-
-        //   //set answer 
-        //   let indexAnswerFirst = indexQuestion * 4
-        //   console.log(indexQuestion,indexAnswerFirst);
-        //   x[0].innerHTML = listAnswer[indexAnswerFirst].content;
-        //   x[1].innerHTML = listAnswer[indexAnswerFirst + 1].content;
-        //   x[2].innerHTML = listAnswer[indexAnswerFirst + 2].content;
-        //   x[3].innerHTML = listAnswer[indexAnswerFirst + 3].content;
-
-        //   //set answer value
-        //   let yourChoice = $('#formExam').serialize()
-        //   let indexChoice = yourChoice.charAt(yourChoice.length - 1);
-        //   console.log("Bạn chọn đáp án : " + indexChoice);
-
-        //   let indexChoiceInList = indexAnswerFirst + indexAnswerFirst % indexChoice 
-        //   let answerInfor = listAnswer[indexChoiceInList]
-        //   console.log(answerInfor);
-        //   if (answerInfor.status) currentScore += 10
-        //   console.log("điểm nè",currentScore);
-
-        //   //set number question
-        //   indexQuestion++
-        // }
-        // // end      
-        // timeLeft++
-
         function setQuestion() {
           var indexQuestion = timeLeft / 6 - 1
 
@@ -425,7 +392,6 @@
         };
 
         function setAnswer() {
-          // console.log("setQuestion câu hỏi trong list" + (timeLeft / 6 - 1));
           var indexQuestion = timeLeft / 6 - 1
           var indexAnswerA = 4 * indexQuestion
           var indexAnswerB = 4 * indexQuestion + 1
@@ -439,7 +405,6 @@
           quizAnswer[2].innerHTML = listAnswer[indexAnswerC].content;
           quizAnswer[3].innerHTML = listAnswer[indexAnswerD].content;
 
-          // return true
         };
 
         function submitAnswer() {
@@ -459,6 +424,17 @@
           if (answerInfor.status) currentScore += 10
           console.log("diem hien tai la : " + currentScore);
         };
+
+        function showPageRank() {
+          document.querySelector('.container__quiz').style.display = "none";
+          document.querySelector('.container__lobby').style.display = "none";
+          document.querySelector('.container__start').style.display = "none";
+          document.querySelector('.container__rank').style.display = "block";
+        }
+
+        function sendScore() {
+          socket.emit("show-rank-player")
+        }
         //
         timeLeft++
         timeLeftDisplay.innerHTML = timeLeft;
@@ -467,7 +443,11 @@
         if (timeLeft == 1) console.log("6s to already....");
         if (timeLeft !== 0 && timeLeft % 6 == 0) {
           const ok = setQuestion();
-          if (!ok) return clearInterval(myInterval)
+          if (!ok) {
+            console.log("bạn đã thi xong, vui lòng đợi kết quả...");
+            showPageRank()
+            return clearInterval(myInterval)
+          }
           setAnswer();
         }
 
