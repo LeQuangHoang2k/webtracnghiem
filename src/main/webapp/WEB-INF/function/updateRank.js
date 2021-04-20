@@ -1,7 +1,7 @@
 const { conn } = require("../data/connect");
 
 exports.updateRank = (io, socket, data) => {
-  console.log(data);
+  console.log("Welcome to rank", data);
 
   //
   const { userCookie, currentScore } = data;
@@ -23,16 +23,28 @@ const checkRank = ({ userCookie, currentScore }) => {
       return newTotalScore;
     }
     case "Silver": {
-      break;
+      if (currentScore >= 6)
+        return (newTotalScore = userCookie.total_score + currentScore);
+      if (difference < 0) return 0;
+      return newTotalScore;
     }
     case "Gold": {
-      break;
+      if (currentScore >= 7)
+        return (newTotalScore = userCookie.total_score + currentScore);
+      if (difference < 0) return 0;
+      return newTotalScore;
     }
     case "Platinum": {
-      break;
+      if (currentScore >= 8)
+        return (newTotalScore = userCookie.total_score + currentScore);
+      if (difference < 0) return 0;
+      return newTotalScore;
     }
     case "Master": {
-      break;
+      if (currentScore >= 9)
+        return (newTotalScore = userCookie.total_score + currentScore);
+      if (difference < 0) return 0;
+      return newTotalScore;
     }
 
     default:

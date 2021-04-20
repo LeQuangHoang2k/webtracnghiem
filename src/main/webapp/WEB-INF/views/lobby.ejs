@@ -235,7 +235,6 @@
       var d = new Date();
       d.setTime(d.getTime() + (7 * 24 * 60 * 60 * 1000));
       var expires = "expires=" + d.toUTCString();
-      // document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
       document.cookie = `id=${userInfor.id};${expires};path=/`
       document.cookie = `name=${userInfor.name};${expires};path=/`
       document.cookie = `total_score=${userInfor.total_score};${expires};path=/`
@@ -324,6 +323,8 @@
       document.cookie = "name=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
       document.cookie = "level=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
       document.cookie = "total_score=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
+      document.cookie = "difficult=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
+
 
       console.log(document.cookie);
       window.location.href = "http://localhost:8080/website-trac-nghiem"
@@ -342,8 +343,12 @@
     function startExam() {// nghi ft.hoang
       const roomId = document.getElementById("clientRoom").innerText;
       const optionExam = $("#optionExam").serialize()
-      console.log("option :");
-      alert("option")
+      const difficultOption = optionExam.charAt(optionExam.length - 1)
+      console.log("option : " + difficultOption);
+      // alert("option")
+
+      document.cookie = `difficult=${difficultOption}`
+
       socket.emit("all-member-start", ({ roomId, optionExam }))
     };
 
