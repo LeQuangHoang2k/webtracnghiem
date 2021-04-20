@@ -17,6 +17,7 @@ const { joinRoom, leaveRoom } = require("./function/joinRoom");
 const { startExam } = require("./function/startExam");
 const { saveMember } = require("./function/saveMember");
 const { showRank } = require("./function/showRank");
+const { updateRank } = require("./function/updateRank");
 
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
@@ -38,5 +39,6 @@ io.on("connection", (socket) => {
   socket.on("all-member-start", (data) => startExam(io, socket, data));
   socket.on("save-member", (data) => saveMember(io, socket, data));
   socket.on("show-rank", (data) => showRank(io, socket, data));
+  socket.on("update-rank", (data) => updateRank(io, socket, data));
   socket.on("disconnect", () => leaveRoom(io, socket));
 });
