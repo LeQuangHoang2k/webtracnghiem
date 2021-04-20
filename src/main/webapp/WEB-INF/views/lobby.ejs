@@ -232,10 +232,14 @@
       $("#clientScore").text(userInfor.total_score)
 
       //save
-      document.cookie = `id=${userInfor.id}`
-      document.cookie = `name=${userInfor.name}`
-      document.cookie = `total_score=${userInfor.total_score}`
-      document.cookie = `level=${userInfor.level}`
+      var d = new Date();
+      d.setTime(d.getTime() + (7 * 24 * 60 * 60 * 1000));
+      var expires = "expires=" + d.toUTCString();
+      // document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+      document.cookie = `id=${userInfor.id};${expires};path=/`
+      document.cookie = `name=${userInfor.name};${expires};path=/`
+      document.cookie = `total_score=${userInfor.total_score};${expires};path=/`
+      document.cookie = `level=${userInfor.level};${expires};path=/`
 
       console.log(document.cookie);
     })
@@ -318,6 +322,9 @@
       document.cookie = "id=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
       document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       document.cookie = "name=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
+      document.cookie = "level=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
+      document.cookie = "total_score=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
+
       console.log(document.cookie);
       window.location.href = "http://localhost:8080/website-trac-nghiem"
     }
