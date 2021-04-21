@@ -24,7 +24,7 @@
     </div>
     <div class="head__rank">
       <div id="clientRank" class="rank"></div>
-      <img id="clientIconRank" src="bronze.png" alt="">
+      <img id="clientIconRank" src="bronze.png" alt="icon">
       <h2 id="clientName"></h2>
       <h3>Total Score : <span id="clientScore">default</span></h3>
     </div>
@@ -230,6 +230,8 @@
       $("#clientName").text(userInfor.name)
       $("#clientRank").text(userInfor.level)
       $("#clientScore").text(userInfor.total_score)
+      $("#clientIconRank").attr("src", `${userInfor.level}.png`);
+      // $("#clientIconRank").attr("src", `Master.png`);
 
       //save
       var d = new Date();
@@ -437,12 +439,12 @@
 
         function updateRank() {
           const userCookie = getDataFromCookie()
-          socket.emit("update-rank", { userCookie, correctAnswer })
+          socket.emit("update-rank", { userCookie, roomId: $("#clientRoom").text() })
         }
 
         //
         timeLeft++
-        timeLeftDisplay.innerHTML = timeLeft - timeAwait;
+        timeLeftDisplay.innerHTML = timeLeft;
         console.log(timeLeft);
 
         if (timeLeft == 1) console.log("6s to already....");

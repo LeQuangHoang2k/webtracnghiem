@@ -1,53 +1,58 @@
 const { conn } = require("../data/connect");
 
-exports.updateRank = (io, socket, data) => {
+exports.updateRank = async (io, socket, data) => {
   console.log("Welcome to rank", data);
 
   //
-  const { userCookie, currentScore } = data;
+  const { userCookie, roomId } = data;
 
-  checkRank({ userCookie, currentScore });
-  //   checkCurrentScore()
+  const newScore = await getNewScore({ userCookie, roomId });
+  console.log("10", newScore);
+  const newRank = await getNewRank(newScore);
+  console.log("12", newRank);
+
+  await finalUpdate({ userCookie, newScore, newRank });
+  console.log("update rank success");
 };
 
-const checkRank = ({ userCookie, currentScore }) => {
-  let newTotalScore = null;
-  let sum = userCookie.total_score + currentScore;
-  let difference = userCookie.total_score - currentScore;
+const getNewScore = async ({ userCookie, roomId }) => {
+  let newScore;
 
-  switch (userCookie.level) {
-    case "Copper": {
-      if (currentScore >= 5)
-        return (newTotalScore = userCookie.total_score + currentScore);
-      if (difference < 0) return 0;
-      return newTotalScore;
-    }
-    case "Silver": {
-      if (currentScore >= 6)
-        return (newTotalScore = userCookie.total_score + currentScore);
-      if (difference < 0) return 0;
-      return newTotalScore;
-    }
-    case "Gold": {
-      if (currentScore >= 7)
-        return (newTotalScore = userCookie.total_score + currentScore);
-      if (difference < 0) return 0;
-      return newTotalScore;
-    }
-    case "Platinum": {
-      if (currentScore >= 8)
-        return (newTotalScore = userCookie.total_score + currentScore);
-      if (difference < 0) return 0;
-      return newTotalScore;
-    }
-    case "Master": {
-      if (currentScore >= 9)
-        return (newTotalScore = userCookie.total_score + currentScore);
-      if (difference < 0) return 0;
-      return newTotalScore;
-    }
+  const getResult = (rows) => {
+    newScore = rows.sum;
+  };
+  await conn
+    .promise()
+    .query(
+      `SELECT sum(score) as sum FROM room_member WHERE id_user=${userCookie.id}`
+    )
+    .then(([rows]) => {
+      console.log("24", rows);
+      getResult(rows[0]);
+    });
 
-    default:
-      break;
-  }
+  return newScore;
+};
+
+const getNewRank = (newScore) => {
+  console.log("40", typeof newScore, newScore);
+  newScore = parseInt(newScore);
+  console.log("42", typeof newScore, newScore);
+
+  if (newScore < 100) return "Bronze";
+  if (newScore >= 100 && newScore < 500) return "Silver";
+  if (newScore >= 500 && newScore < 1000) return "Gold";
+  if (newScore >= 1500 && newScore < 2000) return "Platinum";
+  if (newScore >= 2000) return "Master";
+};
+
+const finalUpdate = async ({ userCookie, newScore, newRank }) => {
+  await conn
+    .promise()
+    .query(
+      `UPDATE user SET total_score = ${newScore},level="${newRank}" WHERE id=${userCookie.id}`
+    )
+    .then(([rows]) => {
+      console.log("24", rows);
+    });
 };
