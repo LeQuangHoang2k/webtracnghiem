@@ -95,17 +95,17 @@
         <div class="quiz-form__quiz1">
           <p class="quiz-form__question">Difficult</p>
           <label class="quiz-form__ans1">
-            <input type="radio" name="difficult" id="easy" value="1" checked />
+            <input type="radio" name="difficult" id="easy" value="0" checked />
             <span class="design1"></span>
             <span class="text1">Easy</span>
           </label>
           <label class="quiz-form__ans1">
-            <input type="radio" name="difficult" id="medium" value="2" />
+            <input type="radio" name="difficult" id="medium" value="1" />
             <span class="design1"></span>
             <span class="text1">Medium</span>
           </label>
           <label class="quiz-form__ans1">
-            <input type="radio" name="difficult" id="expert" value="3" />
+            <input type="radio" name="difficult" id="expert" value="2" />
             <span class="design1"></span>
             <span class="text1">Expert</span>
           </label>
@@ -324,6 +324,7 @@
       document.cookie = "level=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
       document.cookie = "total_score=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
       document.cookie = "difficult=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
+      document.cookie = "correctAnswer=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
 
 
       console.log(document.cookie);
@@ -370,9 +371,10 @@
 
       var quizAnswer = document.getElementsByClassName("quizAnswer");
 
-      let currentScore = 0
+      let correctAnswer = 0
       let indexQuestion = 0
       let timeLeft = 0
+      let timeAwait = 6
       let myInterval
       myInterval = setInterval(() => {
         function setQuestion() {
@@ -415,8 +417,8 @@
           const answerInfor = listAnswer[indexAnswerInList];
           console.log(answerInfor);
 
-          if (answerInfor.status) currentScore += 10
-          console.log("diem hien tai la : " + currentScore);
+          if (answerInfor.status) correctAnswer += 1
+          console.log("số câu đúng là : " + correctAnswer);
         };
 
         function showPageRank() {
@@ -428,18 +430,19 @@
 
         function saveMember() {
           const userCookie = getDataFromCookie()
-          console.log("send id và score", { usernameCookie: userCookie.username, currentScore, roomId: $("#clientRoom").text() });
-          socket.emit("save-member", { userCookieId: userCookie.id, currentScore, roomId: $("#clientRoom").text() })
+          console.log("send id và score", { usernameCookie: userCookie.username, correctAnswer, roomId: $("#clientRoom").text() });
+          document.cookie = `correctAnswer=${correctAnswer}`
+          socket.emit("save-member", { userCookie, correctAnswer, roomId: $("#clientRoom").text() })
         }
 
         function updateRank() {
           const userCookie = getDataFromCookie()
-          socket.emit("update-rank", { userCookie, currentScore })
+          socket.emit("update-rank", { userCookie, correctAnswer })
         }
 
         //
         timeLeft++
-        timeLeftDisplay.innerHTML = timeLeft;
+        timeLeftDisplay.innerHTML = timeLeft - timeAwait;
         console.log(timeLeft);
 
         if (timeLeft == 1) console.log("6s to already....");
@@ -473,20 +476,21 @@
     socket.on("show-rank-success", ({ listRank }) => {
       // alert("listRank")
       console.log("listRank", listRank);
+      const userCookie = getDataFromCookie()
 
       $("#top1PlayerName").text(listRank[0].name)
       $("#top1PlayerScore").text(listRank[0].score)
-      $("#top1PlayerRight").text(`${listRank[0].score / 10} out of 10`)
+      $("#top1PlayerRight").text(`${userCookie.correctAnswer}/10`)
 
       if (listRank[1]) {
         $("#top2PlayerName").text(listRank[1].name)
         $("#top2PlayerScore").text(listRank[1].score)
-        $("#top2PlayerRight").text(`${listRank[1].score / 10} out of 10`)
+        $("#top2PlayerRight").text(`${userCookie.correctAnswer}/10`)
       }
       if (listRank[2]) {
         $("#top3PlayerName").text(listRank[2].name)
         $("#top3PlayerScore").text(listRank[2].score)
-        $("#top3PlayerRight").text(`${listRank[2].score / 10} out of 10`)
+        $("#top3PlayerRight").text(`${userCookie.correctAnswer}/10`)
       }
 
     })

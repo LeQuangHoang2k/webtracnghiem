@@ -75,7 +75,7 @@ public class UserDAO {
 			stm.setString(4, user.getUsername());
 			stm.setString(5, hashPassword);
 			stm.setInt(6, 0);
-			stm.setString(7, "Copper");
+			stm.setString(7, "Bronze");
 			stm.executeUpdate();
 			System.out.println("da insert thanh cong ");
 		} catch (Exception e) {

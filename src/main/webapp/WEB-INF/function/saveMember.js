@@ -1,51 +1,87 @@
 const { conn } = require("../data/connect");
 
 exports.saveMember = async (io, socket, data) => {
-  let { userCookieId, currentScore, roomId } = data;
-  console.log(data);
+  let { userCookie, correctAnswer, roomId } = data;
+  console.log("5", data);
 
-  userCookieId = parseInt(userCookieId);
-  currentScore = parseInt(currentScore);
-  roomId = parseInt(roomId);
+  // return;
+  // userCookieId = parseInt(userCookieId);
+  // correctAnswer = parseInt(correctAnswer);
+  // roomId = parseInt(roomId);
 
-  console.log(roomId);
+  // console.log(roomId);
 
-  await saveRoomMember({ userCookieId, currentScore, roomId });
+  const finalScore = await calculateScore({ userCookie, correctAnswer });
+  await saveRoomMember({ userCookieId: userCookie.id, finalScore, roomId });
 
   socket.emit("save-member-success");
 };
 
-const saveRoomMember = async ({ userCookieId, currentScore, roomId }) => {
+const calculateScore = ({ userCookie, correctAnswer }) => {
+  switch (userCookie.level) {
+    case "Bronze": {
+      const finalScore = getFinalScore({
+        minCorrectAnswer: 5,
+        k: 0,
+        correctAnswer,
+        difficult: userCookie.difficult,
+      });
+      return finalScore;
+    }
+    case "Silver": {
+      const finalScore = getFinalScore({
+        minCorrectAnswer: 6,
+        k: 1,
+        correctAnswer,
+        difficult: userCookie.difficult,
+      });
+      return finalScore;
+    }
+    case "Gold": {
+      const finalScore = getFinalScore({
+        minCorrectAnswer: 7,
+        k: 2,
+        correctAnswer,
+        difficult: userCookie.difficult,
+      });
+      return finalScore;
+    }
+    case "Platinum": {
+      const finalScore = getFinalScore({
+        minCorrectAnswer: 8,
+        k: 3,
+        correctAnswer,
+        difficult: userCookie.difficult,
+      });
+      return finalScore;
+    }
+    case "Master": {
+      const finalScore = getFinalScore({
+        minCorrectAnswer: 9,
+        k: 4,
+        correctAnswer,
+        difficult: userCookie.difficult,
+      });
+      return finalScore;
+    }
+
+    default:
+      return 0;
+  }
+};
+
+const getFinalScore = ({ minCorrectAnswer, k, correctAnswer, difficult }) => {
+  const answerValid = correctAnswer - minCorrectAnswer;
+  let finalScore = answerValid * (k + difficult) * 10;
+  console.log("final score", finalScore);
+  // if (finalScore < 0) finalScore = 0;
+  return finalScore;
+};
+
+const saveRoomMember = async ({ userCookieId, finalScore, roomId }) => {
   conn
     .promise()
     .query(
-      `INSERT INTO room_member (id_room,id_user,score) VALUES (${roomId},${userCookieId},${currentScore})`
+      `INSERT INTO room_member (id_room,id_user,score) VALUES (${roomId},${userCookieId},${finalScore})`
     );
 };
-
-// const findBestPlayer = async ({ roomId }) => {
-//   const getResult2 = (rows) => {
-//     return { rows };
-//   };
-
-//   const myTimeout = setTimeout(() => {
-//     const getResult = (rows) => {
-//       //   console.log("37", rows);
-//       getResult2(rows);
-//     };
-
-//     conn
-//       .promise()
-//       .query(
-//         `SELECT * FROM room_member WHERE id_room=${roomId} ORDER BY score LIMIT 3`
-//       )
-//       .then(async ([rows]) => {
-//         await getResult(rows);
-//         clearTimeout(myTimeout);
-//       });
-//   }, 2000);
-
-//   const { rows } = getResult2();
-//   console.log("37", rows);
-//   return { rows };
-// };

@@ -1,0 +1,7 @@
+hệ_số_rank: icon_Copper(0), icon_Silver(1), icon_Gold(2), icon_Platinum(3), icon_Master(4)
+hệ_số_độ_khó: Easy(0), Normal(1), Expert(2)
+số_câu_đúng_tối_thiểu: icon_Copper(0), icon_Silver(1), icon_Gold(2), icon_Platinum(3), icon_Master(4)
+Công thức : (câu_trả_lời_đúng - số_câu_đúng_tối_thiểu) * (hệ_số_rank + hệ_số_độ_khó)
+ví dụ : Bạn đúng 3/10 , rank: Copper , độ_khó: Normal 
+=> Điểm_của_bạn : (3 - 5) * (0 + 0) = 0 
+Chúc bạn thi tốt nhé ! 
