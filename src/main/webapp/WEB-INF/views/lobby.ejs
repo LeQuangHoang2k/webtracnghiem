@@ -482,17 +482,17 @@
 
       $("#top1PlayerName").text(listRank[0].name)
       $("#top1PlayerScore").text(listRank[0].score)
-      $("#top1PlayerRight").text(`${userCookie.correctAnswer}/10`)
+      $("#top1PlayerRight").text(`${listRank[0].correct_answer}/10`)
 
       if (listRank[1]) {
         $("#top2PlayerName").text(listRank[1].name)
         $("#top2PlayerScore").text(listRank[1].score)
-        $("#top2PlayerRight").text(`${userCookie.correctAnswer}/10`)
+        $("#top2PlayerRight").text(`${listRank[1].correct_answer}/10`)
       }
       if (listRank[2]) {
         $("#top3PlayerName").text(listRank[2].name)
         $("#top3PlayerScore").text(listRank[2].score)
-        $("#top3PlayerRight").text(`${userCookie.correctAnswer}/10`)
+        $("#top3PlayerRight").text(`${listRank[2].correct_answer}/10`)
       }
 
     })

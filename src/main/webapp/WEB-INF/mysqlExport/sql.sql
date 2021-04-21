@@ -51,6 +51,7 @@ create table room_member(
     id_room int(10),
     id_user int(10),
     score int(10),
+    correct_answer int(10),
     primary key (id),
     foreign key (id_room) references room(id),
     foreign key (id_user) references user(id)

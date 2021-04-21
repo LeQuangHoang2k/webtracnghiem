@@ -21,7 +21,7 @@ const findThreeBestPlayer = async (roomId) => {
   await conn
     .promise()
     .query(
-      `SELECT name,score FROM room_member,user WHERE id_room=${roomId} AND room_member.id_user=user.id ORDER BY score LIMIT 3`
+      `SELECT name,score,correct_answer FROM room_member,user WHERE id_room=${roomId} AND room_member.id_user=user.id ORDER BY score DESC LIMIT 3`
     )
     .then(([rows]) => {
       console.log("25", rows);

@@ -4,15 +4,8 @@ exports.saveMember = async (io, socket, data) => {
   let { userCookie, correctAnswer, roomId } = data;
   console.log("5", data);
 
-  // return;
-  // userCookieId = parseInt(userCookieId);
-  // correctAnswer = parseInt(correctAnswer);
-  // roomId = parseInt(roomId);
-
-  // console.log(roomId);
-
   const finalScore = await calculateScore({ userCookie, correctAnswer });
-  await saveRoomMember({ userCookieId: userCookie.id, finalScore, roomId });
+  await saveRoomMember({ userCookie, finalScore, roomId, correctAnswer });
 
   socket.emit("save-member-success");
 };
@@ -78,10 +71,13 @@ const getFinalScore = ({ minCorrectAnswer, k, correctAnswer, difficult }) => {
   return finalScore;
 };
 
-const saveRoomMember = async ({ userCookieId, finalScore, roomId }) => {
-  conn
+const saveRoomMember = async (data) => {
+  const { userCookie, finalScore, roomId, correctAnswer } = data;
+  console.log("75", typeof roomId, roomId, typeof correctAnswer, correctAnswer);
+
+  await conn
     .promise()
     .query(
-      `INSERT INTO room_member (id_room,id_user,score) VALUES (${roomId},${userCookieId},${finalScore})`
+      `INSERT INTO room_member (id_room,id_user,score,correct_answer) VALUES (${roomId},${userCookie.id},${finalScore},${correctAnswer})`
     );
 };

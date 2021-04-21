@@ -47,10 +47,11 @@ const getNewRank = (newScore) => {
 };
 
 const finalUpdate = async ({ userCookie, newScore, newRank }) => {
+  console.log("50", typeof newScore, newScore, typeof newRank, newRank);
   await conn
     .promise()
     .query(
-      `UPDATE user SET total_score = ${newScore},level="${newRank}" WHERE id=${userCookie.id}`
+      `UPDATE user SET total_score = ${parseInt(newScore)}, level="${newRank}" WHERE id=${userCookie.id}`
     )
     .then(([rows]) => {
       console.log("24", rows);
