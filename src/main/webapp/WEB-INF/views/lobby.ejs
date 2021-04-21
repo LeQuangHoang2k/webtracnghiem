@@ -249,6 +249,11 @@
       socket.emit("create-room", (document.cookie))
       socket.on("create-room-success", ({ roomId }) => {
         document.getElementById("clientJoinId").value = roomId
+
+        const userCookie = getDataFromCookie()
+        let data = { id: userCookie.id, username: userCookie.username, name: userCookie.name, roomId: `${roomId.toString()}` }
+        console.log(data);
+        socket.emit("join-room", data)
       })
     }
 
@@ -346,11 +351,6 @@
     function startExam() {// nghi ft.hoang
       const roomId = document.getElementById("clientRoom").innerText;
       const optionExam = $("#optionExam").serialize()
-      const difficultOption = optionExam.charAt(optionExam.length - 1)
-      console.log("option : " + difficultOption);
-      // alert("option")
-
-      document.cookie = `difficult=${difficultOption}`
 
       socket.emit("all-member-start", ({ roomId, optionExam }))
     };
@@ -366,8 +366,14 @@
       }
     }
 
-    socket.on("all-member-start-success", ({ listQuestion, listAnswer, arrayQuestionId }) => {
+    socket.on("all-member-start-success", ({ listQuestion, listAnswer, arrayQuestionId, optionExam }) => {
       console.log(listQuestion, listAnswer, arrayQuestionId);
+
+      const difficultOption = optionExam.charAt(optionExam.length - 1)
+      console.log("option : " + difficultOption);
+      // alert("option")
+
+      document.cookie = `difficult=${difficultOption}`
 
       showPageExam()
 

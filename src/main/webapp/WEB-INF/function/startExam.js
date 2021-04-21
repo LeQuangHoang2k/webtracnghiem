@@ -24,6 +24,7 @@ exports.startExam = async (io, socket, data) => {
     listQuestion,
     listAnswer,
     arrayQuestionId,
+    optionExam
   });
 };
 
