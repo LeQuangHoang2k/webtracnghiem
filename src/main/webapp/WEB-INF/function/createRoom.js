@@ -1,5 +1,5 @@
 const { conn } = require("../data/connect");
-const bluebird = require("bluebird");
+
 exports.createRoom = async (socket, data) => {
   console.log("create room here! ");
   console.log(data);

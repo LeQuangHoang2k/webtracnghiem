@@ -18,16 +18,18 @@ exports.joinRoom = async (io, socket, data) => {
   //main
   globalRoomId = roomId;
   await addSocket(socket, roomId);
-  const index = await checkMemberExistInRoom(socket, username);
-  if (index < 0) addMember(id, username, name);
+  const index = await checkMemberExistInRoom(socket, username, roomId);
+  if (index < 0) addMember(id, username, name, roomId);
+  const { listFilterRoom } = await filterRoom(socket, roomId);
 
   //res
-  response(io, socket, roomId, creatorId);
+  response(io, socket, roomId, creatorId, listFilterRoom);
 };
 
 exports.leaveRoom = (io, socket) => {
   const index = globalListRoomMember.findIndex(
-    (item) => item.username === socket.username
+    (item) =>
+      item.username === socket.username && item.roomId === socket.clientRoom
   );
 
   globalListRoomMember.splice(index, 1);
@@ -67,30 +69,41 @@ const checkRoomUsableById = async (id) => {
 
 const addSocket = (socket, roomId) => {
   socket.join(roomId);
+  socket.clientRoom = roomId;
   console.log("join", roomId);
   console.log(socket.adapter.rooms);
 };
 
-const checkMemberExistInRoom = (socket, username) => {
+const checkMemberExistInRoom = (socket, username, roomId) => {
   const index = globalListRoomMember.findIndex(
-    (item) => item.username === socket.username
+    (item) => item.username === socket.username && item.clientRoom === roomId
   );
-  console.log("index", index);
+  console.log("index", index, socket.clientRoom);
   return index;
 };
 
-const addMember = (id, username, name) => {
-  globalListRoomMember.push({ id, username, name });
-  console.log(globalListRoomMember);
+const addMember = (id, username, name, roomId) => {
+  globalListRoomMember.push({ id, username, name, roomId });
+  console.log("88", globalListRoomMember);
 };
 
-const response = (io, socket, roomId, creatorId) => {
-  console.log("response", roomId, globalListRoomMember);
-  console.log(socket.adapter.rooms[roomId]);
-  // socket.emit("join-room-success", globalListRoomMember);
-  // socket.broadcast.emit("join-room-success", globalListRoomMember)
+const filterRoom = (socket, roomId) => {
+  console.log("92", globalListRoomMember);
+  const listFilterRoom = globalListRoomMember.filter(
+    (item) => (item.roomId === roomId)
+  );
+
+  console.log("listFilterRoom", listFilterRoom);
+
+  return { listFilterRoom };
+};
+
+const response = (io, socket, roomId, creatorId, listFilterRoom) => {
+  // console.log("response", roomId, listFilterRoom);
+  // console.log(socket.adapter.rooms[roomId]);
+
   io.in(roomId).emit("join-room-success", {
-    listMember: globalListRoomMember,
+    listMember: listFilterRoom,
     roomId,
     creatorId,
   });
