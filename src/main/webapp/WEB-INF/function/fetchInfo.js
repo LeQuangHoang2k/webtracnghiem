@@ -41,7 +41,7 @@ const getUserInfo = async (username) => {
   };
   await conn
     .promise()
-    .query(`SELECT * FROM user WHERE username=${username}`)
+    .query(`SELECT * FROM user WHERE username="${username}"`)
     .then(([rows]) => {
       getResult(rows[0]);
     });
