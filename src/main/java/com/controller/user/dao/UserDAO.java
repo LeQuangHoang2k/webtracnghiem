@@ -36,11 +36,11 @@ public class UserDAO {
 		if (checkEmpty(user.getName())) {
 			return "Error : Name is empty or length < 5";
 		}
-		
+
 		if (checkEmpty(user.getEmail())) {
 			return "Error : Email is empty or length < 5";
 		}
-		
+
 		if (checkEmpty(user.getPhone())) {
 			return "Error : Phone is empty or length < 11";
 		}
@@ -52,7 +52,7 @@ public class UserDAO {
 		if (checkEmpty(user.getPassword())) {
 			return "Error : Password is empty or length < 5";
 		}
-		
+
 		try (Connection conn = getConnection(); PreparedStatement stm = conn.prepareStatement(INSERT_USER_SQL)) {
 
 			if (checkExistUserByEmail(user.getEmail())) {
@@ -118,7 +118,7 @@ public class UserDAO {
 			if (!checkHashPassword(user.getPassword(), passwordSQL)) {
 				return "Error : Password doesn't match";
 			}
-			
+
 			System.out.println("Login success!");
 		} catch (Exception e) {
 			System.out.println(e);
@@ -147,9 +147,9 @@ public class UserDAO {
 
 		try (Connection conn = getConnection();
 				PreparedStatement stm = conn.prepareStatement(UPDATE_PASSWORD_BY_USERNAME)) {
-			
+
 			System.out.println("Forgot checking.... : ");
-			
+
 			if (!checkExistUserByEmail(user.getEmail())) {
 				return "Error : Email not valid";
 			}
@@ -166,7 +166,7 @@ public class UserDAO {
 			stm.setString(1, hashPassword);
 			stm.setString(2, user.getUsername());
 			stm.executeUpdate();
-			
+
 			System.out.println("Forgot success!");
 		} catch (Exception e) {
 			System.out.println(e);
@@ -180,6 +180,8 @@ public class UserDAO {
 	}
 
 	private boolean checkHashPassword(String password, String passwordSQL) {
+		if (passwordSQL.length() < 60 || !passwordSQL.contains("$2a$12$"))
+			return false;
 		return BCrypt.checkpw(password, passwordSQL);
 	}
 
