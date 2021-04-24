@@ -39,9 +39,9 @@ const getNewRank = (newScore) => {
   newScore = parseInt(newScore);
   console.log("42", typeof newScore, newScore);
 
-  if (newScore < 100) return "Bronze";
-  if (newScore >= 100 && newScore < 500) return "Silver";
-  if (newScore >= 500 && newScore < 1000) return "Gold";
+  if (newScore < 500) return "Bronze";
+  if (newScore >= 500 && newScore < 1000) return "Silver";
+  if (newScore >= 1000 && newScore < 1500) return "Gold";
   if (newScore >= 1500 && newScore < 2000) return "Platinum";
   if (newScore >= 2000) return "Master";
 };
