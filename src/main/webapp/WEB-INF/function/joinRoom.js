@@ -18,8 +18,7 @@ exports.joinRoom = async (io, socket, data) => {
   //main
   globalRoomId = roomId;
   await addSocket(socket, roomId);
-  const index = await checkMemberExistInRoom(socket, username, roomId);
-  if (index < 0) addMember(id, username, name, roomId);
+  await addMember(id, username, name, roomId);
   const { listFilterRoom } = await filterRoom(socket, roomId);
 
   //res
@@ -75,22 +74,34 @@ const addSocket = (socket, roomId) => {
 };
 
 const checkMemberExistInRoom = (socket, username, roomId) => {
-  const index = globalListRoomMember.findIndex(
-    (item) => item.username === socket.username && item.clientRoom === roomId
-  );
-  console.log("index", index, socket.clientRoom);
-  return index;
+  // const index = globalListRoomMember.findIndex(
+  //   (item) => item.username === socket.username && item.clientRoom === roomId
+  // );
+  console.log("index", socket.clientRoom);
+
+  globalListRoomMember.forEach((item) => {
+    if (item.username === socket.username && item.clientRoom === roomId) {
+      return true;
+    }
+  });
+
+  return false;
 };
 
 const addMember = (id, username, name, roomId) => {
-  globalListRoomMember.push({ id, username, name, roomId });
+  if (
+    !globalListRoomMember.some(
+      (item) => item.username == username && item.roomId == roomId
+    )
+  )
+    globalListRoomMember.push({ id, username, name, roomId });
   console.log("88", globalListRoomMember);
 };
 
 const filterRoom = (socket, roomId) => {
   console.log("92", globalListRoomMember);
   const listFilterRoom = globalListRoomMember.filter(
-    (item) => (item.roomId === roomId)
+    (item) => item.roomId === roomId
   );
 
   console.log("listFilterRoom", listFilterRoom);
