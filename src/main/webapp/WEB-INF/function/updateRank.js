@@ -6,32 +6,53 @@ exports.updateRank = async (io, socket, data) => {
   //
   const { userCookie, roomId } = data;
 
-  const newScore = await getNewScore({ userCookie, roomId });
-  console.log("10", newScore);
-  const newRank = await getNewRank(newScore);
+  const newTotalScore = await getNewTotalScore({ userCookie, roomId });
+  console.log("10", newTotalScore);
+  const newRank = await getNewRank(newTotalScore);
   console.log("12", newRank);
 
-  await finalUpdate({ userCookie, newScore, newRank });
+  await finalUpdate({ userCookie, newTotalScore, newRank });
   console.log("update rank success");
 };
 
-const getNewScore = async ({ userCookie, roomId }) => {
-  let newScore;
+const getNewTotalScore = async ({ userCookie, roomId }) => {
+  let lastestScore;
+  let totalScore;
+  let newTotalScore;
 
-  const getResult = (rows) => {
-    newScore = rows.sum;
+  const getLastestScore = (rows) => {
+    lastestScore = rows.score;
   };
+
+  const getTotalScore = (rows) => {
+    totalScore = rows.total_score;
+  };
+
+  const getNewTotalScore = () => {
+    newTotalScore = totalScore + lastestScore;
+    console.log("newTotalScore", newTotalScore);
+  };
+
   await conn
     .promise()
     .query(
-      `SELECT sum(score) as sum FROM room_member WHERE id_user=${userCookie.id}`
+      `SELECT score FROM room_member WHERE id_user=${userCookie.id} ORDER BY id_room DESC LIMIT 1`
     )
     .then(([rows]) => {
       console.log("24", rows);
-      getResult(rows[0]);
+      getLastestScore(rows[0]);
     });
 
-  return newScore;
+  await conn
+    .promise()
+    .query(`SELECT total_score FROM user WHERE id=${userCookie.id}`)
+    .then(async ([rows]) => {
+      console.log("24", rows);
+      await getTotalScore(rows[0]);
+      await getNewTotalScore();
+    });
+
+  return newTotalScore;
 };
 
 const getNewRank = (newScore) => {
@@ -46,12 +67,20 @@ const getNewRank = (newScore) => {
   if (newScore >= 2000) return "Master";
 };
 
-const finalUpdate = async ({ userCookie, newScore, newRank }) => {
-  console.log("50", typeof newScore, newScore, typeof newRank, newRank);
+const finalUpdate = async ({ userCookie, newTotalScore, newRank }) => {
+  console.log(
+    "50",
+    typeof newTotalScore,
+    newTotalScore,
+    typeof newRank,
+    newRank
+  );
   await conn
     .promise()
     .query(
-      `UPDATE user SET total_score = ${parseInt(newScore)}, level="${newRank}" WHERE id=${userCookie.id}`
+      `UPDATE user SET total_score = ${parseInt(
+        newTotalScore
+      )}, level="${newRank}" WHERE id=${userCookie.id}`
     )
     .then(([rows]) => {
       console.log("24", rows);

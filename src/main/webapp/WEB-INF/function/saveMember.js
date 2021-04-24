@@ -65,7 +65,7 @@ const calculateScore = ({ userCookie, correctAnswer }) => {
 
 const getFinalScore = ({ minCorrectAnswer, k, correctAnswer, difficult }) => {
   const answerValid = correctAnswer - minCorrectAnswer;
-  let finalScore = answerValid * (k + difficult) * 10;
+  let finalScore = answerValid * (parseInt(k) + parseInt(difficult)) * 10;
   console.log("final score", finalScore);
   // if (finalScore < 0) finalScore = 0;
   return finalScore;
