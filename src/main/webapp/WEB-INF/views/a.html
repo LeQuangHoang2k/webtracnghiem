@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
 
-  <link rel="stylesheet" href="light-verse.css">
   <link rel="stylesheet" href="ranking.css">
   <link rel="stylesheet" href="quiz-form.css">
   <link rel="stylesheet" href="lobby.css">
@@ -19,109 +18,75 @@
 </head>
 
 <body>
-
   <div class="container__lobby">
-    <div class="head">
-      <div class="head__id">
-        <h2 id="clientRoom">Good luck !</h2>
+    <div class="head__id">
+      <h2 id="clientRoom"></h2>
+    </div>
+    <div class="head__rank">
+      <div id="clientRank" class="rank"></div>
+      <img id="clientIconRank" src="bronze.png" alt="icon">
+      <h2 id="clientName"></h2>
+      <h3>Total Score : <span id="clientScore">default</span></h3>
+    </div>
+
+    <a class="btn" id="showRoomModal" href="#open-modal">Join / Create</a>
+    <button type="button" id="quitRoom" onclick="quitRoom()" style="display: none;">Quit Room</button>
+    <div id="open-modal" class="modal-window">
+
+      <div class="button-box">
+        <div id="btn"></div>
+        <button type="button" class="toggle-btn" onclick="join()">Join</button>
+        <button type="button" class="toggle-btn" onclick="create()">Create</button>
       </div>
-      <div class="head__rank">
-        <div class="rank" id="clientRank">Master</div>
-        <img id="clientIconRank" src="" alt="icon_rank">
-        <h2 id="clientName">Quangg Hoàng</h2>
-        <h3>Total Score : <span id="clientScore"></span></h3>
-      </div>
-
-      <button class="btn modal-btn" id="showRoomModal">Join / Create</button>
-
-      <div class="modal-overlay">
-        <div class="modal-container">
-          <form id="join" class="form">
-            <div class="input">
-              <div class="inputBox">
-                <input type="text" placeholder="Please input ur ID Room" id="clientJoinId"
-                  onkeydown="changeColor(event);" />
-              </div>
-              <div class="inputBox">
-                <input type="button" value="Join" id="submit" onclick="handleJoinRoom();" />
-                <input type="button" value="Create" class="create" onclick="handleCreateRoom();" />
-              </div>
-            </div>
-          </form>
-          <button class="close-btn"><i class="fas fa-times"></i></button>
-
+      <form id="create">
+        <a href="#" title="Close" class="modal-close">Close</a>
+        <!-- <h2>Create Room</h2> -->
+        <div class="input">
+          <div class="inputBox">
+          </div>
+          <div class="inputBox">
+            <button type="button" class="submit" onclick="handleCreateRoom()">Create</button>
+          </div>
         </div>
-      </div>
+      </form>
+
+      <form id="join">
+        <a href="#" title="Close" class="modal-close">Close</a>
+        <!-- <h2>Join Room</h2> -->
+        <div class="input">
+          <div class="inputBox">
+            <input type="text" id="clientJoinId" placeholder="Please input ur ID Room" />
+          </div>
+          <div class="inputBox">
+            <button type="button" class="submit" onclick="handleJoinRoom()">Join</button>
+          </div>
+        </div>
+      </form>
     </div>
 
     <div class="lobby__body" id="lobby__body"></div>
 
-
-    <div class="overlay" id="overlay"></div>
-    <div class="modal" id="modal">
-      <p class="title">How to calculate your score / rank ?</p>
-      <p class="content">
-        Ranking coefficient: Bronze(0), Silver(1), Gold(2), Platinum(3), Master(4). <br>
-        Difficulty coefficient: Easy(0), Normal(1), Expert(2). <br>
-        Minimum of correct answers: Bronze(5), Silver(6), Gold(7), Platinum(8), Master(9). <br>
-        Recipe : (Correct answers - Minimum of correct answers ) * (Ranking coefficient + Difficulty coefficient) * 10.
-        <br>
-        For Example : You are correct 3/10 at Bronze and You choose difficult is Normal.
-        So your point will be : (3 - 5) * (0 + 0) = 0. <br>
-        Rank: Bronze(< 500), Silver(500 to 999), Gold(1000 to 1499), Platinum(1500 to 1999), Master(Remain) <br>
-      </p>
-      <p class="luck">Good luck !</p>
-      <button class="close-btn" id="close-btn"><i class="fa fa-times"></i></button>
-    </div>
-
-    <div class="next__page">
-      <button type="button" class="learn-more" id="showPageOption" onclick="intoStart();" style="display: none;">
-        <span class="circle" aria-hidden="true">
-          <span class="icon arrow"></span>
-        </span>
-        <span class="button-text">Let's go</span>
-      </button>
-      <div class="action">
-        <div class="profile">
-          <i class="fa fa-cog" aria-hidden="true"></i>
-        </div>
-        <div class="menu ">
-          <button class="score_method" id="btn-modal">Guide</button>
-          <div class="toggle"><span class="mode">Mode</span></div>
-          <div class="leave__room" id="quitRoom">
-            <button onclick="leaveRoom()">Refresh</button>
-          </div>
-          <div class="logout">
-            <a href="javascript:void(0)" onclick="logout();">Log Out</a>
-            <div class="doorway">
-              <div class="door">
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    <button type="button" id="showPageOption" style="display: none;" onclick="intoStart()">Let's go</button>
+    <button type="button" onclick="logout()">Logout</button>
   </div>
 
   <div class="animate__animated animate__zoomIn container__start" style="display: none;">
     <div class="quiz">
-      <form class="quiz-form" id="optionExam">
+      <form id="optionExam" class="quiz-form" accept-charset="utf-8">
         <div class="quiz-form__quiz1">
           <p class="quiz-form__question">Topic</p>
           <label class="quiz-form__ans1">
-            <input type="radio" name="topic" id="" value="IT" checked />
+            <input type="radio" name="topic" id="IT" value="IT" checked />
             <span class="design1"></span>
-            <span class="text1">IT</span>
+            <span class="text1">Công nghệ</span>
           </label>
           <label class="quiz-form__ans1">
-            <input type="radio" name="topic" id="" value="history" />
+            <input type="radio" name="topic" id="history" value="history" />
             <span class="design1"></span>
             <span class="text1">Sử</span>
           </label>
           <label class="quiz-form__ans1">
-            <input type="radio" name="topic" id="" value="geography" />
+            <input type="radio" name="topic" id="geographic" value="geography" />
             <span class="design1"></span>
             <span class="text1">Địa</span>
           </label>
@@ -130,34 +95,28 @@
         <div class="quiz-form__quiz1">
           <p class="quiz-form__question">Difficult</p>
           <label class="quiz-form__ans1">
-            <input type="radio" name="difficult" id="" value="0" checked />
+            <input type="radio" name="difficult" id="easy" value="0" checked />
             <span class="design1"></span>
             <span class="text1">Easy</span>
           </label>
           <label class="quiz-form__ans1">
-            <input type="radio" name="difficult" id="" value="1" />
+            <input type="radio" name="difficult" id="medium" value="1" />
             <span class="design1"></span>
             <span class="text1">Medium</span>
           </label>
           <label class="quiz-form__ans1">
-            <input type="radio" name="difficult" id="" value="2" />
+            <input type="radio" name="difficult" id="expert" value="2" />
             <span class="design1"></span>
             <span class="text1">Expert</span>
           </label>
         </div>
       </form>
     </div>
-    <div class="inputBx">
-      <button class="submit animate__animated animate__zoomIn" onclick="showPageLobby()">Back</button>
-      <button class="submit animate__animated animate__zoomIn" id="start-button" onclick="startExam();">Start</button>
-      <!-- <input
-        class="submit animate__animated animate__zoomIn"
-        id="start-button"
-        type="submit"
-        value="Start"
-        onclick="intoQuiz();"
-      /> -->
-    </div>
+    <button type="button" onclick="showPageLobby()">
+      <<<<<< </button>
+        <input class="submit animate__animated animate__zoomIn" id="start-button" type="submit" value="Start"
+          onclick="startExam();" />
+
   </div>
 
   <div class="animate__animated animate__zoomIn container__quiz" style="display: none;">
@@ -176,7 +135,7 @@
             6s to ready...
           </p>
           <label class="quiz-form__ans" for="answer_A">
-            <input type="radio" name="quizAnswerValue" id="answer_A" value="0" />
+            <input type="radio" name="quizAnswerValue" id="answer_A" value="0" checked />
             <span class="design"></span>
             <span class="text quizAnswer"></span>
           </label>
@@ -209,7 +168,7 @@
         <img src="silver-medal.png" alt="" />
         <h2 id="top2PlayerName"></h2>
         <div class="score">
-          <h1 id="top2PlayerScore"></h1>
+          <h2 id="top2PlayerScore"></h2>
           <h3 id="top2PlayerRight"></h3>
         </div>
       </div>
@@ -230,134 +189,26 @@
         </div>
 
       </div>
-      <!-- <div class="catchup__box">
-        <div class="final__rank">
-          <img class="medal" src="medal.png" alt="" />
-          <h2>Hoàng</h2>
-        </div>
-        <div class="final__rank">
-          <img class="medal" src="medal.png" alt="" />
-          <h2>Bảo</h2>
-        </div>
-      </div> -->
-
-
     </div>
   </div>
-
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
     // nghi
-    // Type & change Color
-    function changeColor() {
-      var submit = document.getElementById('submit');
-      var color = document.getElementById('clientJoinId');
-      if (color.value.length > 0) {
-        submit.style.color = "red";
-      }
-      else {
-        submit.style.color = "grey";
-      }
+    var x = document.getElementById("join");
+    var y = document.getElementById("create");
+    var z = document.getElementById("btn");
+    function create() {
+      x.style.left = "-50%";
+      y.style.left = "50%";
+      z.style.left = "82px";
     }
-
-    // transform div 
-    var a = document.querySelector(".container__quiz");
-    var b = document.querySelector(".container__start");
-    var c = document.querySelector('.container__lobby');
-    var d = document.querySelector('.container__rank');
-    function intoStart() {
-      if (b.style.display === "none") {
-        b.style.display = "block";
-        c.style.display = "none";
-      }
-    };
-
-    // transform div & active clock 
-    const timeLeftDisplay = document.querySelector("#time-left");
-    const startBtn = document.querySelector("#start-button");
-    let timeLeft = 0;
-
-    function intoQuiz() {
-      if (a.style.display === "none") {
-        a.style.display = "block";
-        b.style.display = "none";
-      }
-      setInterval(function () {
-        d.style.display = "none";
-        if (timeLeft >= 60) {
-          d.style.display = "block";
-          a.style.display = "none";
-          clearInterval(timeLeft = 60);
-        }
-        // setTimeout(function(){
-        //     if(c.style.display === "none"){
-        //     c.style.display = "block";
-        //     d.style.display = "none";
-        //   }
-        // }, 6000);
-
-        timeLeftDisplay.innerHTML = timeLeft;
-        timeLeft += 1;
-      }, 1000);
-      startBtn.addEventListener("click", intoQuiz);
-    };
-
-
-    // transform tab create-join & MODAL
-    const x = document.getElementById("join");
-    const visibility = document.querySelector('.btn');
-    function hidden() {
-      visibility.style.display = "none";
-      openModal.style.display = "none";
-      modalOverlay.style.display = "none";
+    function join() {
+      x.style.left = "50%";
+      y.style.left = "-50%";
+      z.style.left = "0px";
     }
-
-    const modalOverlay = document.querySelector(".modal-overlay");
-    const openModalBtn = document.querySelector(".modal-btn");
-    const closeModalBtn = document.querySelector(".close-btn");
-    const openModal = document.querySelector(".modal-container")
-    const form = document.querySelector("form")
-    openModalBtn.addEventListener("click", function () {
-      modalOverlay.classList.add("open-overlay");
-      openModal.classList.add("open-modal");
-    });
-
-    closeModalBtn.addEventListener("click", function () {
-      modalOverlay.classList.remove("open-overlay");
-      openModal.classList.remove("open-modal")
-    });
-
-    window.addEventListener('click', function (event) {
-      if (event.target === modalOverlay) {
-        modalOverlay.classList.remove("open-overlay");
-        openModal.classList.remove("open-modal");
-      }
-    })
-
-    // toggle night/light mode
-    const body = document.querySelector("body");
-    document.querySelector('.toggle').onclick = function () {
-      body.classList.toggle('light');
-    };
-
-
-    // MODAL-RANK
-    document.getElementById('btn-modal').addEventListener('click', function () {
-      document.getElementById('overlay').classList.add('is-visible');
-      document.getElementById('modal').classList.add('is-visible');
-    });
-    document.getElementById('close-btn').addEventListener('click', function () {
-      document.getElementById('overlay').classList.remove('is-visible');
-      document.getElementById('modal').classList.remove('is-visible');
-    });
-    document.getElementById('overlay').addEventListener('click', function () {
-      document.getElementById('modal').classList.remove('is-visible');
-      document.getElementById('overlay').classList.remove('is-visible');
-    });
-
-
     // transform div 
     function intoStart() {
       var x = document.querySelector(".container__start");
@@ -367,8 +218,6 @@
         y.style.display = "none"
       }
     };
-
-
     //hoang
     if (!document.cookie || document.cookie < 0) window.location.href = "http://localhost:8080/website-trac-nghiem/"
     const socket = io();
@@ -378,7 +227,7 @@
       $("#clientRank").text(userInfor.level)
       $("#clientScore").text(userInfor.total_score)
       $("#clientIconRank").attr("src", `${userInfor.level}.png`);
-
+      // $("#clientIconRank").attr("src", `Master.png`);
       //save
       var d = new Date();
       d.setTime(d.getTime() + (7 * 24 * 60 * 60 * 1000));
@@ -387,79 +236,62 @@
       document.cookie = `name=${userInfor.name};${expires};path=/`
       document.cookie = `total_score=${userInfor.total_score};${expires};path=/`
       document.cookie = `level=${userInfor.level};${expires};path=/`
-
       console.log(document.cookie);
     })
-
     const handleCreateRoom = () => {
       socket.emit("create-room", (document.cookie))
       socket.on("create-room-success", ({ roomId }) => {
         document.getElementById("clientJoinId").value = roomId
-
         const userCookie = getDataFromCookie()
         let data = { id: userCookie.id, username: userCookie.username, name: userCookie.name, roomId: `${roomId.toString()}` }
         console.log(data);
         socket.emit("join-room", data)
       })
     }
-
     const handleJoinRoom = () => {
       var roomId = document.getElementById("clientJoinId").value
       if (!roomId && roomId === "") return alert("Not valid Input")
-
       const userCookie = getDataFromCookie()
-
       let data = { id: userCookie.id, username: userCookie.username, name: userCookie.name, roomId }
       console.log(data);
-
       socket.emit("join-room", data)
     }
-
     socket.on("join-room-success", ({ listMember, roomId, creatorId }) => {
       $("#clientRoom").text(roomId)
       resetOldListMember(listMember)
       showNewListMember(listMember)
-
       const userCookie = getDataFromCookie()
       document.getElementById("quitRoom").style.display = "block"
       document.getElementById("showRoomModal").style.display = "none"
-
       if (userCookie.id == creatorId) {
         // alert("Bạn là chủ phòng");
         document.getElementById("showPageOption").style.display = "block"
       }
     })
-
     socket.on("join-room-failed", () => {
       alert("This room is blocked")
     })
-
     socket.on("someone-leave-room", (listMember) => {
       resetOldListMember(listMember)
       showNewListMember(listMember)
     })
-
     const getDataFromCookie = () => {
       let array = []
       let userCookie = {}
-
       array = document.cookie.split("; ")
       array.forEach((item) => {
         item = item.split("=")
         userCookie[item[0]] = item[1]
       })
       console.log("cookie", userCookie);
-
       return userCookie
     }
-
     const resetOldListMember = (listMember) => {
       const divListMember = document.getElementById("lobby__body");
       while (divListMember.lastElementChild) {
         divListMember.removeChild(divListMember.lastElementChild);
       }
     }
-
     const showNewListMember = (listMember) => {
       listMember.forEach((item) => {
         var html = document.createElement("div");
@@ -469,7 +301,6 @@
         document.getElementById("lobby__body").appendChild(html);
       })
     }
-
     const logout = () => {
       document.cookie = "id=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
       document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -478,29 +309,23 @@
       document.cookie = "total_score=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
       document.cookie = "difficult=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
       document.cookie = "correctAnswer=; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
-
-
       console.log(document.cookie);
       window.location.href = "http://localhost:8080/website-trac-nghiem"
     }
-
     const showPageLobby = () => {
       var a = document.querySelector(".container__lobby");
       var b = document.querySelector(".container__start")
       a.style.display = "block";
       b.style.display = "none";
     }
-
-    // // transform div & active clock 
-    // const timeLeftDisplay = document.querySelector("#time-left");
-    // let timeLeft = 0;
+    // transform div & active clock 
+    const timeLeftDisplay = document.querySelector("#time-left");
+    let timeLeft = 0;
     function startExam() {// nghi ft.hoang
       const roomId = document.getElementById("clientRoom").innerText;
       const optionExam = $("#optionExam").serialize()
-
       socket.emit("all-member-start", ({ roomId, optionExam }))
     };
-
     const showPageExam = () => {
       var a = document.querySelector(".container__quiz");
       var b = document.querySelector(".container__start")
@@ -511,20 +336,14 @@
         c.style.display = "none";
       }
     }
-
     socket.on("all-member-start-success", ({ listQuestion, listAnswer, arrayQuestionId, optionExam }) => {
       console.log(listQuestion, listAnswer, arrayQuestionId);
-
       const difficultOption = optionExam.charAt(optionExam.length - 1)
       console.log("option : " + difficultOption);
       // alert("option")
-
       document.cookie = `difficult=${difficultOption}`
-
       showPageExam()
-
       var quizAnswer = document.getElementsByClassName("quizAnswer");
-
       let correctAnswer = 0
       let indexQuestion = 0
       let timeLeft = 0
@@ -533,30 +352,23 @@
       myInterval = setInterval(() => {
         function setQuestion() {
           var indexQuestion = timeLeft / 6 - 1
-
           if (!listQuestion[indexQuestion] || indexQuestion === 10) return false
           $("#quizQuestion").text(`Question ${indexQuestion + 1}: ${listQuestion[indexQuestion].content}`)
           console.log("setQuestion câu hỏi trong list" + indexQuestion);
-
           return true
         };
-
         function setAnswer() {
           var indexQuestion = timeLeft / 6 - 1
           var indexAnswerA = 4 * indexQuestion
           var indexAnswerB = 4 * indexQuestion + 1
           var indexAnswerC = 4 * indexQuestion + 2
           var indexAnswerD = 4 * indexQuestion + 3
-
           console.log("setQuestion câu trả lời trong list: " + indexAnswerA, indexAnswerB, indexAnswerC, indexAnswerD);
-
           quizAnswer[0].innerHTML = listAnswer[indexAnswerA].content;
           quizAnswer[1].innerHTML = listAnswer[indexAnswerB].content;
           quizAnswer[2].innerHTML = listAnswer[indexAnswerC].content;
           quizAnswer[3].innerHTML = listAnswer[indexAnswerD].content;
-
         };
-
         function submitAnswer() {
           const yourChoice = $("#formExam").serialize()
           const indexChoice = yourChoice.charAt(yourChoice.length - 1)
@@ -566,39 +378,32 @@
           var indexAnswerInList = parseInt(indexAnswerA) + parseInt(indexChoice)
           // console.log(yourChoice);
           // console.log(indexChoice);
-
           // console.log("cau trl tuong ung:", parseInt(indexAnswerA) + parseInt(indexChoice));
           const answerInfor = listAnswer[indexAnswerInList];
           console.log(answerInfor);
-
           if (answerInfor.status) correctAnswer += 1
           console.log("số câu đúng là : " + correctAnswer);
         };
-
         function showPageRank() {
           document.querySelector('.container__quiz').style.display = "none";
           document.querySelector('.container__lobby').style.display = "none";
           document.querySelector('.container__start').style.display = "none";
           document.querySelector('.container__rank').style.display = "block";
         }
-
         function saveMember() {
           const userCookie = getDataFromCookie()
           console.log("send id và score", { usernameCookie: userCookie.username, correctAnswer, roomId: $("#clientRoom").text() });
           document.cookie = `correctAnswer=${correctAnswer}`
           socket.emit("save-member", { userCookie, correctAnswer, roomId: $("#clientRoom").text() })
         }
-
         function updateRank() {
           const userCookie = getDataFromCookie()
           socket.emit("update-rank", { userCookie, roomId: $("#clientRoom").text() })
         }
-
         //
         timeLeft++
         timeLeftDisplay.innerHTML = timeLeft;
         console.log(timeLeft);
-
         if (timeLeft == 1) console.log("6s to already....");
         if (timeLeft !== 0 && timeLeft % 6 == 0) {
           const ok = setQuestion();
@@ -611,33 +416,24 @@
           }
           setAnswer();
         }
-
         if (timeLeft > 6 && timeLeft % 6 === 5) {
           submitAnswer()
         }
-
         if (timeLeft == 66) return
-
       }, 1000)
     })
-
     socket.on("save-member-success", () => {
-      // alert("You will back in 2 second....")
-
       setTimeout(() => {
         socket.emit("show-rank", { roomId: $("#clientRoom").text() })
       }, 2000)
     })
-
     socket.on("show-rank-success", ({ listRank }) => {
       // alert("listRank")
       console.log("listRank", listRank);
       const userCookie = getDataFromCookie()
-
       $("#top1PlayerName").text(listRank[0].name)
       $("#top1PlayerScore").text(listRank[0].score)
       $("#top1PlayerRight").text(`${listRank[0].correct_answer}/10`)
-
       if (listRank[1]) {
         $("#top2PlayerName").text(listRank[1].name)
         $("#top2PlayerScore").text(listRank[1].score)
@@ -648,20 +444,13 @@
         $("#top3PlayerScore").text(listRank[2].score)
         $("#top3PlayerRight").text(`${listRank[2].correct_answer}/10`)
       }
-
-      setTimeout(() => {
-        window.location.reload()
-      }, 2000)
     })
-
-    const leaveRoom = () => {
+    const quitRoom = () => {
       window.location.reload()
     }
-
-
-
   </script>
 
 </body>
 
 </html>
+© 2021 GitHub, Inc.

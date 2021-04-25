@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="light-verse.css">
+    <link rel="stylesheet" href="ranking.css">
+    <link rel="stylesheet" href="quiz-form.css">
+    <link rel="stylesheet" href="lobby.css">
+    <link rel="stylesheet" href="start.css">
+  </head>
+  <body>
+
+    <div class="container__lobby">
+      <div class="head">
+        <div class="head__id">
+          <h2>3711827</h2>
+        </div>
+        <div class="head__rank">
+          <div class="rank">Master</div>
+          <img src="master.png" alt="">
+          <h2>Quangg Hoàng</h2>
+          <h3>Total Score : 500</h3>
+        </div>
+
+        <button class="btn modal-btn">Join / Create</button>
+  
+        <div class="modal-overlay">
+          <div class="modal-container">  
+            <form id="join" class="form">
+              <div class="input">
+                <div class="inputBox">
+                  <input type="text" placeholder="Please input ur ID Room" id="text-type" onkeydown="changeColor(event);"  />
+                </div>
+                <div class="inputBox">
+                  <input type="button" value="Join" id="submit" onclick="hidden();"/>
+                  <input type="button" value="Create" class="create" onclick="hidden();" />
+                </div>
+              </div>
+            </form>
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="lobby__body">
+        <div class="user">Lê Đức Nghị</div>
+        <div class="user">Lee Quang Hoàng</div>
+        <div class="user">Phạm Anh Tứng</div>
+        <div class="user">Phùng Quốc Hùng</div>
+        <div class="user">Lee Hoàng Bảo</div>
+        <div class="user">Nguyễn Hải Ngọc Tố Nga</div>
+        <div class="user">Lee Hoàng Bảo</div>
+        <div class="user">Lee Hoàng Bảo</div>
+        <div class="user">Lee Hoàng Bảo</div>
+        <div class="user">Lee Hoàng Bảo</div>
+        <div class="user">Lee Hoàng Bảo</div>
+        <div class="user">Lee Hoàng Bảo</div>
+        <div class="user">Lee Hoàng Bảo</div>
+        <div class="user">Lee Hoàng Bảo</div>
+        <div class="user">Lee Hoàng Bảo</div>
+        <div class="user">Lee Hoàng Bảo</div>
+        <div class="user">Lee Hoàng Bảo</div>
+        <div class="user">Lee Hoàng Bảo</div>
+        <div class="user">Lee Hoàng Bảo</div>
+      </div>
+
+
+      <div class="overlay" id="overlay"></div>
+      <div class="modal" id="modal">
+        <p class="title">How to calculate your score / rank ?</p>
+        <p class="content">
+          Ranking coefficient: Bronze(0), Silver(1), Gold(2), Platinum(3), Master(4). <br>
+          Difficulty coefficient: Easy(0), Normal(1), Expert(2). <br>
+          Minimum of correct answers: Bronze(5), Silver(6), Gold(7), Platinum(8), Master(9). <br>
+          Recipe : (Correct answers - Minimum of correct answers ) * (Ranking coefficient + Difficulty coefficient) * 10. <br>
+          For Example : You are correct 3/10 at Bronze and You choose difficult is Normal. 
+          So your point will be : (3 - 5) * (0 + 0) = 0. <br>
+          Bronze(lower 500 point), Silver(500 to 999 point), Gold(1000 to 1499 point), Platinum(1500 to 1999), Master(Remain) <br>
+          </p>
+          <p class="luck">Good luck !</p>
+        <button class="close-btn" id="close-btn"><i class="fa fa-times" ></i></button>
+      </div>
+      
+      <div class=" next__page">        
+        <button class="learn-more"> 
+          <span class="circle" aria-hidden="true">
+            <span class="icon arrow"></span>
+          </span> 
+          <span class="button-text" onclick="intoStart();">Let's go</span>
+        </button>        
+        <div class="action">
+          <div class="profile" onclick="menuToggle();">
+            <i class="fa fa-cog" aria-hidden="true"></i>
+          </div>
+          <div class="menu ">            
+            <button class="score_method" id="btn-modal"> Score Method</button>            
+            <div class="toggle"><span class="mode">Mode</span></div>
+            <div class="leave__room" >
+              <button >Leave</button>
+            </div>           
+            <div class="logout">
+              <a href="index.html">Log Out</a>
+              <div class="doorway">
+                <div class="door">
+                  <span></span>
+                </div>
+              </div>
+            </div>
+          </div>          
+        </div>
+      </div>
+
+    </div>
+    
+    <div class="animate__animated animate__zoomIn container__start" style="display: none;">
+      <div class="quiz">
+        <form class="quiz-form">
+          <div class="quiz-form__quiz1">
+            <p class="quiz-form__question">Topic</p>
+            <label class="quiz-form__ans1">
+              <input type="radio" name="q1" id="q11" value="A" checked />
+              <span class="design1"></span>
+              <span class="text1">Toán</span>
+            </label>
+            <label class="quiz-form__ans1">
+              <input type="radio" name="q1" id="q12" value="B" />
+              <span class="design1"></span>
+              <span class="text1">Sử</span>
+            </label>
+            <label class="quiz-form__ans1">
+              <input type="radio" name="q1" id="q13" value="C" />
+              <span class="design1"></span>
+              <span class="text1">Địa</span>
+            </label>
+          </div>
+
+          <div class="quiz-form__quiz1">
+            <p class="quiz-form__question">Difficult</p>
+            <label class="quiz-form__ans1">
+              <input type="radio" name="q2" id="q21" value="A" checked />
+              <span class="design1"></span>
+              <span class="text1">Expert</span>
+            </label>
+            <label class="quiz-form__ans1">
+              <input type="radio" name="q2" id="q22" value="B" />
+              <span class="design1"></span>
+              <span class="text1">Medium</span>
+            </label>
+            <label class="quiz-form__ans1">
+              <input type="radio" name="q2" id="q23" value="C" />
+              <span class="design1"></span>
+              <span class="text1">Easy</span>
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="inputBx">
+        <button class="submit animate__animated animate__zoomIn">Back</button>
+        <button class="submit animate__animated animate__zoomIn" id="start-button" onclick="intoQuiz();">Start</button>
+        <!-- <input
+          class="submit animate__animated animate__zoomIn"
+          id="start-button"
+          type="submit"
+          value="Start"
+          onclick="intoQuiz();"
+        /> -->
+      </div>
+      </div>
+
+    <div class="animate__animated animate__zoomIn container__quiz" style="display: none;">
+      <div class="clock ">
+        <span id="time-left">0</span>
+      </div>
+      <div class="heading">
+        <h1 class="heading__text">Quiz</h1>
+      </div>
+      <div class="quiz">
+        <form class="quiz-form">
+         
+          <!-- -->
+          <div class="quiz-form__quiz">
+            <p class="quiz-form__question">
+              1. Sự khác nhau cơ bản giữa truyền thông multicast và truyền thông
+              broadcast là gi?
+            </p>
+            <label class="quiz-form__ans" for="q31">
+              <input type="radio" name="q3" id="q31" value="A" checked />
+              <span class="design"></span>
+              <span class="text">Multicast là gửi cho nhiều mạng được định nghĩa với
+                multicast.</span>
+            </label>
+            <label class="quiz-form__ans" for="q32">
+              <input type="radio" name="q3" id="q32" value="B" />
+              <span class="design"></span>
+              <span class="text">Multicast và broadcast về cơ bản là giống nhau.</span>
+            </label>
+            <label class="quiz-form__ans" for="q33">
+              <input type="radio" name="q3" id="q33" value="C" />
+              <span class="design"></span>
+              <span class="text">Broadcast là gửi cho mọi nút mạng có đăng ký nhóm và/hoặc
+                mạng con </span>
+            </label>
+            <label class="quiz-form__ans" for="q34">
+              <input type="radio" name="q3" id="q34" value="D" />
+              <span class="design"></span>
+              <span class="text">Không phải các ý trên.</span>
+            </label>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="animate__animated animate__zoomIn container__rank " style="display: none;">
+      <div class="title__box">
+        <h2 class="title">Congratulation</h2>
+      </div>
+      <div class="ranking__box">
+        <div class="rank">
+          <img src="silver-medal.png" alt="" />
+          <h2>Lê Đức Nghị</h2>
+          <div class="score">
+            <h1>29148</h2>
+            <h3>4 out of 5</h3>
+          </div>
+        </div>
+        <div class="rank">
+          <img src="gold-medal.png" alt="" />
+          <h2>Lê Quang Hoàng</h2>
+          <div class="score">
+            <h1>29148</h2>
+            <h3>4 out of 5</h3>
+          </div>
+        </div>
+        <div class="rank">
+          <img src="bronze-medal.png" alt="" />
+          <h2>Phạm Anh Tuấn</h2>
+          <div class="score">
+            <h1>29148</h2>
+            <h3>4 out of 5</h3>
+          </div>
+
+        </div>
+        <!-- <div class="catchup__box">
+          <div class="final__rank">
+            <img class="medal" src="medal.png" alt="" />
+            <h2>Hoàng</h2>
+          </div>
+          <div class="final__rank">
+            <img class="medal" src="medal.png" alt="" />
+            <h2>Bảo</h2>
+          </div>
+        </div> -->
+
+
+      </div>
+    </div>
+    
+    <script>
+      // Type & change Color
+      function changeColor() {
+        var submit = document.getElementById('submit');
+        var color = document.getElementById('text-type');
+        if(color.value.length > 0){
+  	      submit.style.color = "red";
+        }
+        else {
+  	      submit.style.color = "grey";
+        }
+      }
+
+      // transform div 
+      var a = document.querySelector(".container__quiz");
+      var b = document.querySelector(".container__start");
+      var c = document.querySelector('.container__lobby');
+      var d = document.querySelector('.container__rank');
+      function intoStart() {
+        if (b.style.display === "none") {
+          b.style.display = "block";
+          c.style.display = "none";
+        }
+      };
+
+      // transform div & active clock 
+      const timeLeftDisplay = document.querySelector("#time-left");
+      const startBtn = document.querySelector("#start-button");
+      let timeLeft = 0;
+
+      function intoQuiz() {
+        if (a.style.display === "none") {
+          a.style.display = "block";
+          b.style.display = "none";
+        }
+        setInterval(function(){
+          d.style.display = "none";
+          if(timeLeft >= 60)
+          {
+            d.style.display = "block";
+            a.style.display = "none";
+            clearInterval(timeLeft = 60);
+          }
+          // setTimeout(function(){
+          //     if(c.style.display === "none"){
+          //     c.style.display = "block";
+          //     d.style.display = "none";
+          //   }
+          // }, 6000);
+
+          timeLeftDisplay.innerHTML = timeLeft;
+          timeLeft += 1;
+        }, 1000);
+        startBtn.addEventListener("click", intoQuiz);
+      };
+      
+
+      // transform tab create-join & MODAL
+      const x = document.getElementById("join");
+      const visibility = document.querySelector('.btn');
+      function hidden() {
+        visibility.style.display = "none";
+        openModal.style.display = "none";
+        modalOverlay.style.display = "none";
+      }
+
+      const modalOverlay = document.querySelector(".modal-overlay");
+      const openModalBtn = document.querySelector(".modal-btn");
+      const closeModalBtn = document.querySelector(".close-btn");
+      const openModal = document.querySelector(".modal-container")
+      const form = document.querySelector("form")
+      openModalBtn.addEventListener("click", function () {
+        modalOverlay.classList.add("open-overlay");
+        openModal.classList.add("open-modal");
+      });
+
+      closeModalBtn.addEventListener("click", function () {
+        modalOverlay.classList.remove("open-overlay");
+        openModal.classList.remove("open-modal")
+      });
+
+      window.addEventListener('click',function(event){
+        if(event.target === modalOverlay){
+          modalOverlay.classList.remove("open-overlay");
+          openModal.classList.remove("open-modal");
+        }
+      })
+
+      // toggle night/light mode
+      const body = document.querySelector("body");
+      document.querySelector('.toggle').onclick = function(){
+        body.classList.toggle('light');
+      };
+
+      
+      // MODAL-RANK
+      document.getElementById('btn-modal').addEventListener('click',function(){
+        document.getElementById('overlay').classList.add('is-visible');
+        document.getElementById('modal').classList.add('is-visible');
+      });
+      document.getElementById('close-btn').addEventListener('click',function(){
+        document.getElementById('overlay').classList.remove('is-visible');
+        document.getElementById('modal').classList.remove('is-visible');
+      });
+      document.getElementById('overlay').addEventListener('click',function(){
+        document.getElementById('modal').classList.remove('is-visible');
+        document.getElementById('overlay').classList.remove('is-visible');
+      });
+
+    </script>
+  </body>
+</html>

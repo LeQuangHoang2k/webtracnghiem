@@ -8,7 +8,8 @@
 .container__start {
   max-width: 50rem;
   width: 90vw;
-  margin: 10rem auto;
+  margin: 5rem auto ;
+  /* background: red; */
 }
 
 .quiz__heading {
@@ -21,7 +22,7 @@
 }
 
 .heading__text,
-p {
+.quiz-form__question {
   margin-bottom: 1.5rem;
   color: #babecc;
   text-shadow: 0.5px 1px 1px #fff;
@@ -55,10 +56,8 @@ p {
 
 .quiz-form__quiz1 {
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   flex-direction: row;
-  margin: 0 auto;
 }
 
 .quiz-form__ans1 {
@@ -73,9 +72,6 @@ p {
   align-items: center;
   cursor: pointer;
 }
-
-
-
 
 input[type="radio"] {
   opacity: 0;
@@ -154,6 +150,14 @@ input[type="radio"]:active + .design1::after {
   transform: scale(2);
 }
 
+.inputBx{
+  margin: 2em 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* button.submit, */
 .submit:focus,
 .submit {
   border: none;
@@ -166,113 +170,17 @@ input[type="radio"]:active + .design1::after {
   font-size: 1.2rem;
   font-weight: 600;
   display: block;
-  margin: 1rem auto 4rem auto;
+  margin: 1rem 1em 1rem 1em;
   cursor: pointer;
   box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.1),
     2px 2px 6px rgba(0, 0, 0, 0.8);
   background: #131419;
   outline: none;
 }
-
+/* button.submit:active, */
 .submit:active {
   cursor: pointer;
   box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1),
     inset 2px 2px 6px rgba(0, 0, 0, 0.8);
 }
 
-span a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.next__page span i {
-  margin: 0px 10px;
-  font-size: 30px;
-  color: #fff;
-}
-
-a:hover + i {
-  animation: bounce 3s infinite;
-}
-
-@keyframes bounce {
-  /* blue, red, goldenrod, cyan */
-  0%,
-  5% {
-    transform: translateX(0);
-    color: #2852e2;
-  }
-  10% {
-    transform: translateX(40px);
-  }
-  12.5% {
-    transform: translateX(0);
-  }
-  15% {
-    transform: translateX(10px);
-  }
-  20%,
-  25% {
-    transform: translateX(0);
-  }
-
-  25%,
-  30% {
-    transform: translateX(0);
-    color: #ff0000;
-  }
-  35% {
-    transform: translateX(40px);
-  }
-  37.5% {
-    transform: translateX(0);
-  }
-  40% {
-    transform: translateX(10px);
-  }
-  45%,
-  50% {
-    transform: translateX(0);
-  }
-
-  50%,
-  55% {
-    transform: translateX(0);
-    color: #dacd2a;
-  }
-  60% {
-    transform: translateX(40px);
-  }
-  62.5% {
-    transform: translateX(0);
-  }
-  65% {
-    transform: translateX(10px);
-  }
-  70%,
-  75% {
-    transform: translateX(0);
-  }
-
-  75%,
-  80% {
-    transform: translateX(0);
-    color: #3cddd6;
-  }
-  85% {
-    transform: translateX(40px);
-  }
-  87.5% {
-    transform: translateX(0);
-  }
-  90% {
-    transform: translateX(10px);
-  }
-  95%,
-  100% {
-    transform: translateX(0);
-    color: #2852e2;
-  }
-}

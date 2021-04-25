@@ -1,11 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Oleo+Script:wght@700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Oleo+Script:wght@700&display=swap");
+::-webkit-scrollbar {
+  display: none;
+}
 
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   font-family: sans-serif;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -21,10 +24,13 @@ body {
 .container__lobby {
   position: relative;
   width: 100%;
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-  /* margin: 1em auto; */
+}
+
+.head {
+  position: relative;
+  margin: 5em 0;
+  width: 100%;
+  /* background: red; */
 }
 
 .container__lobby .head__id {
@@ -47,10 +53,10 @@ body {
   content: "\f2c0";
   position: absolute;
   top: 0.3em;
-  left: 0.7em;
+  left: 0.8em;
   font-family: fontAwesome;
   color: #fff;
-  font-size: 35px;
+  font-size: 30px;
 }
 
 /* RANK */
@@ -81,9 +87,9 @@ body {
 .container__lobby .head__rank img {
   position: absolute;
   top: 3.8em;
-  left: 1em;
-  width: 3em;
-  height: 3em;
+  left: 0.9em;
+  width: 3.2em;
+  height: 3.2em;
 }
 
 /* Username__RANK */
@@ -105,100 +111,24 @@ body {
   z-index: 1;
 }
 
-.modal-window {
-  position: fixed;
-  background-color: rgba(255, 255, 255, 0.25);
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 999;
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s;
-  overflow: hidden;
-  transition: 0.5s;
-}
-
-.information{
-  pointer-events: none;
-  color: rgba(0, 0, 0, 0.5);
-  font-weight: normal;
-  padding: 1em;
-  position: absolute;
-  transition: opacity 2 ease-out;
-  transform: rotateX(-25deg) scale(1);
-  transform-origin: 50% 7em 0em;
-  opacity: 0;
-  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.1), 0 2px 20px rgba(0, 0, 0, 0.3);
-  box-sizing: border-box;
-  top: 3rem;
-  border-radius: 10px;
-  background: white;
-  display: block;
-  height: 300px;
-  width: calc(var(--menu-width) * 1.5);
-}
-
-.modal-window:target {
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.modal-window header {
-  font-weight: bold;
-}
-
-.modal-window h1 {
-  font-size: 150%;
-  margin: 0 0 15px;
-}
-
-.modal-close {
-  color: #aaa;
-  line-height: 50px;
-  font-size: 80%;
-  position: absolute;
-  right: 0;
-  text-align: center;
-  top: 0em;
-  width: 70px;
-  text-decoration: none;
-}
-
-.modal-close:hover {
-  color: black;
-}
-
-a {
-  color: inherit;
-}
-
-
-
-small {
-  color: lightgray;
-}
-
 .btn {
   position: absolute;
-  top: 1.5em;
+  top: 1em;
   left: 4em;
   cursor: pointer;
   color: #fff;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   background: #131419;
   padding: 1em 1.5em;
-  border-radius: 1rem;
+  border-radius: 2rem;
   text-decoration: none;
   box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.1),
     2px 2px 6px rgba(0, 0, 0, 0.8);
 }
 
 .btn:active {
+  color: #006c9c;
   cursor: pointer;
   box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1),
     inset 2px 2px 6px rgba(0, 0, 0, 0.8);
@@ -219,14 +149,46 @@ small {
   transition: 0.5s;
 }
 
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(1, 1, 1, 0.5);
+  opacity:0;
+  display: grid;
+  place-items: center;
+  transition: 0.2s all ease-in;
+  visibility: hidden;
+  z-index: -10;
+}
+.open-overlay {
+  opacity: 1;
+  visibility: visible;
+  z-index: 10;
+  transition: 0.2s all ease-out;
+}
+
+.modal-container {
+  opacity: 0;
+  transition: 0.2s all ease-in;
+  overflow: hidden;
+}
+
+.open-modal{
+  opacity: 1;
+  transition:  0.2s all ease-out;
+}
+
+
 .button-box {
   width: 195px;
   margin: 0px auto;
   position: relative;
-  top: 29em;
   box-shadow: 0 0 20px 9px #4a3b54;
   border-radius: 30px;
-  z-index: 2;
+  z-index: 10;
 }
 
 .toggle-btn {
@@ -241,37 +203,37 @@ small {
   font-weight: 600;
 }
 
-.modal-window > form {
+.form {
+  transition: transform 0.4s;
   width: 400px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* transition: 0.5s; */
   padding: 2em;
   border-radius: 1rem;
   width: 350px;
   padding: 40px 40px 60px;
   background: #131419;
   text-align: center;
+  overflow: hidden;
   box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.05),
     5px 5px 15px rgba(0, 0, 0, 0.5);
 }
 
-form h2 {
+.form h2 {
   color: #babecc;
   font-weight: 500;
   letter-spacing: 1px;
   /* margin: 100px 0 0 0; */
 }
 
-form .input {
+.form .input {
   text-align: left;
   margin: 50px 0 10px 0;
 }
 
-form .input .inputBox button,
-form .input .inputBox input {
+.form .input .inputBox input[type=text] {
   width: 100%;
   height: 50px;
   background: #131419;
@@ -285,14 +247,26 @@ form .input .inputBox input {
     inset 2px 2px 6px rgba(0, 0, 0, 0.8);
 }
 
-form .input .inputBox .submit {
+.form .input .inputBox .create{
+  color: #03a9f4;
+}
+
+.form .input .inputBox input[type=button] {
+  width: 100%;
+  height: 50px;
+  background: #131419;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  padding: 5px 15px;
+  font-size: 18px;
   cursor: pointer;
   margin-top: 20px;
   box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.1),
     2px 2px 6px rgba(0, 0, 0, 0.8);
 }
 
-form .input .inputBox .submit:active {
+.form .input .inputBox input[type=button]:active {
   cursor: pointer;
   color: #006c9c;
   margin-top: 20px;
@@ -300,7 +274,7 @@ form .input .inputBox .submit:active {
     inset 2px 2px 6px rgba(0, 0, 0, 0.8);
 }
 
-form .input .inputBox input::placeholder {
+.form .input .inputBox input::placeholder {
   color: #555;
   font-size: 18px;
 }
@@ -329,7 +303,7 @@ form .input .inputBox input::placeholder {
     15px 15px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* ARROW */
+/*  */
 .next__page {
   margin: 5em 0 0 0;
   display: flex;
@@ -337,126 +311,124 @@ form .input .inputBox input::placeholder {
   align-items: center;
 }
 
-span a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.next__page span i {
-  margin: 0px 10px;
-  font-size: 30px;
-  color: #fff;
-}
-
-a:hover + i {
-  animation: bounce 3s infinite;
-}
-
-@keyframes bounce {
-  /* blue, red, goldenrod, cyan */
-  0%,
-  5% {
-    transform: translateX(0);
-    color: #2852e2;
-  }
-  10% {
-    transform: translateX(40px);
-  }
-  12.5% {
-    transform: translateX(0);
-  }
-  15% {
-    transform: translateX(10px);
-  }
-  20%,
-  25% {
-    transform: translateX(0);
-  }
-
-  25%,
-  30% {
-    transform: translateX(0);
-    color: #ff0000;
-  }
-  35% {
-    transform: translateX(40px);
-  }
-  37.5% {
-    transform: translateX(0);
-  }
-  40% {
-    transform: translateX(10px);
-  }
-  45%,
-  50% {
-    transform: translateX(0);
-  }
-
-  50%,
-  55% {
-    transform: translateX(0);
-    color: #dacd2a;
-  }
-  60% {
-    transform: translateX(40px);
-  }
-  62.5% {
-    transform: translateX(0);
-  }
-  65% {
-    transform: translateX(10px);
-  }
-  70%,
-  75% {
-    transform: translateX(0);
-  }
-
-  75%,
-  80% {
-    transform: translateX(0);
-    color: #3cddd6;
-  }
-  85% {
-    transform: translateX(40px);
-  }
-  87.5% {
-    transform: translateX(0);
-  }
-  90% {
-    transform: translateX(10px);
-  }
-  95%,
-  100% {
-    transform: translateX(0);
-    color: #2852e2;
-  }
-}
-
-.logout {
-  border: 4px solid lightgray;
+button {
   position: relative;
-  left: -50em;
-  width: 40px;
-  height: 60px;
+  display: inline-block;
   cursor: pointer;
+  outline: none;
+  border: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
 }
 
-.logout a {
+button.learn-more {
+  width: 12rem;
+  height: auto;
+}
+
+button.learn-more .circle {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: relative;
+  display: block;
+  margin: 0;
+  width: 3rem;
+  height: 3rem;
+  background: #282936;
+  border-radius: 1.625rem;
+}
+
+button.learn-more .circle .icon {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: #fff;
+}
+
+button.learn-more .circle .icon.arrow {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  left: 0.625rem;
+  width: 1.125rem;
+  height: 0.125rem;
+  background: none;
+}
+
+button.learn-more .circle .icon.arrow::before {
+  position: absolute;
+  content: "";
+  top: -0.3rem;
+  right: 0.07rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-top: 0.125rem solid #fff;
+  border-right: 0.125rem solid #fff;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+button.learn-more .button-text {
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.75rem 0;
+  margin: 0 0 0 1.85rem;
+  color: #282936;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.button-text a {
+  text-decoration: none;
+}
+
+button:hover .circle {
+  width: 100%;
+}
+
+button:hover .circle .icon.arrow {
+  background: #fff;
+  transform: translate(1rem, 0);
+}
+
+button:hover .button-text {
+  color: #fff;
+}
+
+.action .menu .logout {
+  position: relative;
+  margin: 1em 2em -0.5em 0.5em;
+  border: 4px solid lightgray;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  /* padding: 10px 0 ; */
+}
+.action .menu .logout a {
   white-space: nowrap;
   position: absolute;
+  top: 10px;
+  left: 3.75em;
   z-index: 1;
-  top: 18px;
-  left: 60px;
-  color: #fff;
+  color: #111;
   font-size: 16px;
   font-weight: 600;
   text-align: center;
   text-decoration: none;
 }
-
-.logout a:after {
+.action .menu .score_method::after,
+.action .menu .mode::after,
+.action .menu .leave__room button::after,
+.action .menu .logout a:after {
   background: none repeat scroll 0 0 transparent;
   bottom: -5px;
   content: "";
@@ -464,24 +436,26 @@ a:hover + i {
   height: 2px;
   left: 50%;
   position: absolute;
-  background: #fff;
+  background: #111;
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 0;
 }
-
-.logout a:hover:after {
+.action .menu .score_method:hover:after,
+.action .menu .mode:hover:after,
+.action .menu .leave__room button:hover:after,
+.action .menu .logout a:hover:after {
   width: 100%;
   left: 0;
 }
 
-.logout .doorway {
+.action .menu .logout .doorway {
   position: absolute;
   width: 32px;
-  height: 52px;
+  height: 32px;
   background-color: #fff;
 }
 
-.logout .doorway .door {
+.action .menu .logout .doorway .door {
   transition: transform 0.5s;
   transform-style: preserve-3d;
   transform-origin: 0% 0%;
@@ -491,19 +465,187 @@ a:hover + i {
   background: #091921;
   position: relative;
 }
-.logout:hover .door {
+.action .menu .logout:hover .door {
   -webkit-transform: perspective(900) rotateY(45deg);
   transition: all 2s ease-in-out;
 }
 
-.door span {
+.action .menu .door span {
   position: absolute;
-  width: 7px;
-  height: 7px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   display: block;
   background-color: lightgray;
-  top: 20px;
+  top: 15px;
   left: 20px;
 }
 
+.action .menu .leave__room {
+  width: 60px;
+  margin: 1.2em 3em 0 1.2em;
+  position: relative;
+}
+
+.action .menu .leave__room button {
+  border: none;
+  outline: none;
+  margin-left: 3em;
+  white-space: nowrap;
+  color: #111;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+}
+
+.action .menu .leave__room::before {
+  content: "\f08b";
+  font-family: fontAwesome;
+  font-size: 22px;
+  position: absolute;
+  left: 0em;
+  color: #111;
+}
+
+.action {
+  position: fixed;
+  bottom: 2.3em;
+  left: 45px;
+}
+
+.action .profile {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.action .profile i {
+  font-size: 50px;
+  color: #fff;
+  transition: transform 0.8s ease-in-out;
+}
+
+.action .profile i:hover {
+  transform: rotate(360deg);
+}
+
+.action .menu {
+  position: absolute;
+  bottom: 80px;
+  left: -15px;
+  padding: 30px 10px;
+  background: #fff;
+  width: 200px;
+  box-sizing: 0 5px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  transition: 0.5s;
+  visibility: hidden;
+  opacity: 0;
+}
+.action:hover .menu {
+  visibility: visible;
+  opacity: 1;
+}
+
+.action .menu::before {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 28px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  transform: rotate(45deg);
+}
+
+.score_method {
+  position: absolute;
+  top: 1em;
+  left: 4.2em;
+  padding: 1px 5px;
+  color: #111;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  outline: none;
+}
+
+
+.modal .title {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 1.5em 0;
+  box-shadow: 5px 5px 10px rgba(0,0,0,0.1);
+}
+
+.modal .content{
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: pre-line;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  position: absolute;
+  top:5em;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 65em;
+  height: 500px;
+  padding: 20px ;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  z-index: 5;
+}
+.modal .luck{
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 1.5em 0;
+  box-shadow: 15px 5px 15px rgba(0,0,0,0.1);
+}
+
+.close-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 20px;
+}
+
+.overlay {
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+/** JS */
+.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
