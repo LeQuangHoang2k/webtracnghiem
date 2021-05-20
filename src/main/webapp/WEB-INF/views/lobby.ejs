@@ -569,9 +569,9 @@
 
           // console.log("cau trl tuong ung:", parseInt(indexAnswerA) + parseInt(indexChoice));
           const answerInfor = listAnswer[indexAnswerInList];
-          console.log(answerInfor);
+          console.log("dữ liệu câu trả lời : " + answerInfor);
 
-          if (answerInfor.status) correctAnswer += 1
+          if (answerInfor && answerInfor.status) correctAnswer += 1
           console.log("số câu đúng là : " + correctAnswer);
         };
 
@@ -651,14 +651,12 @@
 
       setTimeout(() => {
         window.location.reload()
-      }, 2000)
+      }, 5000)
     })
 
     const leaveRoom = () => {
       window.location.reload()
     }
-
-
 
   </script>
 

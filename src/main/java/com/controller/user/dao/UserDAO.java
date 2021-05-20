@@ -10,22 +10,29 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.controller.user.model.User;
 
 public class UserDAO {
-	private final String jdbcURL = "jdbc:mysql://localhost:3306/webtracnghiem?useSSL=false";
-	private final String jdbcUsername = "root";
-	private final String jdbcPassword = "admin";
+	//	workbench
+	//private final String jdbcHost = "jdbc:mysql://localhost:3306/";
+	//private final String jdbcDB = "webtracnghiem";
+	//private final String jdbcUsername = "root";
+	//private final String jdbcPassword = "admin";
+
+	//	freedb.tech https://freedb.tech/dashboard/index.php
+	private final String jdbcHost = "jdbc:mysql://freedb.tech:3306/";
+	private final String jdbcDB = "freedbtech_webtracnghiem";
+	private final String jdbcUsername = "freedbtech_crim";
+	private final String jdbcPassword = "crim159555";
 
 	private final String INSERT_USER_SQL = "INSERT INTO user (name,email,phone,username,password_hash,total_score,level) VALUES (?,?,?,?,?,?,?)";
 	private final String SELECT_USER_BY_EMAIL = "SELECT * FROM user WHERE email=?";
 	private final String SELECT_USER_BY_PHONE = "SELECT * FROM user WHERE phone=?";
 	private final String SELECT_USER_BY_USERNAME = "SELECT * FROM user WHERE username=?";
 	private final String UPDATE_PASSWORD_BY_USERNAME = "UPDATE user SET password_hash = ? WHERE username=?";
-//	private final String INSERT_USER_SQL="INSERT INTO user (name,password,phone VALUES (?,?,?)";
 
 	private Connection getConnection() {
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
+			conn = DriverManager.getConnection(jdbcHost + jdbcDB, jdbcUsername, jdbcPassword);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
