@@ -17,13 +17,13 @@ import com.controller.user.dao.UserDAO;
 @WebServlet("/")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static UserDAO UserDAO;
+	public static UserDAO UserDAO;
 
 	public UserServlet() {
 		UserDAO = new UserDAO();
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
@@ -38,7 +38,7 @@ public class UserServlet extends HttpServlet {
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
@@ -69,13 +69,13 @@ public class UserServlet extends HttpServlet {
 		}
 	}
 
-	protected void write(HttpServletResponse res, Map<String, Object> map) throws ServletException, IOException {
+	public void write(HttpServletResponse res, Map<String, Object> map) throws ServletException, IOException {
 		res.setContentType("json");
 		res.setCharacterEncoding("UTF-8");
 		res.getWriter().write(new Gson().toJson(map));
 	}
 
-	private void register(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	public void register(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// input
 		String name = req.getParameter("name");
 		String email = req.getParameter("email");
@@ -97,7 +97,7 @@ public class UserServlet extends HttpServlet {
 		write(res, map);
 	}
 
-	private void login(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	public void login(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// input
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
@@ -117,7 +117,7 @@ public class UserServlet extends HttpServlet {
 		write(res, map);
 	}
 
-	private void forgotPassword(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	public void forgotPassword(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// input
 		String name = req.getParameter("name");
 		String email = req.getParameter("email");
