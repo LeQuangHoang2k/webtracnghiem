@@ -1,27 +1,20 @@
 {
-    "name": "webapp",
-    "version": "1.0.0",
-    "description": "",
-    "main": "socket.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "node D:/study/website-trac-nghiem/src/main/webapp/WEB-INF/socket.js"
-    },
-    "engines": {
-      "node": "12.x"
-    },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-      "bluebird": "^3.7.2",
-      "cookie-parser": "^1.4.5",
-      "cors": "^2.8.5",
-      "ejs": "^3.1.6",
-      "express": "^4.17.1",
-      "mysql": "^2.18.1",
-      "mysql2": "^2.2.5",
-      "nodemon": "^2.0.7",
-      "socketio": "^1.0.0"
-    }
-  }
-  
+  "name": "website-trac-nghiem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "\"cd ../src/main/webapp/WEB-INF && npm start \""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theibdn159555/webtracnghiem.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theibdn159555/webtracnghiem/issues"
+  },
+  "homepage": "https://github.com/theibdn159555/webtracnghiem#readme"
+}
